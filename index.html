@@ -2459,14 +2459,14 @@
                     
                     <div class="contact-form">
                         <h3>Send Us a Message</h3>
-                        <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+                        <form id="contact-form">
                             <div class="form-field">
                                 <label for="name">Full Name</label>
-                                <input type="text" id="name" name="name" required>
+                                <input type="text" id="name" name="from_name" required>
                             </div>
                             <div class="form-field">
                                 <label for="email">Email Address</label>
-                                <input type="email" id="email" name="email" required>
+                                <input type="email" id="email" name="from_email" required>
                             </div>
                             <div class="form-field">
                                 <label for="subject">Subject</label>
@@ -2476,7 +2476,11 @@
                                 <label for="message">Message</label>
                                 <textarea id="message" name="message" required></textarea>
                             </div>
-                            <button type="submit" class="submit-btn">Send Message</button>
+                            <button type="submit" class="submit-btn" id="submit-btn">
+                                <span id="btn-text">Send Message</span>
+                                <i class="fas fa-spinner fa-spin" id="btn-spinner" style="display: none;"></i>
+                            </button>
+                            <div id="form-status" style="margin-top: 1rem; text-align: center; font-weight: 500;"></div>
                         </form>
                     </div>
                 </div>
@@ -2977,6 +2981,67 @@
         } else {
             loadWeather();
         }
+    </script>
+
+    <!-- EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+    <script>
+        // Initialize EmailJS with your Public Key
+        // Replace 'YOUR_PUBLIC_KEY' with your actual EmailJS public key
+        (function() {
+            emailjs.init('YOUR_PUBLIC_KEY');
+        })();
+
+        // Handle contact form submission
+        document.getElementById('contact-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const submitBtn = document.getElementById('submit-btn');
+            const btnText = document.getElementById('btn-text');
+            const btnSpinner = document.getElementById('btn-spinner');
+            const formStatus = document.getElementById('form-status');
+
+            // Show loading state
+            submitBtn.disabled = true;
+            btnText.style.display = 'none';
+            btnSpinner.style.display = 'inline-block';
+            formStatus.innerHTML = '';
+
+            // Send email using EmailJS
+            // Replace 'YOUR_SERVICE_ID' and 'YOUR_TEMPLATE_ID' with your actual IDs
+            emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', this)
+                .then(function(response) {
+                    console.log('SUCCESS!', response.status, response.text);
+
+                    // Show success message
+                    formStatus.innerHTML = '<span style="color: var(--success-color);"><i class="fas fa-check-circle"></i> Message sent successfully! We\'ll get back to you soon.</span>';
+
+                    // Reset form
+                    document.getElementById('contact-form').reset();
+
+                    // Reset button
+                    submitBtn.disabled = false;
+                    btnText.style.display = 'inline';
+                    btnSpinner.style.display = 'none';
+
+                    // Clear success message after 5 seconds
+                    setTimeout(function() {
+                        formStatus.innerHTML = '';
+                    }, 5000);
+
+                }, function(error) {
+                    console.log('FAILED...', error);
+
+                    // Show error message
+                    formStatus.innerHTML = '<span style="color: #dc3545;"><i class="fas fa-exclamation-circle"></i> Failed to send message. Please try again or contact us directly via WhatsApp.</span>';
+
+                    // Reset button
+                    submitBtn.disabled = false;
+                    btnText.style.display = 'inline';
+                    btnSpinner.style.display = 'none';
+                });
+        });
     </script>
 </body>
 </html>

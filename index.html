@@ -2988,9 +2988,8 @@
 
     <script>
         // Initialize EmailJS with your Public Key
-        // Replace 'YOUR_PUBLIC_KEY' with your actual EmailJS public key
         (function() {
-            emailjs.init('YOUR_PUBLIC_KEY');
+            emailjs.init('ORzlasdcn0K_wWlmR');
         })();
 
         // Handle contact form submission
@@ -3009,8 +3008,7 @@
             formStatus.innerHTML = '';
 
             // Send email using EmailJS
-            // Replace 'YOUR_SERVICE_ID' and 'YOUR_TEMPLATE_ID' with your actual IDs
-            emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', this)
+            emailjs.sendForm('emailjs-boskruintennis', 'template_vd82znh', this)
                 .then(function(response) {
                     console.log('SUCCESS!', response.status, response.text);
 

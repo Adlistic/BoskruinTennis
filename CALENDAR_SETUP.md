@@ -116,7 +116,7 @@ If GitHub API fails (wrong token, network issues, etc.):
 - `login.html` - Admin login page
 - `admin.html` - Calendar management interface
 - `calendar-events.json` - Event data storage
-- `boskruin-tennis-website.html` - Updated with calendar display
+- `index.html` - Main website with calendar display
 - `CALENDAR_SETUP.md` - This file
 
 ## Accessing the System

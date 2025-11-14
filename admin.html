@@ -444,9 +444,14 @@
     <header class="header">
         <div class="header-content">
             <h1><i class="fas fa-calendar-alt"></i> Calendar Management</h1>
-            <button class="logout-btn" onclick="logout()">
-                <i class="fas fa-sign-out-alt"></i> Logout
-            </button>
+            <div style="display: flex; gap: 10px;">
+                <button class="logout-btn" onclick="openSettings()" style="background: var(--secondary);">
+                    <i class="fas fa-cog"></i> Settings
+                </button>
+                <button class="logout-btn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
         </div>
     </header>
 
@@ -539,6 +544,76 @@
                     </button>
                 </div>
             </form>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div class="modal" id="settingsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>GitHub Settings</h2>
+                <button class="close-btn" onclick="closeSettings()">&times;</button>
+            </div>
+
+            <div style="background: #fff3cd; border-left: 4px solid #ffc107; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                <strong><i class="fas fa-exclamation-triangle"></i> Security Notice:</strong>
+                <p style="margin: 10px 0 0 0; font-size: 14px; color: #856404;">
+                    Your GitHub token will be stored in your browser's localStorage. Only use a token with minimal permissions (content write access only).
+                </p>
+            </div>
+
+            <form id="settingsForm">
+                <div class="form-group">
+                    <label for="githubOwner">GitHub Username/Organization *</label>
+                    <input type="text" id="githubOwner" placeholder="e.g., Adlistic" required>
+                    <small style="color: #666; font-size: 12px;">The owner of the repository</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="githubRepo">Repository Name *</label>
+                    <input type="text" id="githubRepo" placeholder="e.g., BoskruinTennis" required>
+                    <small style="color: #666; font-size: 12px;">The name of your repository</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="githubBranch">Branch *</label>
+                    <input type="text" id="githubBranch" placeholder="e.g., main or gh-pages" required>
+                    <small style="color: #666; font-size: 12px;">The branch where changes should be committed</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="githubToken">GitHub Personal Access Token *</label>
+                    <input type="password" id="githubToken" placeholder="ghp_xxxxxxxxxxxx" required>
+                    <small style="color: #666; font-size: 12px;">
+                        <a href="https://github.com/settings/tokens/new" target="_blank" style="color: var(--secondary);">Create a token</a>
+                        with "repo" scope (or just "public_repo" for public repos)
+                    </small>
+                </div>
+
+                <div style="background: #e7f3ff; border-left: 4px solid var(--secondary); padding: 15px; border-radius: 8px; margin: 20px 0;">
+                    <strong><i class="fas fa-info-circle"></i> How to create a GitHub token:</strong>
+                    <ol style="margin: 10px 0 0 20px; font-size: 14px; line-height: 1.8;">
+                        <li>Click the link above to go to GitHub</li>
+                        <li>Name it "Calendar Admin" and set expiration</li>
+                        <li>Check "repo" scope (or "public_repo" for public repos)</li>
+                        <li>Click "Generate token" and copy it</li>
+                        <li>Paste it in the field above</li>
+                    </ol>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn-cancel" onclick="closeSettings()">Cancel</button>
+                    <button type="submit" class="btn-submit">
+                        <i class="fas fa-save"></i> Save Settings
+                    </button>
+                </div>
+            </form>
+
+            <div style="margin-top: 30px; padding-top: 20px; border-top: 2px solid #e0e0e0;">
+                <button type="button" class="btn-cancel" onclick="clearSettings()" style="width: 100%; background: var(--danger); color: white;">
+                    <i class="fas fa-trash"></i> Clear All Settings
+                </button>
+            </div>
         </div>
     </div>
 
@@ -728,17 +803,80 @@
             }
         }
 
-        // Save events (client-side only - download prompt)
-        function saveEvents() {
-            // Since we can't write to the file directly from the browser,
-            // we'll store in localStorage and provide download option
-            localStorage.setItem('calendarEvents', JSON.stringify(events));
+        // Save events to GitHub
+        async function saveEvents() {
+            const settings = getGitHubSettings();
 
-            // Auto-download the updated JSON
-            downloadJSON(true);
+            if (!settings.owner || !settings.repo || !settings.branch || !settings.token) {
+                if (confirm('GitHub is not configured. Would you like to set it up now?\n\nClick OK to configure, or Cancel to download the JSON file instead.')) {
+                    openSettings();
+                } else {
+                    downloadJSON();
+                }
+                return;
+            }
+
+            try {
+                showSuccess('Saving to GitHub...');
+                await commitToGitHub(settings);
+                showSuccess('Events successfully saved to GitHub!');
+            } catch (error) {
+                console.error('GitHub commit error:', error);
+                alert(`Failed to save to GitHub: ${error.message}\n\nThe JSON file will be downloaded instead.`);
+                downloadJSON();
+            }
         }
 
-        // Download JSON file
+        // Commit changes to GitHub using the API
+        async function commitToGitHub(settings) {
+            const { owner, repo, branch, token } = settings;
+            const filePath = 'calendar-events.json';
+            const fileContent = JSON.stringify(events, null, 2);
+            const message = `Update calendar events - ${new Date().toISOString()}`;
+
+            // Step 1: Get the current file SHA
+            const fileUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${filePath}?ref=${branch}`;
+            const fileResponse = await fetch(fileUrl, {
+                headers: {
+                    'Authorization': `token ${token}`,
+                    'Accept': 'application/vnd.github.v3+json'
+                }
+            });
+
+            let sha = null;
+            if (fileResponse.ok) {
+                const fileData = await fileResponse.json();
+                sha = fileData.sha;
+            } else if (fileResponse.status !== 404) {
+                throw new Error(`Failed to get file info: ${fileResponse.statusText}`);
+            }
+
+            // Step 2: Update the file
+            const updateUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${filePath}`;
+            const updateResponse = await fetch(updateUrl, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `token ${token}`,
+                    'Accept': 'application/vnd.github.v3+json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    message: message,
+                    content: btoa(unescape(encodeURIComponent(fileContent))), // Base64 encode
+                    sha: sha,
+                    branch: branch
+                })
+            });
+
+            if (!updateResponse.ok) {
+                const errorData = await updateResponse.json();
+                throw new Error(errorData.message || 'Failed to commit to GitHub');
+            }
+
+            return await updateResponse.json();
+        }
+
+        // Download JSON file as fallback
         function downloadJSON(silent = false) {
             const dataStr = JSON.stringify(events, null, 2);
             const dataBlob = new Blob([dataStr], { type: 'application/json' });
@@ -753,6 +891,74 @@
                 showSuccess('JSON file downloaded! Replace the existing calendar-events.json file with this download.');
             }
         }
+
+        // GitHub Settings Management
+        function getGitHubSettings() {
+            return {
+                owner: localStorage.getItem('github_owner') || '',
+                repo: localStorage.getItem('github_repo') || '',
+                branch: localStorage.getItem('github_branch') || '',
+                token: localStorage.getItem('github_token') || ''
+            };
+        }
+
+        function saveGitHubSettings(owner, repo, branch, token) {
+            localStorage.setItem('github_owner', owner);
+            localStorage.setItem('github_repo', repo);
+            localStorage.setItem('github_branch', branch);
+            localStorage.setItem('github_token', token);
+        }
+
+        function clearGitHubSettings() {
+            localStorage.removeItem('github_owner');
+            localStorage.removeItem('github_repo');
+            localStorage.removeItem('github_branch');
+            localStorage.removeItem('github_token');
+        }
+
+        // Settings Modal Functions
+        function openSettings() {
+            const settings = getGitHubSettings();
+            document.getElementById('githubOwner').value = settings.owner;
+            document.getElementById('githubRepo').value = settings.repo;
+            document.getElementById('githubBranch').value = settings.branch;
+            document.getElementById('githubToken').value = settings.token;
+            document.getElementById('settingsModal').classList.add('show');
+        }
+
+        function closeSettings() {
+            document.getElementById('settingsModal').classList.remove('show');
+        }
+
+        function clearSettings() {
+            if (confirm('Are you sure you want to clear all GitHub settings? This will remove your stored token.')) {
+                clearGitHubSettings();
+                document.getElementById('settingsForm').reset();
+                showSuccess('GitHub settings cleared!');
+                closeSettings();
+            }
+        }
+
+        // Settings form submission
+        document.getElementById('settingsForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const owner = document.getElementById('githubOwner').value.trim();
+            const repo = document.getElementById('githubRepo').value.trim();
+            const branch = document.getElementById('githubBranch').value.trim();
+            const token = document.getElementById('githubToken').value.trim();
+
+            saveGitHubSettings(owner, repo, branch, token);
+            showSuccess('GitHub settings saved successfully!');
+            closeSettings();
+        });
+
+        // Close settings modal when clicking outside
+        document.getElementById('settingsModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeSettings();
+            }
+        });
 
         // Show success message
         function showSuccess(message) {

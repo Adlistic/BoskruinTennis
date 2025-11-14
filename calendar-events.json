@@ -1,0 +1,47 @@
+[
+  {
+    "id": 1,
+    "title": "Social Tennis",
+    "date": "2025-11-18",
+    "time": "18:00",
+    "description": "Weekly social tennis session. All levels welcome!",
+    "type": "social",
+    "recurring": "weekly-tuesday"
+  },
+  {
+    "id": 2,
+    "title": "Social Tennis",
+    "date": "2025-11-16",
+    "time": "14:00",
+    "description": "Weekend social tennis session. Bring your friends!",
+    "type": "social",
+    "recurring": "weekly-saturday"
+  },
+  {
+    "id": 3,
+    "title": "Ladies' Tennis Group",
+    "date": "2025-11-19",
+    "time": "08:00",
+    "description": "Ladies' group tennis session",
+    "type": "ladies",
+    "recurring": "weekly-tuesday-thursday"
+  },
+  {
+    "id": 4,
+    "title": "Junior Coaching",
+    "date": "2025-11-20",
+    "time": "16:00",
+    "description": "Junior coaching session with Wayne Kets",
+    "type": "coaching",
+    "recurring": "none"
+  },
+  {
+    "id": 5,
+    "title": "Club Championship",
+    "date": "2025-11-23",
+    "time": "09:00",
+    "description": "Annual club championship tournament. Register at reception.",
+    "type": "tournament",
+    "recurring": "none"
+  }
+]

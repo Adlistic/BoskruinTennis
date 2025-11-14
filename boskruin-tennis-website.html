@@ -844,6 +844,151 @@
             color: var(--primary-color);
         }
 
+        /* Calendar Section */
+        .calendar-section {
+            background: var(--bg-white);
+            padding: 4rem 0;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .calendar-event {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            border-left: 5px solid var(--secondary-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .calendar-event:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .calendar-event.social {
+            border-left-color: #3498db;
+        }
+
+        .calendar-event.ladies {
+            border-left-color: #e91e63;
+        }
+
+        .calendar-event.coaching {
+            border-left-color: #ff9800;
+        }
+
+        .calendar-event.tournament {
+            border-left-color: #9c27b0;
+        }
+
+        .calendar-event.other {
+            border-left-color: var(--accent-color);
+        }
+
+        .event-type-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 0.75rem;
+        }
+
+        .event-type-badge.social {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .event-type-badge.ladies {
+            background: #fce4ec;
+            color: #c2185b;
+        }
+
+        .event-type-badge.coaching {
+            background: #fff3e0;
+            color: #f57c00;
+        }
+
+        .event-type-badge.tournament {
+            background: #f3e5f5;
+            color: #7b1fa2;
+        }
+
+        .event-type-badge.other {
+            background: #fffde7;
+            color: #827717;
+        }
+
+        .calendar-event h3 {
+            font-size: 1.25rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .event-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .event-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .event-meta-item i {
+            color: var(--secondary-color);
+            width: 18px;
+        }
+
+        .event-description {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-top: 1rem;
+        }
+
+        .recurring-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--bg-light);
+            padding: 0.5rem 0.75rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            color: var(--primary-color);
+            margin-top: 1rem;
+        }
+
+        .recurring-badge i {
+            color: var(--secondary-color);
+        }
+
+        .calendar-empty {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-light);
+        }
+
+        .calendar-empty i {
+            font-size: 4rem;
+            color: #ddd;
+            margin-bottom: 1rem;
+        }
+
         /* Visitor Info */
         .visitor-info {
             background: var(--bg-white);
@@ -1513,6 +1658,7 @@
                 <li><a href="#membership">Membership</a></li>
                 <li><a href="#coaching">Coaching</a></li>
                 <li><a href="#social">Social Tennis</a></li>
+                <li><a href="#calendar">Calendar</a></li>
                 <li><a href="#weather">Weather</a></li>
                 <li><a href="#contact">Contact</a></li>
                 <li><a href="#membership" class="nav-cta">Join Now</a></li>
@@ -2250,8 +2396,25 @@
         </div>
     </div>
 </section>
-	
-	
+
+
+    <!-- Calendar Section -->
+    <section id="calendar" class="calendar-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Upcoming Events</h2>
+                <p>Stay updated with our latest tennis events, tournaments, and activities</p>
+            </div>
+            <div class="calendar-grid" id="calendarGrid">
+                <!-- Events will be loaded dynamically -->
+            </div>
+            <div class="calendar-empty" id="calendarEmpty" style="display: none;">
+                <i class="fas fa-calendar-times"></i>
+                <h3>No Upcoming Events</h3>
+                <p>Check back soon for new events and activities!</p>
+            </div>
+        </div>
+    </section>
 
     <section id="visitor" class="visitor-info">
         <div class="container">
@@ -2950,12 +3113,112 @@
             
             document.getElementById('fullWeatherWidget').innerHTML = html;
         }
-        
+
         // Load weather when page loads
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', loadWeather);
         } else {
             loadWeather();
+        }
+
+        // Calendar Events Loading
+        async function loadCalendarEvents() {
+            try {
+                const response = await fetch('calendar-events.json');
+                const events = await response.json();
+
+                // Filter and sort events
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+
+                const upcomingEvents = events
+                    .filter(event => new Date(event.date) >= today)
+                    .sort((a, b) => new Date(a.date) - new Date(b.date))
+                    .slice(0, 6); // Show next 6 events
+
+                renderCalendarEvents(upcomingEvents);
+            } catch (error) {
+                console.error('Error loading calendar events:', error);
+                document.getElementById('calendarEmpty').style.display = 'block';
+                document.getElementById('calendarGrid').style.display = 'none';
+            }
+        }
+
+        function renderCalendarEvents(events) {
+            const grid = document.getElementById('calendarGrid');
+            const emptyState = document.getElementById('calendarEmpty');
+
+            if (events.length === 0) {
+                grid.style.display = 'none';
+                emptyState.style.display = 'block';
+                return;
+            }
+
+            grid.style.display = 'grid';
+            emptyState.style.display = 'none';
+
+            grid.innerHTML = events.map(event => `
+                <div class="calendar-event ${event.type}">
+                    <span class="event-type-badge ${event.type}">${event.type}</span>
+                    <h3>${event.title}</h3>
+                    <div class="event-meta">
+                        <div class="event-meta-item">
+                            <i class="fas fa-calendar"></i>
+                            <span>${formatEventDate(event.date)}</span>
+                        </div>
+                        <div class="event-meta-item">
+                            <i class="fas fa-clock"></i>
+                            <span>${formatEventTime(event.time)}</span>
+                        </div>
+                    </div>
+                    ${event.description ? `<div class="event-description">${event.description}</div>` : ''}
+                    ${event.recurring !== 'none' ? `
+                        <div class="recurring-badge">
+                            <i class="fas fa-redo"></i>
+                            <span>${formatRecurringPattern(event.recurring)}</span>
+                        </div>
+                    ` : ''}
+                </div>
+            `).join('');
+        }
+
+        function formatEventDate(dateStr) {
+            const date = new Date(dateStr);
+            return date.toLocaleDateString('en-ZA', {
+                weekday: 'short',
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
+            });
+        }
+
+        function formatEventTime(timeStr) {
+            const [hours, minutes] = timeStr.split(':');
+            const hour = parseInt(hours);
+            const ampm = hour >= 12 ? 'PM' : 'AM';
+            const displayHour = hour % 12 || 12;
+            return `${displayHour}:${minutes} ${ampm}`;
+        }
+
+        function formatRecurringPattern(pattern) {
+            const patterns = {
+                'weekly-monday': 'Every Monday',
+                'weekly-tuesday': 'Every Tuesday',
+                'weekly-wednesday': 'Every Wednesday',
+                'weekly-thursday': 'Every Thursday',
+                'weekly-friday': 'Every Friday',
+                'weekly-saturday': 'Every Saturday',
+                'weekly-sunday': 'Every Sunday',
+                'weekly-tuesday-thursday': 'Every Tuesday & Thursday'
+            };
+            return patterns[pattern] || pattern;
+        }
+
+        // Load calendar events when page loads
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', loadCalendarEvents);
+        } else {
+            loadCalendarEvents();
         }
     </script>
 </body>

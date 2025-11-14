@@ -1,14 +1,5 @@
 [
   {
-    "id": 1,
-    "title": "Social Tennis",
-    "date": "2025-11-18",
-    "time": "18:00",
-    "description": "Weekly social tennis session. All levels welcome!",
-    "type": "social",
-    "recurring": "weekly-tuesday"
-  },
-  {
     "id": 2,
     "title": "Social Tennis",
     "date": "2025-11-16",
@@ -16,6 +7,15 @@
     "description": "Weekend social tennis session. Bring your friends!",
     "type": "social",
     "recurring": "weekly-saturday"
+  },
+  {
+    "id": 1,
+    "title": "Social Tennis",
+    "date": "2025-11-18",
+    "time": "18:00",
+    "description": "Weekly social tennis session. All levels welcome!",
+    "type": "social",
+    "recurring": "weekly-tuesday"
   },
   {
     "id": 3,
@@ -43,5 +43,14 @@
     "description": "Annual club championship tournament. Register at reception.",
     "type": "tournament",
     "recurring": "none"
+  },
+  {
+    "id": 6,
+    "title": "test",
+    "date": "2025-11-16",
+    "time": "04:48",
+    "type": "social",
+    "recurring": "weekly-thursday",
+    "description": "aaa"
   }
 ]

@@ -9,6 +9,15 @@
     "recurring": "weekly-saturday"
   },
   {
+    "id": 6,
+    "title": "Thursday Informal Socials",
+    "date": "2025-11-16",
+    "time": "04:48",
+    "type": "social",
+    "recurring": "weekly-thursday",
+    "description": "aaa"
+  },
+  {
     "id": 1,
     "title": "Social Tennis",
     "date": "2025-11-18",
@@ -43,14 +52,5 @@
     "description": "Annual club championship tournament. Register at reception.",
     "type": "tournament",
     "recurring": "none"
-  },
-  {
-    "id": 6,
-    "title": "test",
-    "date": "2025-11-16",
-    "time": "04:48",
-    "type": "social",
-    "recurring": "weekly-thursday",
-    "description": "aaa"
   }
 ]

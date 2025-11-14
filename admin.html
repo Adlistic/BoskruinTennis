@@ -145,7 +145,6 @@
         }
 
         .event-card:hover {
-            transform: translateY(-5px);
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
         }
 
@@ -953,13 +952,6 @@
             closeSettings();
         });
 
-        // Close settings modal when clicking outside
-        document.getElementById('settingsModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeSettings();
-            }
-        });
-
         // Show success message
         function showSuccess(message) {
             const successMsg = document.getElementById('successMessage');
@@ -976,13 +968,6 @@
             sessionStorage.removeItem('loginTime');
             window.location.href = 'login.html';
         }
-
-        // Close modal when clicking outside
-        document.getElementById('eventModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeModal();
-            }
-        });
 
         // Load events on page load
         loadEvents();

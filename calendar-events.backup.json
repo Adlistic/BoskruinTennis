@@ -1,0 +1,128 @@
+﻿[
+  {
+    "id": 3,
+    "title": "Jozi Night Lights",
+    "date": "2026-01-16",
+    "time": "18:00",
+    "type": "social-event",
+    "recurring": "none",
+    "description": "Night lights tennis event"
+  },
+  {
+    "id": 4,
+    "title": "Egoli League (Men's & Ladies')",
+    "date": "2026-02-14",
+    "time": "09:00",
+    "type": "league",
+    "recurring": "none",
+    "description": "Egoli League runs from 14th February to 22nd March (excluding 8th & 9th March)"
+  },
+  {
+    "id": 5,
+    "title": "JT Mini 1",
+    "date": "2026-03-14",
+    "time": "09:00",
+    "type": "junior",
+    "recurring": "none",
+    "description": "Junior Tennis Mini event - 14th to 15th March"
+  },
+  {
+    "id": 6,
+    "title": "American Express Club Champs",
+    "date": "2026-03-20",
+    "time": "09:00",
+    "type": "championship",
+    "recurring": "none",
+    "description": "Club Championship event (date to be confirmed)"
+  },
+  {
+    "id": 7,
+    "title": "Wilson Marks Park GP",
+    "date": "2026-04-24",
+    "time": "09:00",
+    "type": "tournament",
+    "recurring": "none",
+    "description": "Wilson Marks Park Grand Prix - 24th to 28th April"
+  },
+  {
+    "id": 8,
+    "title": "Joburg Mixed League",
+    "date": "2026-05-09",
+    "time": "09:00",
+    "type": "mixed",
+    "recurring": "none",
+    "description": "Johannesburg Mixed Doubles League - 9th May to 7th June"
+  },
+  {
+    "id": 9,
+    "title": "American Express JT Super 8",
+    "date": "2026-07-12",
+    "time": "09:00",
+    "type": "junior",
+    "recurring": "none",
+    "description": "Junior Tennis Super 8 event - 12th to 16th July"
+  },
+  {
+    "id": 10,
+    "title": "Rising Stars",
+    "date": "2026-07-18",
+    "time": "09:00",
+    "type": "junior",
+    "recurring": "none",
+    "description": "Rising Stars junior development event (date to be confirmed)"
+  },
+  {
+    "id": 11,
+    "title": "JT Bundes & Men's/Ladies Leagues",
+    "date": "2026-07-25",
+    "time": "09:00",
+    "type": "league",
+    "recurring": "none",
+    "description": "JT Bundes and Men's/Ladies Leagues - 25th July to 30th August (excluding 8th & 9th August)"
+  },
+  {
+    "id": 12,
+    "title": "JT Mini 3",
+    "date": "2026-08-29",
+    "time": "09:00",
+    "type": "junior",
+    "recurring": "none",
+    "description": "Junior Tennis Mini event 3 - 29th to 30th August"
+  },
+  {
+    "id": 13,
+    "title": "League Cup",
+    "date": "2026-10-11",
+    "time": "09:00",
+    "type": "league",
+    "recurring": "none",
+    "description": "League Cup tournament - 11th to 25th October"
+  },
+  {
+    "id": 14,
+    "title": "JT Masters Event",
+    "date": "2026-11-05",
+    "time": "09:00",
+    "type": "tournament",
+    "recurring": "none",
+    "description": "Junior Tennis Masters Event - 5th to 8th November"
+  },
+  {
+    "id": 15,
+    "title": "Joburg Tennis Christmas Cup",
+    "date": "2026-11-29",
+    "time": "09:00",
+    "type": "tournament",
+    "recurring": "none",
+    "description": "Annual Christmas Cup tournament"
+  },
+  {
+    "id": 16,
+    "title": "JT Summer",
+    "date": "2026-12-13",
+    "time": "09:00",
+    "type": "junior",
+    "recurring": "none",
+    "description": "Junior Tennis Summer event - 13th to 15th December"
+  }
+]

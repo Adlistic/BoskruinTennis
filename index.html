@@ -1,0 +1,4223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boskruin Tennis Club - Where Everyone Loves Tennis</title>
+    <meta name="description" content="Join Boskruin Tennis Club in Johannesburg. Professional coaching, social tennis, leagues, and a welcoming community for all skill levels.">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- EmailJS -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #0d4f4f;
+            --secondary-color: #1a8080;
+            --accent-color: #c8d200;
+            --accent-hover: #a8b200;
+            --text-dark: #1a1a1a;
+            --text-light: #666666;
+            --bg-light: #f8faf9;
+            --bg-white: #ffffff;
+            --border-color: #e0e0e0;
+            --success-color: #28a745;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+            --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: var(--bg-white);
+            box-shadow: var(--shadow);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            box-shadow: var(--shadow-lg);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 1.4rem;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .logo img {
+            height: 50px;
+            width: auto;
+        }
+
+        .logo i {
+            color: var(--accent-color);
+            font-size: 1.8rem;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: color 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .nav-menu a:hover {
+            color: var(--secondary-color);
+        }
+
+        .nav-cta {
+            background: var(--accent-color);
+            color: var(--text-dark);
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .nav-cta:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 70px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 5rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="rgba(255,255,255,0.05)" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,165.3C1248,171,1344,149,1392,138.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') no-repeat bottom;
+            background-size: cover;
+            opacity: 0.5;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .hero .subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            display: inline-flex; /* Use flex to align text inside */
+            align-items: center; /* Vertically center text */
+            justify-content: center; /* Horizontally center text (for full-width buttons) */
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: var(--accent-color);
+            color: var(--text-dark);
+        }
+
+        /* FIX: Removed animation, kept subtle shadow change, updated hover color */
+        .btn-primary:hover {
+            background: var(--accent-hover); 
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); 
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: var(--primary-color);
+        }
+
+        /* Stats Section */
+        .stats {
+            background: var(--bg-white);
+            padding: 3rem 2rem;
+            box-shadow: var(--shadow);
+            margin-top: -3rem;
+            position: relative;
+            z-index: 10;
+            max-width: 1100px;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 15px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .stat-item h3 {
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-item p {
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        /* Section Styles */
+        section {
+            padding: 5rem 2rem;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 3rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            font-size: 1.1rem;
+            color: var(--text-light);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Benefits Section */
+        .benefits {
+            background: var(--bg-light);
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .benefit-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s;
+            box-shadow: var(--shadow);
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .benefit-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2rem;
+            color: white;
+        }
+
+        .benefit-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .benefit-card p {
+            color: var(--text-light);
+            line-height: 1.7;
+        }
+
+        /* Instagram Section */
+        .instagram-section {
+            background: var(--bg-white);
+        }
+
+        .instagram-feed {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .instagram-placeholder {
+            background: linear-gradient(135deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);
+            aspect-ratio: 1;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .instagram-placeholder::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0);
+            transition: all 0.3s;
+        }
+
+        .instagram-placeholder:hover::before {
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .instagram-placeholder:hover {
+            transform: scale(1.05);
+        }
+
+        .instagram-cta {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .instagram-button {
+            background: linear-gradient(135deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .instagram-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Membership Calculator */
+        .calculator {
+            background: var(--bg-light);
+        }
+
+        .calculator-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .calculator-intro {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .calculator-intro h3 {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .calculator-intro p {
+            color: var(--text-light);
+        }
+
+        .calculator-form {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .package-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+            background: var(--bg-light);
+            padding: 1.5rem;
+            border-radius: 12px;
+            transition: all 0.3s;
+        }
+
+        .package-item:hover {
+            background: #e8f5e9;
+            box-shadow: var(--shadow);
+        }
+
+        .package-info {
+            flex: 1;
+        }
+
+        .package-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .package-header i {
+            color: var(--secondary-color);
+            font-size: 1.3rem;
+        }
+
+        .package-header strong {
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            flex: 1;
+        }
+
+        .package-price {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--secondary-color);
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .package-description {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        .form-group {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .form-group label i {
+            color: var(--secondary-color);
+        }
+
+        .counter-group {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background: var(--bg-light);
+            padding: 1rem;
+            border-radius: 10px;
+        }
+
+        .counter-label {
+            flex: 1;
+            font-weight: 500;
+        }
+
+        .counter-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .counter-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid var(--secondary-color);
+            background: white;
+            color: var(--secondary-color);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .counter-btn:hover {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .counter-value {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            min-width: 40px;
+            text-align: center;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background: var(--bg-light);
+            padding: 1.25rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .checkbox-group:hover {
+            background: #e8f5e9;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            accent-color: var(--secondary-color);
+        }
+
+        .checkbox-label {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .checkbox-label strong {
+            color: var(--primary-color);
+        }
+
+        .checkbox-label small {
+            color: var(--text-light);
+        }
+
+        .price-summary {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin-top: 2rem;
+        }
+
+        .price-breakdown {
+            display: grid;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .price-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .price-item:last-child {
+            border-bottom: none;
+        }
+
+        .price-total {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            padding-top: 1rem;
+            border-top: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .price-note {
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* Membership Application Modal */
+        .membership-modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.7);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .membership-modal.show {
+            display: block;
+        }
+
+        .membership-modal-content {
+            background: white;
+            margin: 3% auto;
+            padding: 2rem;
+            border-radius: 20px;
+            max-width: 600px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            animation: slideDown 0.3s ease;
+            position: relative;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .membership-modal-close {
+            position: absolute;
+            right: 1.5rem;
+            top: 1.5rem;
+            color: #999;
+            font-size: 2rem;
+            font-weight: 300;
+            cursor: pointer;
+            transition: color 0.3s;
+            line-height: 1;
+        }
+
+        .membership-modal-close:hover {
+            color: var(--danger);
+        }
+
+        .membership-modal-content h2 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-size: 1.8rem;
+        }
+
+        .membership-modal-content h2 i {
+            color: var(--secondary-color);
+            margin-right: 0.5rem;
+        }
+
+        .membership-modal-content > p {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+        }
+
+        .selected-packages-summary {
+            background: var(--bg-light);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        .selected-packages-summary h3 {
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .selected-packages-summary .package-line {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .selected-packages-summary .package-line:last-child {
+            border-bottom: none;
+            font-weight: 600;
+            color: var(--primary-color);
+            padding-top: 0.75rem;
+            margin-top: 0.5rem;
+            border-top: 2px solid var(--secondary-color);
+        }
+
+        .membership-modal-content .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .membership-modal-content .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .membership-modal-content .form-group input,
+        .membership-modal-content .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            transition: border-color 0.3s;
+        }
+
+        .membership-modal-content .form-group input:focus,
+        .membership-modal-content .form-group textarea:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+        }
+
+        .membership-modal-content .form-group textarea {
+            resize: vertical;
+        }
+
+        /* Coaching Section */
+        .coaching {
+            background: var(--bg-white);
+        }
+
+        .coaches-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+    align-items: stretch; /* Ensure all cards stretch to same height */
+}
+
+
+        .coach-card {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: all 0.3s;
+    display: flex;
+    flex-direction: column;
+}
+
+.coach-card:hover {
+    box-shadow: var(--shadow-lg);
+}
+
+
+
+        .coach-image {
+    width: 100%;
+    height: 300px;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+}
+
+.coach-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.coach-info {
+    padding: 2rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.coach-info h3 {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.coach-title {
+    color: var(--secondary-color);
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+/* Target only the description paragraph (not coach-title) */
+.coach-info > p:not(.coach-title) {
+    color: var(--text-light);
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+    /* Removed flex-grow: 1 so it doesn't expand */
+}
+
+.coach-pricing {
+    background: var(--bg-light);
+    padding: 1rem;
+    border-radius: 10px;
+    /* Removed margin-top: auto - keeps it under the text */
+}
+
+.coach-pricing h4 {
+    font-size: 1rem;
+    margin-bottom: 0.75rem;
+    color: var(--primary-color);
+}
+
+.price-list {
+    display: grid;
+    gap: 0.5rem;
+}
+
+.price-list-item {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    padding: 0.5rem 0;
+}
+
+.price-list-item span:first-child {
+    color: var(--text-light);
+}
+
+.price-list-item span:last-child {
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.coach-whatsapp-btn-container {
+    margin-top: auto; /* Only the button is pushed to bottom */
+    text-align: center;
+    padding: 0 2rem 2rem;
+}
+
+.coach-whatsapp-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #25D366;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.3s;
+    box-shadow: 0 2px 8px rgba(37, 211, 102, 0.3);
+}
+
+.coach-whatsapp-btn:hover {
+    background: #20BA5A;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+}
+
+.coach-whatsapp-btn i {
+    font-size: 1.2rem;
+}
+
+
+
+        /* Social Tennis */
+        .social-tennis {
+            background: var(--bg-light);
+        }
+
+        .social-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .social-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s;
+        }
+
+        .social-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .social-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--accent-color);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            color: var(--primary-color);
+        }
+
+        .social-card h3 {
+            font-size: 1.4rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .social-schedule {
+            background: var(--bg-light);
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+        }
+
+        .schedule-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.5rem 0;
+        }
+
+        .schedule-item i {
+            color: var(--secondary-color);
+        }
+
+        .social-pricing {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 2px solid var(--border-color);
+        }
+
+        .pricing-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            font-size: 0.95rem;
+        }
+
+        .pricing-row strong {
+            color: var(--primary-color);
+        }
+
+        /* Calendar Section */
+        .calendar-section {
+            background: var(--bg-white);
+            padding: 4rem 0;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .calendar-event {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            border-left: 5px solid var(--secondary-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .calendar-event:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .calendar-event.social {
+            border-left-color: #3498db;
+        }
+
+        .calendar-event.ladies {
+            border-left-color: #e91e63;
+        }
+
+        .calendar-event.coaching {
+            border-left-color: #ff9800;
+        }
+
+        .calendar-event.tournament {
+            border-left-color: #9c27b0;
+        }
+
+        .calendar-event.other {
+            border-left-color: var(--accent-color);
+        }
+
+        .calendar-event.league {
+            border-left-color: #f57f17;
+        }
+
+        .calendar-event.championship {
+            border-left-color: #f57c00;
+        }
+
+        .calendar-event.mixed {
+            border-left-color: #7b1fa2;
+        }
+
+        .calendar-event.junior {
+            border-left-color: #558b2f;
+        }
+
+        .calendar-event.beginner {
+            border-left-color: #2e7d32;
+        }
+
+        .calendar-event.social-event {
+            border-left-color: #d84315;
+        }
+
+        .calendar-event.meeting {
+            border-left-color: #37474f;
+        }
+
+        .calendar-event.maintenance {
+            border-left-color: #5d4037;
+        }
+
+        .event-type-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 0.75rem;
+        }
+
+        .event-type-badge.social {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .event-type-badge.ladies {
+            background: #fce4ec;
+            color: #c2185b;
+        }
+
+        .event-type-badge.coaching {
+            background: #fff3e0;
+            color: #f57c00;
+        }
+
+        .event-type-badge.tournament {
+            background: #f3e5f5;
+            color: #7b1fa2;
+        }
+
+        .event-type-badge.other {
+            background: #fffde7;
+            color: #827717;
+        }
+
+        .event-type-badge.league {
+            background: linear-gradient(135deg, #fff9c4, #fff59d);
+            color: #f57f17;
+        }
+
+        .event-type-badge.championship {
+            background: linear-gradient(135deg, #ffd54f, #ffca28);
+            color: #f57c00;
+        }
+
+        .event-type-badge.mixed {
+            background: linear-gradient(135deg, #e1bee7, #ce93d8);
+            color: #7b1fa2;
+        }
+
+        .event-type-badge.junior {
+            background: linear-gradient(135deg, #c5e1a5, #aed581);
+            color: #558b2f;
+        }
+
+        .event-type-badge.beginner {
+            background: linear-gradient(135deg, #a5d6a7, #81c784);
+            color: #2e7d32;
+        }
+
+        .event-type-badge.social-event {
+            background: linear-gradient(135deg, #ffccbc, #ffab91);
+            color: #d84315;
+        }
+
+        .event-type-badge.meeting {
+            background: linear-gradient(135deg, #b0bec5, #90a4ae);
+            color: #37474f;
+        }
+
+        .event-type-badge.maintenance {
+            background: linear-gradient(135deg, #d7ccc8, #bcaaa4);
+            color: #5d4037;
+        }
+
+        .calendar-event h3 {
+            font-size: 1.25rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .event-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .event-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .event-meta-item i {
+            color: var(--secondary-color);
+            width: 18px;
+        }
+
+        .event-description {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-top: 1rem;
+        }
+
+        .recurring-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--bg-light);
+            padding: 0.5rem 0.75rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            color: var(--primary-color);
+            margin-top: 1rem;
+        }
+
+        .recurring-badge i {
+            color: var(--secondary-color);
+        }
+
+        .calendar-empty {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-light);
+        }
+
+        .calendar-empty i {
+            font-size: 4rem;
+            color: #ddd;
+            margin-bottom: 1rem;
+        }
+
+        /* Calendar View Toggle */
+        .view-toggle {
+            display: flex;
+            gap: 5px;
+            background: #f0f0f0;
+            padding: 4px;
+            border-radius: 8px;
+        }
+
+        .view-toggle-btn {
+            padding: 8px 12px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            color: #666;
+            font-size: 16px;
+        }
+
+        .view-toggle-btn:hover {
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        .view-toggle-btn.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        /* Calendar Table View */
+        .events-table {
+            display: none;
+            width: 100%;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+            margin-top: 2rem;
+        }
+
+        .events-table.active {
+            display: table;
+        }
+
+        .calendar-grid.hidden {
+            display: none;
+        }
+
+        .events-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .events-table thead {
+            background: linear-gradient(135deg, #f8f9fa, #ffffff);
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .events-table th {
+            padding: 12px 15px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 12px;
+            color: var(--dark);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .events-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #f5f5f5;
+            font-size: 13px;
+            color: #555;
+        }
+
+        .events-table tbody tr {
+            transition: background 0.2s ease;
+        }
+
+        .events-table tbody tr:hover {
+            background: #f8f9fa;
+        }
+
+        .events-table .event-title-cell {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .events-table .event-type-cell {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .events-table .event-type-cell.social { background: linear-gradient(135deg, #e3f2fd, #bbdefb); color: #1565c0; }
+        .events-table .event-type-cell.ladies { background: linear-gradient(135deg, #fce4ec, #f8bbd0); color: #ad1457; }
+        .events-table .event-type-cell.coaching { background: linear-gradient(135deg, #fff3e0, #ffe0b2); color: #e65100; }
+        .events-table .event-type-cell.tournament { background: linear-gradient(135deg, #f3e5f5, #e1bee7); color: #6a1b9a; }
+        .events-table .event-type-cell.other { background: linear-gradient(135deg, #e0f2f1, #b2dfdb); color: #00695c; }
+        .events-table .event-type-cell.league { background: linear-gradient(135deg, #fff9c4, #fff59d); color: #f57f17; }
+        .events-table .event-type-cell.championship { background: linear-gradient(135deg, #ffd54f, #ffca28); color: #f57c00; }
+        .events-table .event-type-cell.mixed { background: linear-gradient(135deg, #e1bee7, #ce93d8); color: #7b1fa2; }
+        .events-table .event-type-cell.junior { background: linear-gradient(135deg, #c5e1a5, #aed581); color: #558b2f; }
+        .events-table .event-type-cell.beginner { background: linear-gradient(135deg, #a5d6a7, #81c784); color: #2e7d32; }
+        .events-table .event-type-cell.social-event { background: linear-gradient(135deg, #ffccbc, #ffab91); color: #d84315; }
+        .events-table .event-type-cell.meeting { background: linear-gradient(135deg, #cfd8dc, #b0bec5); color: #37474f; }
+        .events-table .event-type-cell.maintenance { background: linear-gradient(135deg, #d7ccc8, #bcaaa4); color: #5d4037; }
+
+        /* Visitor Info */
+        .visitor-info {
+            background: var(--bg-white);
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .info-card {
+            background: var(--bg-light);
+            padding: 2rem;
+            border-radius: 15px;
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        .info-card h3 {
+            font-size: 1.3rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .info-card h3 i {
+            color: var(--secondary-color);
+        }
+
+        .info-card p {
+            color: var(--text-light);
+            line-height: 1.7;
+            margin-bottom: 0.75rem;
+        }
+
+        .info-card strong {
+            color: var(--primary-color);
+            display: block;
+            margin-top: 1rem;
+        }
+
+        /* FAQ Section */
+        .faq {
+            background: var(--bg-light);
+        }
+
+        .faq-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: white;
+            margin-bottom: 1rem;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .faq-question {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: var(--primary-color);
+            transition: all 0.3s;
+        }
+
+        .faq-question:hover {
+            background: var(--bg-light);
+        }
+
+        .faq-question i {
+            color: var(--secondary-color);
+            transition: transform 0.3s;
+        }
+
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .faq-answer-content {
+            padding: 0 1.5rem 1.5rem;
+            color: var(--text-light);
+            line-height: 1.7;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+        }
+
+/* Location & Contact */
+.location {
+    background: var(--bg-white);
+}
+
+.location-content-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+}
+
+.map-container {
+    grid-column: 1 / -1; /* Full width for the map */
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    height: 450px;
+}
+
+.contact-info-block {
+    grid-column: 1 / -1; 
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+}
+
+.contact-form {
+    /* Removed grid-column: 1 / -1 so form stays in its column */
+    background: var(--bg-light);
+    padding: 2.5rem;
+    border-radius: 15px;
+}
+
+
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+
+        .contact-form h3 {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .form-field {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-field label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+
+        .form-field input,
+        .form-field textarea {
+            width: 100%;
+            padding: 0.9rem;
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .form-field input:focus,
+        .form-field textarea:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+        }
+
+        .form-field textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .contact-methods {
+            display: grid;
+            gap: 1.5rem;
+            margin-top: 0; /* Adjusted from 2rem since it's now in a grid */
+        }
+
+        .contact-method {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 10px;
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--secondary-color);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.3rem;
+        }
+
+        .contact-method-info h4 {
+            font-size: 1rem;
+            color: var(--primary-color);
+            margin-bottom: 0.25rem;
+        }
+
+        .contact-method-info p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .contact-method-info a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .contact-method-info a:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary-color);
+            color: white;
+            padding: 3rem 2rem 1.5rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.8;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a:hover {
+            color: var(--accent-color);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            /* FIX: Ensure icons are perfectly centered */
+            display: flex; 
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .social-link:hover {
+            background: var(--accent-color);
+            color: var(--primary-color);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* WhatsApp Floating Button */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: #25D366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+            cursor: pointer;
+            transition: all 0.3s;
+            z-index: 999;
+            text-decoration: none;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 960px) {
+            .contact-info-block {
+                grid-template-columns: 1fr; /* Stack on smaller screens */
+                gap: 2rem;
+            }
+
+            .nav-container {
+                padding: 1rem 1.5rem;
+            }
+
+            .nav-menu {
+                gap: 1rem;
+            }
+
+            .nav-menu a {
+                font-size: 0.85rem;
+            }
+
+            .nav-cta {
+                padding: 0.5rem 1rem;
+                font-size: 0.85rem;
+            }
+
+            .logo {
+                font-size: 1.2rem;
+            }
+
+            .logo img {
+                height: 40px;
+            }
+        }
+
+        @media (max-width: 850px) {
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                padding: 1rem;
+                box-shadow: var(--shadow-lg);
+                gap: 0.5rem;
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .nav-menu a {
+                font-size: 1rem;
+                padding: 0.75rem;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1.5rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero .subtitle {
+                font-size: 1.1rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .section-header h2 {
+                font-size: 2rem;
+            }
+
+            .calculator-container {
+                padding: 2rem 1.5rem;
+            }
+
+            .location-content-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-info-block {
+                grid-template-columns: 1fr; 
+            }
+
+            .map-container {
+                height: 300px;
+            }
+
+            .whatsapp-float {
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+
+        /* Smooth Scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Loading Animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease;
+        }
+    </style>
+
+    <style>
+        /* Compact Weather Widget Hover FIX */
+        .view-full-weather:hover {
+            background: var(--bg-light);
+            /* transform: translateX(3px); - REMOVED ANIMATION */
+        }
+        
+        /* Full Weather Widget Styles */
+        .weather-container {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 2rem;
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .current-weather {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 15px;
+            color: white;
+            text-align: center;
+        }
+        
+        .current-temp {
+            font-size: 4rem;
+            font-weight: 700;
+            margin: 1rem 0;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .current-desc {
+            font-size: 1.2rem;
+            text-transform: capitalize;
+            margin-bottom: 1rem;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+        
+        .current-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            width: 100%;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .detail-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .detail-item i {
+            color: var(--accent-color);
+        }
+        
+        .weather-forecasts {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .forecast-section {
+            background: var(--bg-light);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+        
+        .forecast-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .hourly-period-label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--secondary-color);
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .hourly-forecast {
+            display: flex;
+            gap: 1rem;
+            overflow-x: auto;
+            padding-bottom: 0.5rem;
+        }
+        
+        .hourly-forecast::-webkit-scrollbar {
+            height: 6px;
+        }
+        
+        .hourly-forecast::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        
+        .hourly-forecast::-webkit-scrollbar-thumb {
+            background: var(--secondary-color);
+            border-radius: 10px;
+        }
+        
+        .hour-item {
+            flex: 0 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 10px;
+            min-width: 80px;
+            box-shadow: var(--shadow);
+            transition: transform 0.2s;
+        }
+        
+        .hour-item:hover {
+            transform: translateY(-3px);
+        }
+        
+        .hour-time {
+            font-weight: 600;
+            color: var(--primary-color);
+            font-size: 0.85rem;
+        }
+        
+        .hour-icon {
+            font-size: 1.8rem;
+        }
+        
+        .hour-temp {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--text-dark);
+        }
+        
+        .daily-forecast {
+            display: grid;
+            gap: 0.75rem;
+        }
+        
+        .day-item {
+            display: grid;
+            grid-template-columns: 100px 50px 1fr 80px;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            transition: all 0.2s;
+        }
+        
+        .day-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        .day-name {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .day-icon {
+            font-size: 1.5rem;
+            text-align: center;
+        }
+        
+        .day-desc {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            text-transform: capitalize;
+        }
+        
+        .day-temp {
+            text-align: right;
+            font-weight: 600;
+        }
+        
+        .temp-high {
+            color: var(--text-dark);
+            font-size: 1.1rem;
+        }
+        
+        .temp-low {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-left: 0.5rem;
+        }
+        
+        @media (max-width: 968px) {
+            .weather-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .day-item {
+                grid-template-columns: 80px 40px 1fr 70px;
+                gap: 0.75rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Weather Animations */
+        @keyframes rainFall {
+            0% {
+                transform: translateY(-100vh) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) translateX(-20px);
+                opacity: 0;
+            }
+        }
+
+        @keyframes snowFall {
+            0% {
+                transform: translateY(-100vh) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) translateX(50px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes cloudMove {
+            0% {
+                transform: translateX(-10%);
+            }
+            100% {
+                transform: translateX(10%);
+            }
+        }
+
+        @keyframes lightning {
+            0%, 10%, 20%, 100% {
+                opacity: 0;
+            }
+            5%, 15% {
+                opacity: 0.8;
+            }
+        }
+
+        @keyframes twinkle {
+            0%, 100% {
+                opacity: 0.3;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+
+        .weather-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .rain-drop {
+            position: absolute;
+            width: 2px;
+            height: 20px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.8), rgba(255,255,255,0.3));
+            animation: rainFall linear infinite;
+            border-radius: 2px;
+        }
+
+        .snow-flake {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: white;
+            border-radius: 50%;
+            animation: snowFall linear infinite;
+            box-shadow: 0 0 5px rgba(255,255,255,0.8);
+        }
+
+        .cloud-shape {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 100px;
+            animation: cloudMove ease-in-out infinite alternate;
+        }
+
+        .lightning-flash {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.3);
+            animation: lightning 4s infinite;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle ease-in-out infinite;
+            box-shadow: 0 0 3px rgba(255,255,255,0.8);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">
+                <img src="logo.png" alt="Boskruin Tennis Club">
+                <span>Boskruin Tennis</span>
+            </a>
+            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#benefits">Why Join</a></li>
+                <li><a href="#membership">Membership</a></li>
+                <li><a href="#coaching">Coaching</a></li>
+                <li><a href="#social">Social Tennis</a></li>
+                <li><a href="#calendar">Calendar</a></li>
+                <li><a href="#weather">Weather</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="#membership" class="nav-cta">Join Now</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Where Everyone Loves Tennis</h1>
+            <p class="subtitle">Established in 1993. Join Johannesburg's premier tennis community with professional coaching, vibrant socials, and a welcoming atmosphere for all skill levels.</p>
+            <div class="hero-buttons">
+                <a href="#membership" class="btn btn-primary">Calculate Membership</a>
+                <a href="https://www.sportyhq.com/" target="_blank" class="btn btn-secondary">Book a Court</a>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="stats">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h3>30+</h3>
+                    <p>Years of Excellence</p>
+                </div>
+                <div class="stat-item">
+                    <h3>9</h3>
+                    <p>Professional Courts</p>
+                </div>
+                <div class="stat-item">
+                    <h3>250+</h3>
+                    <p>Active Members</p>
+                </div>
+                <div class="stat-item">
+                    <h3>4</h3>
+                    <p>Expert Coaches</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <section class="weather-section-compact" style="background: var(--bg-light); padding: 1.5rem 0;">
+        <div class="container">
+            <div id="compactWeatherWidget">
+                <div style="text-align: center; color: var(--text-light);">
+                    <i class="fas fa-spinner fa-spin" style="color: var(--secondary-color);"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <style>
+        .compact-weather-display {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem 2rem;
+            box-shadow: var(--shadow);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .compact-current {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .compact-icon {
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+        }
+        
+        .compact-temp-info {
+            text-align: left;
+        }
+        
+        .compact-temp {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .compact-desc {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            text-transform: capitalize;
+        }
+        
+        .compact-details {
+            display: flex;
+            gap: 1.5rem;
+            padding-left: 2rem;
+            border-left: 2px solid var(--border-color);
+        }
+        
+        .compact-detail {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.25rem;
+        }
+        
+        .compact-detail i {
+            color: var(--secondary-color);
+            font-size: 1.2rem;
+        }
+        
+        .compact-detail-value {
+            font-weight: 600;
+            color: var(--text-dark);
+            font-size: 0.9rem;
+        }
+        
+        .compact-detail-label {
+            color: var(--text-light);
+            font-size: 0.75rem;
+        }
+        
+        .view-full-weather {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--secondary-color);
+            font-weight: 600;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .compact-weather-display {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .compact-details {
+                border-left: none;
+                border-top: 2px solid var(--border-color);
+                padding-left: 0;
+                padding-top: 1rem;
+            }
+        }
+    </style>
+    <section id="benefits" class="benefits">
+        <div class="container">
+            <div class="section-header">
+                <h2>Why Join Boskruin Tennis Club?</h2>
+                <p>Experience the best tennis community in Johannesburg with world-class facilities and a welcoming atmosphere</p>
+            </div>
+            <div class="benefits-grid">
+                <div class="benefit-card fade-in-up">
+                    <div class="benefit-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Vibrant Community</h3>
+                    <p>Join a passionate community of tennis enthusiasts. Regular socials, tournaments, and events bring members together for fun and competition.</p>
+                </div>
+                <div class="benefit-card fade-in-up">
+                    <div class="benefit-icon">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                    </div>
+                    <h3>Expert Coaching</h3>
+                    <p>Learn from experienced coaches with proven track records. Group lessons and private coaching available for all ages and skill levels.</p>
+                </div>
+                <div class="benefit-card fade-in-up">
+                    <div class="benefit-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <h3>Competitive Play</h3>
+                    <p>Represent the club in regional leagues, participate in club championships, and test your skills against players of similar ability.</p>
+                </div>
+                <div class="benefit-card fade-in-up">
+                    <div class="benefit-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <h3>Court Booking</h3>
+                    <p>Members enjoy free court usage with convenient online booking. Play when it suits your schedule with priority access.</p>
+                </div>
+                <div class="benefit-card fade-in-up">
+                    <div class="benefit-icon">
+                        <i class="fas fa-moon"></i>
+                    </div>
+                    <h3>Floodlit Courts</h3>
+                    <p>Play day or night on our professionally maintained courts with excellent lighting for evening matches and practice sessions.</p>
+                </div>
+                <div class="benefit-card fade-in-up">
+                    <div class="benefit-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <h3>Prime Location</h3>
+                    <p>Conveniently located in Boskruin with ample parking and easy access. Close to amenities and the community center.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--section id="instagram" class="instagram-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>See Our Community in Action</h2>
+                <p>Follow us on Instagram for the latest updates, match highlights, and community moments</p>
+            </div>
+            <div class="instagram-feed">
+                <div class="instagram-placeholder">
+                    <i class="fab fa-instagram"></i>
+                </div>
+                <div class="instagram-placeholder">
+                    <i class="fab fa-instagram"></i>
+                </div>
+                <div class="instagram-placeholder">
+                    <i class="fab fa-instagram"></i>
+                </div>
+                <div class="instagram-placeholder">
+                    <i class="fab fa-instagram"></i>
+                </div>
+            </div>
+            <div class="instagram-cta">
+                <a href="https://www.instagram.com/boskruintennisclub/" target="_blank" class="instagram-button">
+                    <i class="fab fa-instagram"></i>
+                    Follow @boskruintennisclub
+                </a>
+            </div>
+        </div>
+    </section-->
+
+    <section id="membership" class="calculator">
+        <div class="container">
+            <div class="section-header">
+                <h2>Calculate Your Membership</h2>
+                <p>Get an instant quote for your membership based on your family size and league participation</p>
+                <p style="color: #e67e22; font-weight: 600; margin-top: 1rem;"><i class="fas fa-info-circle"></i> Applications currently open but limited. Membership may close upon reaching capacity for the year.</p>
+            </div>
+            <div class="calculator-container">
+                <div class="calculator-intro">
+                    <h3>Membership Pricing Calculator</h3>
+                    <p>Customize your membership package to fit your needs</p>
+                </div>
+                <div class="calculator-form">
+                    <div class="package-item">
+                        <div class="package-info">
+                            <div class="package-header">
+                                <i class="fas fa-trophy"></i>
+                                <strong>Adult League</strong>
+                                <span class="package-price">R3,820</span>
+                            </div>
+                            <p class="package-description">For adults (16+) who want to compete in regional leagues. Includes higher TSA&GTA and GCTA fees.</p>
+                        </div>
+                        <div class="counter-controls">
+                            <button class="counter-btn" onclick="updatePackageCount('adultLeague', -1)">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <span class="counter-value" id="adultLeague-count">0</span>
+                            <button class="counter-btn" onclick="updatePackageCount('adultLeague', 1)">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="package-item">
+                        <div class="package-info">
+                            <div class="package-header">
+                                <i class="fas fa-user"></i>
+                                <strong>Adult Social</strong>
+                                <span class="package-price">R3,350</span>
+                            </div>
+                            <p class="package-description">For adults (16+) playing social tennis only. Perfect for recreational players.</p>
+                        </div>
+                        <div class="counter-controls">
+                            <button class="counter-btn" onclick="updatePackageCount('adultSocial', -1)">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <span class="counter-value" id="adultSocial-count">0</span>
+                            <button class="counter-btn" onclick="updatePackageCount('adultSocial', 1)">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="package-item">
+                        <div class="package-info">
+                            <div class="package-header">
+                                <i class="fas fa-heart"></i>
+                                <strong>Couple League</strong>
+                                <span class="package-price">R6,190</span>
+                            </div>
+                            <p class="package-description">Special rate for couples (married/living together) who both play league tennis.</p>
+                        </div>
+                        <div class="counter-controls">
+                            <button class="counter-btn" onclick="updatePackageCount('coupleLeague', -1)">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <span class="counter-value" id="coupleLeague-count">0</span>
+                            <button class="counter-btn" onclick="updatePackageCount('coupleLeague', 1)">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="package-item">
+                        <div class="package-info">
+                            <div class="package-header">
+                                <i class="fas fa-heart"></i>
+                                <strong>Couple Social</strong>
+                                <span class="package-price">R5,250</span>
+                            </div>
+                            <p class="package-description">Special rate for couples (married/living together) playing social tennis.</p>
+                        </div>
+                        <div class="counter-controls">
+                            <button class="counter-btn" onclick="updatePackageCount('coupleSocial', -1)">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <span class="counter-value" id="coupleSocial-count">0</span>
+                            <button class="counter-btn" onclick="updatePackageCount('coupleSocial', 1)">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="package-item">
+                        <div class="package-info">
+                            <div class="package-header">
+                                <i class="fas fa-heart"></i>
+                                <strong>Couple 1x Social 1x League</strong>
+                                <span class="package-price">R5,720</span>
+                            </div>
+                            <p class="package-description">Special rate for couples where one plays social and one plays league.</p>
+                        </div>
+                        <div class="counter-controls">
+                            <button class="counter-btn" onclick="updatePackageCount('coupleMixed', -1)">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <span class="counter-value" id="coupleMixed-count">0</span>
+                            <button class="counter-btn" onclick="updatePackageCount('coupleMixed', 1)">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="package-item">
+                        <div class="package-info">
+                            <div class="package-header">
+                                <i class="fas fa-graduation-cap"></i>
+                                <strong>Student 18+ Social</strong>
+                                <span class="package-price">R1,650</span>
+                            </div>
+                            <p class="package-description">For full-time students (18+) playing social tennis.</p>
+                        </div>
+                        <div class="counter-controls">
+                            <button class="counter-btn" onclick="updatePackageCount('studentSocial', -1)">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <span class="counter-value" id="studentSocial-count">0</span>
+                            <button class="counter-btn" onclick="updatePackageCount('studentSocial', 1)">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="package-item">
+                        <div class="package-info">
+                            <div class="package-header">
+                                <i class="fas fa-trophy"></i>
+                                <strong>Student 18+ League</strong>
+                                <span class="package-price">R2,120</span>
+                            </div>
+                            <p class="package-description">For full-time students (18+) who want to compete in leagues.</p>
+                        </div>
+                        <div class="counter-controls">
+                            <button class="counter-btn" onclick="updatePackageCount('studentLeague', -1)">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <span class="counter-value" id="studentLeague-count">0</span>
+                            <button class="counter-btn" onclick="updatePackageCount('studentLeague', 1)">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="package-item">
+                        <div class="package-info">
+                            <div class="package-header">
+                                <i class="fas fa-child"></i>
+                                <strong>Junior & Scholar (Under 18)</strong>
+                                <span class="package-price">R1,550</span>
+                            </div>
+                            <p class="package-description">For juniors and scholars under 18. Includes GCTA fees.</p>
+                        </div>
+                        <div class="counter-controls">
+                            <button class="counter-btn" onclick="updatePackageCount('junior', -1)">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <span class="counter-value" id="junior-count">0</span>
+                            <button class="counter-btn" onclick="updatePackageCount('junior', 1)">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="package-item">
+                        <div class="package-info">
+                            <div class="package-header">
+                                <i class="fas fa-user-clock"></i>
+                                <strong>Pensioner Social</strong>
+                                <span class="package-price">R1,550</span>
+                            </div>
+                            <p class="package-description">For pensioners (65+) playing social tennis.</p>
+                        </div>
+                        <div class="counter-controls">
+                            <button class="counter-btn" onclick="updatePackageCount('pensionerSocial', -1)">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <span class="counter-value" id="pensionerSocial-count">0</span>
+                            <button class="counter-btn" onclick="updatePackageCount('pensionerSocial', 1)">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="package-item">
+                        <div class="package-info">
+                            <div class="package-header">
+                                <i class="fas fa-trophy"></i>
+                                <strong>Pensioner League</strong>
+                                <span class="package-price">R2,020</span>
+                            </div>
+                            <p class="package-description">For pensioners (65+) who want to compete in leagues.</p>
+                        </div>
+                        <div class="counter-controls">
+                            <button class="counter-btn" onclick="updatePackageCount('pensionerLeague', -1)">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <span class="counter-value" id="pensionerLeague-count">0</span>
+                            <button class="counter-btn" onclick="updatePackageCount('pensionerLeague', 1)">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="price-summary">
+                        <div class="price-breakdown" id="price-breakdown">
+                            </div>
+                        <div class="price-total">
+                            <span>Total Annual Membership</span>
+                            <span id="total-price">R0</span>
+                        </div>
+                        <p class="price-note">
+                            <i class="fas fa-info-circle"></i> All packages include mandatory TSA&amp;GTA and GCTA fees. Court usage is free for members.
+                        </p>
+                    </div>
+
+                    <div style="display: grid; gap: 1rem; margin-top: 2rem;">
+                        <button onclick="openMembershipModal()" class="btn btn-primary" style="text-align: center; width: 100%; border: none; cursor: pointer;">Apply for Membership</button>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Membership Application Modal -->
+    <div id="membershipModal" class="membership-modal">
+        <div class="membership-modal-content">
+            <span class="membership-modal-close" onclick="closeMembershipModal()">&times;</span>
+            <h2><i class="fas fa-paper-plane"></i> Apply for Membership</h2>
+            <p>Complete the form below and we'll contact you shortly regarding your membership application.</p>
+
+            <div class="selected-packages-summary" id="selectedPackagesSummary">
+                <!-- Selected packages will be displayed here -->
+            </div>
+
+            <form id="membershipApplicationForm" onsubmit="sendMembershipEmail(event)">
+                <div class="form-group">
+                    <label for="applicantName">Full Name *</label>
+                    <input type="text" id="applicantName" name="from_name" required placeholder="Enter your full name">
+                </div>
+
+                <div class="form-group">
+                    <label for="applicantEmail">Email Address *</label>
+                    <input type="email" id="applicantEmail" name="from_email" required placeholder="your.email@example.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="applicantPhone">Phone Number (Optional)</label>
+                    <input type="tel" id="applicantPhone" name="phone" placeholder="083 123 4567">
+                </div>
+
+                <div class="form-group">
+                    <label for="applicantMessage">Additional Information (Optional)</label>
+                    <textarea id="applicantMessage" name="message" rows="3" placeholder="Any questions or special requests?"></textarea>
+                </div>
+
+                <!-- Hidden fields for package information -->
+                <input type="hidden" id="selectedPackages" name="selected_packages">
+                <input type="hidden" id="totalAmount" name="total_fee">
+                <input type="hidden" name="subject" value="Membership Enquiry">
+
+                <button type="submit" class="btn btn-primary" style="width: 100%; border: none; cursor: pointer;">
+                    <span class="btn-text"><i class="fas fa-check-circle"></i> Submit Application</span>
+                    <span class="btn-loading" style="display: none;"><i class="fas fa-spinner fa-spin"></i> Submitting...</span>
+                </button>
+            </form>
+            <div id="membershipFormStatus" style="margin-top: 1rem; text-align: center; display: none;"></div>
+        </div>
+    </div>
+
+    <section id="coaching" class="coaching">
+        <div class="container">
+            <div class="section-header">
+                <h2>Professional Tennis Coaching</h2>
+                <p>Learn from experienced coaches who are passionate about developing players at every level</p>
+            </div>
+            <div class="coaches-grid">
+                <div class="coach-card">
+                    <div class="coach-image">
+                        <img src="waynekets.jpg" alt="Wayne Kets" />
+                    </div>
+                    <div class="coach-info">
+                        <h3>Wayne Kets</h3>
+                        <p class="coach-title">Head Coach & Founding Member</p>
+                        <p>Wayne is a qualified professional tennis coach and founding member of Boskruin Tennis Club (est. 1993). He believes in finding potential in each player and teaching the skills needed for a great game.</p>
+                        <div class="coach-pricing">
+                            <h4>Coaching Fees</h4>
+                            <div class="price-list">
+                                <div class="price-list-item">
+                                    <span>Mini Tennis (Age 4+, 30min)</span>
+                                    <span>R550/month</span>
+                                </div>
+                                <div class="price-list-item">
+                                    <span>Beginners (45min)</span>
+                                    <span>R700/month</span>
+                                </div>
+                                <div class="price-list-item">
+                                    <span>Intermediate (90min)</span>
+                                    <span>R800/month</span>
+                                </div>
+                                <div class="price-list-item">
+                                    <span>Squad Level (2 hours)</span>
+                                    <span>R1,000/month</span>
+                                </div>
+                                <div class="price-list-item">
+                                    <span>Individual Coaching</span>
+                                    <span>R400/30min</span>
+                                </div>
+                                <div class="price-list-item">
+                                    <span>Racket Restringing</span>
+                                    <span>R330</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="coach-whatsapp-btn-container" style="padding: 0 2rem 2rem;">
+                        <a href="https://wa.me/27837031434" class="coach-whatsapp-btn" target="_blank">
+                            <i class="fab fa-whatsapp"></i>
+                            WhatsApp Wayne
+                        </a>
+                    </div>
+                </div>
+
+                <div class="coach-card">
+                    <div class="coach-image">
+                        <img src="jaysoncerovich.jpg" alt="Wayne Kets" />
+                    </div>
+                    <div class="coach-info">
+                        <h3>Jayson Cerovich</h3>
+                        <p class="coach-title">Tennis & Fitness Coach</p>
+                        <p>With 15+ years of experience and training with German ex-pro Marc Kevin Goellner, Jayson helps players reach their goals through dedication and commitment while ensuring everyone has fun.</p>
+                        <div class="coach-pricing">
+                            <h4>Coaching Fees</h4>
+                            <div class="price-list">
+                                <div class="price-list-item">
+                                    <span>Squad Level</span>
+                                    <span>R900/month</span>
+                                </div>
+                                <div class="price-list-item">
+                                    <span>Individual Coaching</span>
+                                    <span>R370/30min</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="coach-whatsapp-btn-container" style="padding: 0 2rem 2rem;">
+                        <a href="https://wa.me/27834159042" class="coach-whatsapp-btn" target="_blank">
+                            <i class="fab fa-whatsapp"></i>
+                            WhatsApp Jayson
+                        </a>
+                    </div>
+                </div>
+				
+				
+                <div class="coach-card">
+                    <div class="coach-image">
+                        <img src="jdta.jpg" alt="Jamie Davis Tennis Academy" />
+                    </div>
+                    <div class="coach-info">
+                        <h3>Jamie Davis Tennis Academy</h3>
+                        <p class="coach-title">High-Performance Tennis Academy</p>
+                        <p>Jamie Davis Tennis Academy (JDTA) is a professional high-performance tennis academy based at the Boskruin Tennis Club. Founded in 2023, JDTA offers professional coaching services to all ages and levels, from beginners to high-level players.</p>
+                        <div class="coach-pricing">
+                            <h4>Academy Programs</h4>
+                            <div class="price-list">
+                                <div class="price-list-item">
+                                    <span>All Ages & Skill Levels</span>
+                                    <span>Contact for Details</span>
+                                </div>
+                                <div class="price-list-item">
+                                    <span>High-Performance Training</span>
+                                    <span>Available</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="coach-whatsapp-btn-container" style="padding: 0 2rem 2rem;">
+                        <a href="https://wa.me/27718689388" class="coach-whatsapp-btn" target="_blank">
+                            <i class="fab fa-whatsapp"></i>
+                            WhatsApp Jamie Davis
+                        </a>
+                    </div>
+                </div>
+
+                <div class="coach-card">
+                    <div class="coach-image">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <div class="coach-info">
+                        <h3>Preatchy Dlamini</h3>
+                        <p class="coach-title">Tennis Coach</p>
+                        <p>Preatchy offers personalized coaching to help players develop their skills and reach their full potential on the court.</p>
+                        <div class="coach-pricing">
+                            <h4>Coaching Fees</h4>
+                            <div class="price-list">
+                                <div class="price-list-item">
+                                    <span>Individual Coaching</span>
+                                    <span>R270/30min</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="coach-whatsapp-btn-container" style="padding: 0 2rem 2rem;">
+                        <a href="https://wa.me/27738311751" class="coach-whatsapp-btn" target="_blank">
+                            <i class="fab fa-whatsapp"></i>
+                            WhatsApp Preatchy
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+            <div style="text-align: center; margin-top: 3rem;">
+                <a href="mailto:tennis@waynekets.co.za" class="btn btn-primary">Enquire About Lessons</a>
+                <p style="margin-top: 1rem; color: var(--text-light);">
+                    Or WhatsApp Wayne: <a href="https://wa.me/27837031434" style="color: var(--secondary-color); font-weight: 600;">083 703 1434</a>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    
+	<section id="social" class="social-tennis">
+    <div class="container">
+        <div class="section-header">
+            <h2>Social Tennis</h2>
+            <p>Join our famous social sessions - fun, friendly matches with players of similar ability. No booking needed!</p>
+        </div>
+        <div class="social-grid">
+            <div class="social-card">
+                <div class="social-icon">
+                    <i class="fas fa-moon"></i>
+                </div>
+                <h3>Tuesday Evenings</h3>
+                <div class="social-schedule">
+                    <div class="schedule-item">
+                        <i class="fas fa-clock"></i>
+                        <span>From 6:00 PM</span>
+                    </div>
+                    <div class="schedule-item">
+                        <i class="fas fa-users"></i>
+                        <span>All levels welcome</span>
+                    </div>
+                </div>
+                <p>Our most popular social! Perfect for after-work tennis with automatic pairing based on skill level.</p>
+                <div class="social-pricing">
+                    <div class="pricing-row">
+                        <span>Visitors:</span>
+                        <strong>R100</strong>
+                    </div>
+                    <div class="pricing-row">
+                        <span>Members:</span>
+                        <strong>R50</strong>
+                    </div>
+                    <div class="pricing-row">
+                        <span>Junior Members:</span>
+                        <strong>R40</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="social-card">
+                <div class="social-icon">
+                    <i class="fas fa-sun"></i>
+                </div>
+                <h3>Saturday Afternoons</h3>
+                <div class="social-schedule">
+                    <div class="schedule-item">
+                        <i class="fas fa-clock"></i>
+                        <span>From 2:00 PM</span>
+                    </div>
+                    <div class="schedule-item">
+                        <i class="fas fa-users"></i>
+                        <span>Family-friendly</span>
+                    </div>
+                </div>
+                <p>Enjoy weekend tennis in a relaxed atmosphere. Great for families and casual players.</p>
+                <div class="social-pricing">
+                    <div class="pricing-row">
+                        <span>Visitors:</span>
+                        <strong>R50</strong>
+                    </div>
+                    <div class="pricing-row">
+                        <span>Members & Juniors:</span>
+                        <strong>FREE</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="social-card">
+                <div class="social-icon">
+                    <i class="fas fa-child"></i>
+                </div>
+                <h3>Junior Socials</h3>
+                <div class="social-schedule">
+                    <div class="schedule-item">
+                        <i class="fas fa-calendar"></i>
+                        <span>Saturday</span>
+                    </div>
+                    <div class="schedule-item">
+                        <i class="fas fa-clock"></i>
+                        <span>12:00 PM - 2:00 PM</span>
+                    </div>
+                </div>
+                <p>Fun and competitive tennis for junior players. Develop skills while making friends in a supportive environment.</p>
+                <div class="social-pricing">
+                    <div class="pricing-row">
+                        <span>Junior Members:</span>
+                        <strong>FREE</strong>
+                    </div>
+                    <div class="pricing-row">
+                        <span>Junior Visitors:</span>
+                        <strong>R40</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="social-card">
+                <div class="social-icon">
+                    <i class="fas fa-female"></i>
+                </div>
+                <h3>Ladies' Tennis Group</h3>
+                <div class="social-schedule">
+                    <div class="schedule-item">
+                        <i class="fas fa-calendar"></i>
+                        <span>Tuesday & Thursday</span>
+                    </div>
+                    <div class="schedule-item">
+                        <i class="fas fa-clock"></i>
+                        <span>8:00 AM</span>
+                    </div>
+                </div>
+                <p>Morning tennis sessions exclusively for ladies. All ages and abilities welcome in a supportive environment.</p>
+                <div class="social-pricing">
+                    <div class="pricing-row">
+                        <span>Members:</span>
+                        <strong>FREE</strong>
+                    </div>
+                    <div class="pricing-row">
+                        <span>Visitors:</span>
+                        <strong>Ad-hoc court fee</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+    <!-- Calendar Section -->
+    <section id="calendar" class="calendar-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Upcoming Events</h2>
+                <p>Stay updated with our latest tennis events, tournaments, and activities</p>
+            </div>
+
+            <!-- View Toggle -->
+            <div style="display: flex; justify-content: center; margin-bottom: 2rem;">
+                <div class="view-toggle">
+                    <button class="view-toggle-btn" id="gridViewBtnPublic" onclick="switchPublicView('grid')">
+                        <i class="fas fa-th-large"></i>
+                    </button>
+                    <button class="view-toggle-btn active" id="tableViewBtnPublic" onclick="switchPublicView('table')">
+                        <i class="fas fa-list"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="calendar-grid" id="calendarGrid">
+                <!-- Events will be loaded dynamically -->
+            </div>
+
+            <div class="events-table" id="calendarTable">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Event</th>
+                            <th>Type</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody id="calendarTableBody">
+                        <!-- Table rows will be loaded here dynamically -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="calendar-empty" id="calendarEmpty" style="display: none;">
+                <i class="fas fa-calendar-times"></i>
+                <h3>No Upcoming Events</h3>
+                <p>Check back soon for new events and activities!</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="visitor" class="visitor-info">
+        <div class="container">
+            <div class="section-header">
+                <h2>Visitor Information</h2>
+                <p>Everyone is welcome at Boskruin Tennis Club! Here's what you need to know</p>
+            </div>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3><i class="fas fa-money-bill-wave"></i> Court Usage Fees</h3>
+                    <p><strong>R50 per player, per hour</strong></p>
+                    <p>Floodlights: R50 per court, per hour</p>
+                    <p>Payment at the Clubhouse. Available courts cannot be pre-booked by visitors and will be booked at the club.</p>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-clipboard-check"></i> How to Play</h3>
+                    <p>Simply arrive at the Clubhouse and pay the ad-hoc court fee. Check the member's booking sheet to see court availability.</p>
+                    <p><strong>Tip:</strong> Choose courts that will be available for your full session.</p>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-car"></i> Parking & Safety</h3>
+                    <p>Ample parking available with car guards on duty. Please tip your car guard.</p>
+                    <p><strong>Important:</strong> Lock your car and avoid leaving valuables visible.</p>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-calendar-alt"></i> Book Courts Online</h3>
+                    <p>Members can pre-book courts through the SportyHQ platform. Visitors can check availability and court schedule.</p>
+                    <strong><a href="https://www.sportyhq.com/" target="_blank" style="color: var(--secondary-color);">Visit SportyHQ →</a></strong>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="faq">
+        <div class="container">
+            <div class="section-header">
+                <h2>Frequently Asked Questions</h2>
+                <p>Find quick answers to common questions about membership and club activities</p>
+            </div>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>How do I become a member?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Use our membership calculator above to determine your fees, then contact us using the form below or email the treasurer at jaichkitty@gmail.com. You'll receive an invoice for payment, and once processed, you'll get access to all member benefits including court keys and booking privileges.
+                        </div>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Can visitors play at the club?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Absolutely! Visitors are welcome to use courts after paying the ad-hoc fee (R50/player/hour) at the Clubhouse. You can also join our social tennis sessions. Note that visitors cannot pre-book courts - courts are available on a first-come basis.
+                        </div>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>What are the benefits of membership?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Members enjoy free court usage, priority court booking, keys to courts and light boxes, league participation eligibility, entry to Club Championships, discounted social tennis fees, and access to member-only events. Plus, you become part of a vibrant tennis community!
+                        </div>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Do you offer tennis lessons for beginners?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Yes! Our qualified coaches offer lessons for all ages and skill levels, from mini tennis (age 4+) to advanced squad training. We have group lessons and individual coaching available. Contact Wayne at tennis@waynekets.co.za or WhatsApp 083 703 1434 for more information.
+                        </div>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>How do I book a court?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Members can book courts online through our SportyHQ platform. Simply visit sportyhq.com, log in with your member credentials, and select your preferred time slot. Bookings can be made up to 7 days in advance. Visitors cannot pre-book but can use available courts on a pay-as-you-go basis.
+                        </div>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>When are the tennis socials held?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Tuesday evenings from 6pm, Saturday afternoons from 2pm, and Ladies' Group on Tuesday & Thursday mornings at 8am. No booking needed - just arrive at the Clubhouse, register, and we'll match you with players of similar ability. All levels welcome!
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section id="weather" class="weather-section" style="background: linear-gradient(135deg, var(--bg-light) 0%, #ffffff 100%); padding: 3rem 0;">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <h3 style="color: var(--primary-color); margin-bottom: 0.5rem; font-size: 1.5rem;">
+                    <i class="fas fa-cloud-sun"></i> Weather in Boskruin
+                </h3>
+                <p style="color: var(--text-light); font-size: 0.95rem;">Plan your perfect tennis day</p>
+            </div>
+            
+            <div id="fullWeatherWidget">
+                <div style="text-align: center; padding: 2rem; color: var(--text-light);">
+                    <i class="fas fa-spinner fa-spin" style="font-size: 2rem; color: var(--secondary-color);"></i>
+                    <p style="margin-top: 1rem;">Loading weather data...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="contact" class="location">
+        <div class="container">
+            <div class="section-header">
+                <h2>Visit Us</h2>
+                <p>Located in the heart of Boskruin, Johannesburg</p>
+            </div>
+            
+            <div class="location-content-container">
+                <div class="map-container">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3585.3338384988935!2d27.9426952!3d-26.0879075!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1e95759e4f9b521b%3A0xffd4263772a8935d!2sBoskruin%20Tennis%20Club!5e0!3m2!1sen!2sza!4v1731176400000!5m2!1sen!2sza"
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+
+                <div class="contact-info-block">
+                    <div class="contact-methods">
+                        <div class="contact-method">
+                            <div class="contact-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="contact-method-info">
+                                <h4>Location</h4>
+                                <p>Kelly Road, Boskruin<br>Next to Community Centre & Library<br>Johannesburg, South Africa</p>
+                            </div>
+                        </div>
+                        <div class="contact-method">
+                            <div class="contact-icon">
+                                <i class="fab fa-whatsapp"></i>
+                            </div>
+                            <div class="contact-method-info">
+                                <h4>WhatsApp</h4>
+                                <p><a href="https://wa.me/27837031434">083 703 1434</a><br>Wayne Kets (Head Coach)</p>
+                            </div>
+                        </div>
+                        <div class="contact-method">
+                            <div class="contact-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="contact-method-info">
+                                <h4>Email</h4>
+                                <p><a href="mailto:tennis@waynekets.co.za">tennis@waynekets.co.za</a><br>General Enquiries & Lessons</p>
+                            </div>
+                        </div>
+                        <div class="contact-method">
+                            <div class="contact-icon">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="contact-method-info">
+                                <h4>Membership</h4>
+                                <p><a href="mailto:jaichkitty@gmail.com">jaichkitty@gmail.com</a><br>Kitty (Treasurer)</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-form">
+                        <h3>Send Us a Message</h3>
+                        <form id="contactForm" onsubmit="sendContactEmail(event)">
+                            <div class="form-field">
+                                <label for="contact_name">Full Name</label>
+                                <input type="text" id="contact_name" name="from_name" required>
+                            </div>
+                            <div class="form-field">
+                                <label for="contact_email">Email Address</label>
+                                <input type="email" id="contact_email" name="from_email" required>
+                            </div>
+                            <div class="form-field">
+                                <label for="contact_subject">Subject</label>
+                                <input type="text" id="contact_subject" name="subject" required>
+                            </div>
+                            <div class="form-field">
+                                <label for="contact_message">Message</label>
+                                <textarea id="contact_message" name="message" required></textarea>
+                            </div>
+                            <button type="submit" class="submit-btn">
+                                <span class="btn-text">Send Message</span>
+                                <span class="btn-loading" style="display: none;"><i class="fas fa-spinner fa-spin"></i> Sending...</span>
+                            </button>
+                        </form>
+                        <div id="contactFormStatus" style="margin-top: 1rem; text-align: center; display: none;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Boskruin Tennis Club</h3>
+                <p>Established in 1993, Boskruin Tennis Club is one of Johannesburg's premier tennis communities, offering world-class facilities and a welcoming atmosphere for players of all levels.</p>
+                <div class="social-links">
+                    <a href="https://www.instagram.com/boskruintennisclub/" target="_blank" class="social-link">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://www.facebook.com/boskruintennisclub/" target="_blank" class="social-link">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="https://wa.me/27837031434" target="_blank" class="social-link">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <a href="#benefits">Why Join</a>
+                <a href="#membership">Membership</a>
+                <a href="#coaching">Coaching</a>
+                <a href="#social">Social Tennis</a>
+                <a href="https://www.sportyhq.com/book" target="_blank">Book a Court</a>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p>Kelly Road, Boskruin<br>Johannesburg, South Africa</p>
+                <p><strong>Email:</strong><br>tennis@waynekets.co.za</p>
+                <p><strong>WhatsApp:</strong><br>083 703 1434</p>
+            </div>
+            <div class="footer-section">
+                <h3>Hours</h3>
+                <p><strong>Courts:</strong><br>6:00 AM - 10:00 PM Daily</p>
+                <p><strong>Social Tennis:</strong><br>Tue 6pm, Sat 2pm</p>
+                <p><strong>Ladies' Group:</strong><br>Tue & Thu 8am</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 Boskruin Tennis Club. All rights reserved. | <a href="#" style="color: var(--accent-color);">Privacy Policy</a></p>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/27837031434" target="_blank" class="whatsapp-float" title="Chat on WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script>
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const navMenu = document.getElementById('navMenu');
+            navMenu.classList.toggle('active');
+        }
+
+        // Navbar Scroll Effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // ----------------------------------------------------
+        // ✅ EMAILJS CONFIGURATION
+        // ----------------------------------------------------
+
+        // Initialize EmailJS with your Public Key
+        (function() {
+            emailjs.init('ORzlasdcn0K_wWlmR');
+        })();
+
+        // Contact Form Submission
+        function sendContactEmail(event) {
+            event.preventDefault();
+
+            const form = event.target;
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const btnText = submitBtn.querySelector('.btn-text');
+            const btnLoading = submitBtn.querySelector('.btn-loading');
+            const statusDiv = document.getElementById('contactFormStatus');
+
+            // Show loading state
+            btnText.style.display = 'none';
+            btnLoading.style.display = 'inline';
+            submitBtn.disabled = true;
+            statusDiv.style.display = 'none';
+
+            // Send email using EmailJS
+            emailjs.sendForm('emailjs-boskruintennis', 'template_vd82znh', form)
+                .then(function() {
+                    // Success
+                    statusDiv.innerHTML = '<p style="color: var(--success-color); font-weight: 600;"><i class="fas fa-check-circle"></i> Message sent successfully! We\'ll be in touch soon.</p>';
+                    statusDiv.style.display = 'block';
+                    form.reset();
+                }, function(error) {
+                    // Error
+                    statusDiv.innerHTML = '<p style="color: #dc3545; font-weight: 600;"><i class="fas fa-exclamation-circle"></i> Failed to send message. Please try again or contact us directly.</p>';
+                    statusDiv.style.display = 'block';
+                    console.error('EmailJS Error:', error);
+                })
+                .finally(function() {
+                    // Reset button state
+                    btnText.style.display = 'inline';
+                    btnLoading.style.display = 'none';
+                    submitBtn.disabled = false;
+                });
+        }
+
+        // Membership Application Form Submission
+        function sendMembershipEmail(event) {
+            event.preventDefault();
+
+            // Build selected packages list
+            let packagesList = '';
+            Object.keys(packageCounts).forEach(key => {
+                const count = packageCounts[key];
+                if (count > 0) {
+                    const pkg = packages[key];
+                    packagesList += `${pkg.name} × ${count} (R${(count * pkg.price).toLocaleString('en-US')})\n`;
+                }
+            });
+
+            // Calculate total
+            let total = 0;
+            Object.keys(packageCounts).forEach(key => {
+                total += packageCounts[key] * packages[key].price;
+            });
+
+            // Get user's additional message
+            const userMessage = document.getElementById('applicantMessage').value;
+
+            // Combine package info with user's message
+            const fullMessage = `SELECTED MEMBERSHIP PACKAGES:\n\n${packagesList}\nTOTAL ANNUAL FEE: R${total.toLocaleString('en-US')}\n\n` +
+                (userMessage ? `ADDITIONAL INFORMATION:\n${userMessage}` : 'No additional information provided.');
+
+            // Populate hidden fields
+            document.getElementById('selectedPackages').value = packagesList;
+            document.getElementById('totalAmount').value = 'R' + total.toLocaleString('en-US');
+
+            // Update message field with complete information
+            document.getElementById('applicantMessage').value = fullMessage;
+
+            const form = event.target;
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const btnText = submitBtn.querySelector('.btn-text');
+            const btnLoading = submitBtn.querySelector('.btn-loading');
+            const statusDiv = document.getElementById('membershipFormStatus');
+
+            // Show loading state
+            btnText.style.display = 'none';
+            btnLoading.style.display = 'inline';
+            submitBtn.disabled = true;
+            statusDiv.style.display = 'none';
+
+            // Send email using EmailJS
+            emailjs.sendForm('emailjs-boskruintennis', 'template_vd82znh', form)
+                .then(function() {
+                    // Success
+                    statusDiv.innerHTML = '<p style="color: var(--success-color); font-weight: 600;"><i class="fas fa-check-circle"></i> Application submitted successfully! We\'ll contact you shortly.</p>';
+                    statusDiv.style.display = 'block';
+
+                    // Reset form and close modal after delay
+                    setTimeout(function() {
+                        closeMembershipModal();
+                        form.reset();
+                        statusDiv.style.display = 'none';
+                    }, 3000);
+                }, function(error) {
+                    // Error
+                    statusDiv.innerHTML = '<p style="color: #dc3545; font-weight: 600;"><i class="fas fa-exclamation-circle"></i> Failed to submit application. Please try again.</p>';
+                    statusDiv.style.display = 'block';
+                    console.error('EmailJS Error:', error);
+                })
+                .finally(function() {
+                    // Reset button state
+                    btnText.style.display = 'inline';
+                    btnLoading.style.display = 'none';
+                    submitBtn.disabled = false;
+                });
+        }
+
+        // ----------------------------------------------------
+        // ✅ CORRECTED MEMBERSHIP CALCULATOR LOGIC
+        // ----------------------------------------------------
+        
+        // 1. Define the packages with their prices (extracted from your HTML)
+        const packagePricing = {
+            adultLeague: 3820,
+            adultSocial: 3350,
+            coupleLeague: 6190,
+            coupleSocial: 5250,
+            coupleMixed: 5720,
+            studentSocial: 1650,
+            studentLeague: 2120,
+            junior: 1550,
+            pensionerSocial: 1550,
+            pensionerLeague: 2020
+        };
+
+        // 2. Initialize a counts object for each package
+        const packageCounts = {
+            adultLeague: 0,
+            adultSocial: 0,
+            coupleLeague: 0,
+            coupleSocial: 0,
+            coupleMixed: 0,
+            studentSocial: 0,
+            studentLeague: 0,
+            junior: 0,
+            pensionerSocial: 0,
+            pensionerLeague: 0
+        };
+
+        // Package definitions with names and prices for modal display
+        const packages = {
+            adultLeague: { name: 'Adult League', price: 3820 },
+            adultSocial: { name: 'Adult Social', price: 3350 },
+            coupleLeague: { name: 'Couple League', price: 6190 },
+            coupleSocial: { name: 'Couple Social', price: 5250 },
+            coupleMixed: { name: 'Couple 1x Social 1x League', price: 5720 },
+            studentSocial: { name: 'Student 18+ Social', price: 1650 },
+            studentLeague: { name: 'Student 18+ League', price: 2120 },
+            junior: { name: 'Junior & Scholar (Under 18)', price: 1550 },
+            pensionerSocial: { name: 'Pensioner Social', price: 1550 },
+            pensionerLeague: { name: 'Pensioner League', price: 2020 }
+        };
+
+        // 3. New update function called by the buttons (updatePackageCount)
+        function updatePackageCount(type, delta) {
+            if (packageCounts.hasOwnProperty(type)) {
+                // Ensure count doesn't go below zero
+                packageCounts[type] = Math.max(0, packageCounts[type] + delta);
+                
+                // Update the visual counter value
+                const countElement = document.getElementById(`${type}-count`);
+                if (countElement) {
+                    countElement.textContent = packageCounts[type];
+                }
+                
+                // Recalculate the total
+                calculateTotal();
+            }
+        }
+
+        // 4. Updated total calculation logic
+        function calculateTotal() {
+    let grandTotal = 0;
+    let breakdown = [];
+
+    // Loop through all defined packages
+    for (const type in packageCounts) {
+        const count = packageCounts[type];
+        
+        if (count > 0) {
+            const price = packagePricing[type];
+            const subtotal = price * count;
+            grandTotal += subtotal;
+            
+            // Get the display name from the HTML using the count element's parent
+            const labelElement = document.querySelector(`#${type}-count`).closest('.package-item').querySelector('strong');
+            let labelText = labelElement ? labelElement.textContent.trim() : type;
+            
+            const formattedLabel = count > 1 ? `${count} x ${labelText}` : `${labelText}`;
+            
+            breakdown.push({ 
+                label: formattedLabel, 
+                amount: subtotal 
+            });
+        }
+    }
+
+    // Build breakdown HTML
+    let breakdownHTML = breakdown.map((item, index) => {
+        // Remove border from last item if there are multiple items
+        const isLast = index === breakdown.length - 1 && breakdown.length > 0;
+        const noBorder = isLast ? 'border-bottom: none;' : '';
+        
+        return `<div class="price-item" style="${noBorder}">
+            <span>${item.label}</span>
+            <span>R${item.amount.toLocaleString('en-US')}</span>
+        </div>`;
+    }).join('');
+
+    // If there are selected items, add a subtotal/summary line to the breakdown
+    if (breakdown.length > 0) {
+        breakdownHTML += `
+            <div class="price-item" style="margin-top: 1rem; padding-top: 1rem; border-top: 2px solid rgba(255, 255, 255, 0.2); border-bottom: none;">
+                <span>Subtotal of Selected Packages</span>
+                <span>R${grandTotal.toLocaleString('en-US')}</span>
+            </div>
+        `;
+    } else {
+        // Show a default line if nothing is selected
+         breakdownHTML = `<div class="price-item"><span>Select a package above</span><span>R0</span></div>`;
+    }
+
+    // Update the HTML display elements
+    document.getElementById('price-breakdown').innerHTML = breakdownHTML;
+    document.getElementById('total-price').textContent = `R${grandTotal.toLocaleString('en-US')}`;
+}
+
+
+        // ----------------------------------------------------
+        // END CORRECTED CALCULATOR LOGIC
+        // ----------------------------------------------------
+
+        // Membership Application Modal Functions
+        function openMembershipModal() {
+            const modal = document.getElementById('membershipModal');
+            const summary = document.getElementById('selectedPackagesSummary');
+
+            // Check if any packages are selected
+            const hasSelections = Object.values(packageCounts).some(count => count > 0);
+
+            if (!hasSelections) {
+                alert('Please select at least one membership package before applying.');
+                return;
+            }
+
+            // Build the summary of selected packages
+            let summaryHTML = '<h3><i class="fas fa-shopping-cart"></i> Your Selected Packages</h3>';
+
+            Object.keys(packageCounts).forEach(key => {
+                const count = packageCounts[key];
+                if (count > 0) {
+                    const pkg = packages[key];
+                    const itemTotal = count * pkg.price;
+                    summaryHTML += `
+                        <div class="package-line">
+                            <span>${pkg.name} × ${count}</span>
+                            <strong>R${itemTotal.toLocaleString('en-US')}</strong>
+                        </div>
+                    `;
+                }
+            });
+
+            // Calculate and add total
+            let total = 0;
+            Object.keys(packageCounts).forEach(key => {
+                total += packageCounts[key] * packages[key].price;
+            });
+
+            summaryHTML += `
+                <div class="package-line">
+                    <span><strong>Total Annual Fee</strong></span>
+                    <strong style="color: var(--secondary-color); font-size: 1.2rem;">R${total.toLocaleString('en-US')}</strong>
+                </div>
+            `;
+
+            summary.innerHTML = summaryHTML;
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMembershipModal() {
+            const modal = document.getElementById('membershipModal');
+            modal.classList.remove('show');
+            document.body.style.overflow = 'auto';
+        }
+
+        // FAQ Toggle
+        function toggleFAQ(element) {
+            const faqItem = element.parentElement;
+            const allItems = document.querySelectorAll('.faq-item');
+            
+            // Close all other items
+            allItems.forEach(item => {
+                if (item !== faqItem) {
+                    item.classList.remove('active');
+                }
+            });
+            
+            // Toggle current item
+            faqItem.classList.toggle('active');
+        }
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    // Close mobile menu if open
+                    document.getElementById('navMenu').classList.remove('active');
+                }
+            });
+        });
+
+        // Initialize calculator on page load
+        calculateTotal();
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in-up');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.benefit-card, .coach-card, .social-card').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+
+    <script>
+        // Weather API integration for both compact and full widgets
+        async function loadWeather() {
+            const compactWidget = document.getElementById('compactWeatherWidget');
+            const fullWidget = document.getElementById('fullWeatherWidget');
+            
+            try {
+                // Using Open-Meteo API (free, no API key needed)
+                const lat = -26.10;
+                const lon = 28.01;
+                
+                const response = await fetch(
+                    `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m&hourly=temperature_2m,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=Africa/Johannesburg`
+                );
+                
+                const data = await response.json();
+                
+                displayCompactWeather(data);
+                displayFullWeather(data);
+            } catch (error) {
+                console.error('Weather fetch error:', error);
+                if (compactWidget) {
+                    compactWidget.innerHTML = `
+                        <div style="text-align: center; padding: 1rem; color: var(--text-light);">
+                            <p style="font-size: 0.9rem;">Weather data temporarily unavailable</p>
+                        </div>
+                    `;
+                }
+                if (fullWidget) {
+                    fullWidget.innerHTML = `
+                        <div style="text-align: center; padding: 2rem; color: var(--text-light);">
+                            <i class="fas fa-exclamation-triangle" style="font-size: 2rem; color: var(--accent-color);"></i>
+                            <p style="margin-top: 1rem;">Weather data temporarily unavailable</p>
+                        </div>
+                    `;
+                }
+            }
+        }
+        
+        function getWeatherIcon(code, isDay = true) {
+            const icons = {
+                0: 'fas fa-sun',
+                1: 'fas fa-sun',
+                2: 'fas fa-cloud-sun',
+                3: 'fas fa-cloud',
+                45: 'fas fa-smog',
+                48: 'fas fa-smog',
+                51: 'fas fa-cloud-rain',
+                53: 'fas fa-cloud-rain',
+                55: 'fas fa-cloud-showers-heavy',
+                61: 'fas fa-cloud-rain',
+                63: 'fas fa-cloud-rain',
+                65: 'fas fa-cloud-showers-heavy',
+                71: 'fas fa-snowflake',
+                73: 'fas fa-snowflake',
+                75: 'fas fa-snowflake',
+                80: 'fas fa-cloud-rain',
+                81: 'fas fa-cloud-showers-heavy',
+                82: 'fas fa-cloud-showers-heavy',
+                95: 'fas fa-bolt',
+                96: 'fas fa-bolt',
+                99: 'fas fa-bolt'
+            };
+            return icons[code] || 'fas fa-cloud';
+        }
+        
+        function getWeatherDescription(code) {
+            const descriptions = {
+                0: 'Clear sky',
+                1: 'Mainly clear',
+                2: 'Partly cloudy',
+                3: 'Overcast',
+                45: 'Foggy',
+                48: 'Foggy',
+                51: 'Light drizzle',
+                53: 'Drizzle',
+                55: 'Heavy drizzle',
+                61: 'Light rain',
+                63: 'Rain',
+                65: 'Heavy rain',
+                71: 'Light snow',
+                73: 'Snow',
+                75: 'Heavy snow',
+                80: 'Light showers',
+                81: 'Showers',
+                82: 'Heavy showers',
+                95: 'Thunderstorm',
+                96: 'Thunderstorm',
+                99: 'Heavy thunderstorm'
+            };
+            return descriptions[code] || 'Unknown';
+        }
+
+        function getWeatherBackground(code, isDay = true) {
+            const dayBackgrounds = {
+                // Clear/Sunny (0-1)
+                0: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 50%, #a8e6f3 100%)',
+                1: 'linear-gradient(135deg, #5ca9fb 0%, #6ac5fe 50%, #b8e8fc 100%)',
+
+                // Partly cloudy (2)
+                2: 'linear-gradient(135deg, #89b5e1 0%, #a8c5dd 50%, #c5dae8 100%)',
+
+                // Overcast (3)
+                3: 'linear-gradient(135deg, #8e9eab 0%, #b6c2cf 50%, #d4dce4 100%)',
+
+                // Foggy (45-48)
+                45: 'linear-gradient(135deg, #bdc3c7 0%, #dfe4e8 50%, #ecf0f1 100%)',
+                48: 'linear-gradient(135deg, #bdc3c7 0%, #dfe4e8 50%, #ecf0f1 100%)',
+
+                // Drizzle (51-55)
+                51: 'linear-gradient(135deg, #667eea 0%, #89a4e8 50%, #afc3f0 100%)',
+                53: 'linear-gradient(135deg, #5f72bd 0%, #7b8fc7 50%, #99aad4 100%)',
+                55: 'linear-gradient(135deg, #4b5c94 0%, #6c7db3 50%, #8a9cc8 100%)',
+
+                // Rain (61-65)
+                61: 'linear-gradient(135deg, #4a6fa5 0%, #6688bb 50%, #89a4d1 100%)',
+                63: 'linear-gradient(135deg, #3d5a80 0%, #5c7a9d 50%, #7e9bbd 100%)',
+                65: 'linear-gradient(135deg, #2e4057 0%, #4a5f7b 50%, #6b819e 100%)',
+
+                // Snow (71-75)
+                71: 'linear-gradient(135deg, #e0eafc 0%, #f0f5fa 50%, #ffffff 100%)',
+                73: 'linear-gradient(135deg, #d4e2f1 0%, #e8f0f7 50%, #f7fbff 100%)',
+                75: 'linear-gradient(135deg, #c7d9ed 0%, #dce8f4 50%, #f0f6fc 100%)',
+
+                // Showers (80-82)
+                80: 'linear-gradient(135deg, #4e73a8 0%, #6a8fbe 50%, #8aaed4 100%)',
+                81: 'linear-gradient(135deg, #3b5d8c 0%, #5678a8 50%, #7395c2 100%)',
+                82: 'linear-gradient(135deg, #2a4a73 0%, #43628f 50%, #5f7fab 100%)',
+
+                // Thunderstorm (95-99)
+                95: 'linear-gradient(135deg, #373b44 0%, #4a5160 50%, #6d7583 100%)',
+                96: 'linear-gradient(135deg, #2d3142 0%, #434858 50%, #5d6270 100%)',
+                99: 'linear-gradient(135deg, #1f2533 0%, #363b4d 50%, #4d5567 100%)'
+            };
+
+            const nightBackgrounds = {
+                // Clear night (0-1) - starry sky
+                0: 'linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%)',
+                1: 'linear-gradient(135deg, #1a2a6c 0%, #2e4482 50%, #4a628f 100%)',
+
+                // Partly cloudy night (2)
+                2: 'linear-gradient(135deg, #2c3e50 0%, #3d5161 50%, #506374 100%)',
+
+                // Overcast night (3)
+                3: 'linear-gradient(135deg, #232526 0%, #414345 50%, #5a5c5e 100%)',
+
+                // Foggy night (45-48)
+                45: 'linear-gradient(135deg, #4b4f56 0%, #5d6169 50%, #73767d 100%)',
+                48: 'linear-gradient(135deg, #4b4f56 0%, #5d6169 50%, #73767d 100%)',
+
+                // Drizzle night (51-55)
+                51: 'linear-gradient(135deg, #2c3e50 0%, #3f5468 50%, #556d82 100%)',
+                53: 'linear-gradient(135deg, #1e3c50 0%, #2f5167 50%, #43697f 100%)',
+                55: 'linear-gradient(135deg, #0d2738 0%, #1e4156 50%, #315b70 100%)',
+
+                // Rain night (61-65)
+                61: 'linear-gradient(135deg, #1a3a52 0%, #2d5268 50%, #436a7f 100%)',
+                63: 'linear-gradient(135deg, #0f2537 0%, #1f3d53 50%, #32566d 100%)',
+                65: 'linear-gradient(135deg, #0a1929 0%, #1a2f42 50%, #2b465a 100%)',
+
+                // Snow night (71-75)
+                71: 'linear-gradient(135deg, #4d5f7f 0%, #6a7c98 50%, #8899b0 100%)',
+                73: 'linear-gradient(135deg, #3d5066 0%, #566982 50%, #70849c 100%)',
+                75: 'linear-gradient(135deg, #2d4157 0%, #465b73 50%, #61778f 100%)',
+
+                // Showers night (80-82)
+                80: 'linear-gradient(135deg, #1e3651 0%, #314d6a 50%, #476585 100%)',
+                81: 'linear-gradient(135deg, #142c42 0%, #26445d 50%, #3b5d78 100%)',
+                82: 'linear-gradient(135deg, #0c1f35 0%, #1b374d 50%, #2d5065 100%)',
+
+                // Thunderstorm night (95-99)
+                95: 'linear-gradient(135deg, #1a1d29 0%, #2b2e3b 50%, #3d4050 100%)',
+                96: 'linear-gradient(135deg, #0d0f1a 0%, #1e202b 50%, #30323d 100%)',
+                99: 'linear-gradient(135deg, #000000 0%, #1a1c25 50%, #2d2f38 100%)'
+            };
+
+            const backgrounds = isDay ? dayBackgrounds : nightBackgrounds;
+            return backgrounds[code] || (isDay ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' : 'linear-gradient(135deg, #2c3e50 0%, #3f4c6b 100%)');
+        }
+
+        function getWeatherAnimation(code) {
+            // Rain animation (drizzle and rain)
+            if ([51, 53, 55, 61, 63, 65, 80, 81, 82].includes(code)) {
+                const dropCount = code >= 63 ? 50 : code >= 61 ? 30 : 20;
+                let drops = '';
+                for (let i = 0; i < dropCount; i++) {
+                    const left = Math.random() * 100;
+                    const duration = 0.5 + Math.random() * 0.5;
+                    const delay = Math.random() * 2;
+                    drops += `<div class="rain-drop" style="left: ${left}%; animation-duration: ${duration}s; animation-delay: ${delay}s;"></div>`;
+                }
+                return `<div class="weather-animation">${drops}</div>`;
+            }
+
+            // Snow animation
+            if ([71, 73, 75].includes(code)) {
+                const flakeCount = code >= 73 ? 40 : 25;
+                let flakes = '';
+                for (let i = 0; i < flakeCount; i++) {
+                    const left = Math.random() * 100;
+                    const duration = 3 + Math.random() * 4;
+                    const delay = Math.random() * 5;
+                    const size = 4 + Math.random() * 6;
+                    flakes += `<div class="snow-flake" style="left: ${left}%; animation-duration: ${duration}s; animation-delay: ${delay}s; width: ${size}px; height: ${size}px;"></div>`;
+                }
+                return `<div class="weather-animation">${flakes}</div>`;
+            }
+
+            // Thunderstorm (lightning + rain)
+            if ([95, 96, 99].includes(code)) {
+                const dropCount = 60;
+                let drops = '';
+                for (let i = 0; i < dropCount; i++) {
+                    const left = Math.random() * 100;
+                    const duration = 0.4 + Math.random() * 0.4;
+                    const delay = Math.random() * 2;
+                    drops += `<div class="rain-drop" style="left: ${left}%; animation-duration: ${duration}s; animation-delay: ${delay}s;"></div>`;
+                }
+                return `<div class="weather-animation">${drops}<div class="lightning-flash"></div></div>`;
+            }
+
+            // Cloudy (floating clouds)
+            if ([2, 3].includes(code)) {
+                let clouds = '';
+                for (let i = 0; i < 3; i++) {
+                    const top = 10 + Math.random() * 70;
+                    const width = 60 + Math.random() * 100;
+                    const height = 30 + Math.random() * 40;
+                    const duration = 8 + Math.random() * 8;
+                    clouds += `<div class="cloud-shape" style="top: ${top}%; width: ${width}px; height: ${height}px; animation-duration: ${duration}s;"></div>`;
+                }
+                return `<div class="weather-animation">${clouds}</div>`;
+            }
+
+            // Clear night (stars)
+            if ([0, 1].includes(code)) {
+                const hour = new Date().getHours();
+                const isNight = hour < 6 || hour > 18;
+                if (isNight) {
+                    let stars = '';
+                    for (let i = 0; i < 50; i++) {
+                        const left = Math.random() * 100;
+                        const top = Math.random() * 100;
+                        const duration = 1 + Math.random() * 3;
+                        const delay = Math.random() * 3;
+                        stars += `<div class="star" style="left: ${left}%; top: ${top}%; animation-duration: ${duration}s; animation-delay: ${delay}s;"></div>`;
+                    }
+                    return `<div class="weather-animation">${stars}</div>`;
+                }
+            }
+
+            return '';
+        }
+        
+        function displayCompactWeather(data) {
+            const current = data.current;
+            const daily = data.daily;
+
+            const now = new Date();
+            const currentHour = now.getHours();
+            const isDay = currentHour >= 6 && currentHour < 18;
+
+            const html = `
+                <div class="compact-weather-display" style="background: ${getWeatherBackground(current.weather_code, isDay)}; position: relative; overflow: hidden;">
+                    ${getWeatherAnimation(current.weather_code)}
+                    <div style="position: relative; z-index: 2; display: flex; align-items: center; justify-content: center; gap: 2rem; width: 100%;">
+                        <div class="compact-current">
+                            <i class="${getWeatherIcon(current.weather_code)} compact-icon" style="color: white; text-shadow: 0 2px 8px rgba(0,0,0,0.3);"></i>
+                            <div class="compact-temp-info">
+                                <div class="compact-temp" style="color: white; text-shadow: 0 2px 8px rgba(0,0,0,0.3);">${Math.round(current.temperature_2m)}°C</div>
+                                <div class="compact-desc" style="color: white; text-shadow: 0 1px 5px rgba(0,0,0,0.3);">${getWeatherDescription(current.weather_code)}</div>
+                            </div>
+                        </div>
+                        <div class="compact-details" style="border-left-color: rgba(255,255,255,0.3);">
+                            <div class="compact-detail">
+                                <i class="fas fa-temperature-high" style="color: white;"></i>
+                                <span class="compact-detail-value" style="color: white;">${Math.round(daily.temperature_2m_max[0])}°</span>
+                                <span class="compact-detail-label" style="color: rgba(255,255,255,0.8);">High</span>
+                            </div>
+                            <div class="compact-detail">
+                                <i class="fas fa-temperature-low" style="color: white;"></i>
+                                <span class="compact-detail-value" style="color: white;">${Math.round(daily.temperature_2m_min[0])}°</span>
+                                <span class="compact-detail-label" style="color: rgba(255,255,255,0.8);">Low</span>
+                            </div>
+                            <div class="compact-detail">
+                                <i class="fas fa-tint" style="color: white;"></i>
+                                <span class="compact-detail-value" style="color: white;">${current.relative_humidity_2m}%</span>
+                                <span class="compact-detail-label" style="color: rgba(255,255,255,0.8);">Humidity</span>
+                            </div>
+                            <div class="compact-detail">
+                                <i class="fas fa-wind" style="color: white;"></i>
+                                <span class="compact-detail-value" style="color: white;">${Math.round(current.wind_speed_10m)} km/h</span>
+                                <span class="compact-detail-label" style="color: rgba(255,255,255,0.8);">Wind</span>
+                            </div>
+                        </div>
+                        <a href="#weather" class="view-full-weather" style="color: white; background: rgba(255,255,255,0.2); backdrop-filter: blur(10px);">
+                            View Full Forecast
+                            <i class="fas fa-arrow-down"></i>
+                        </a>
+                    </div>
+                    <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.1); z-index: 1;"></div>
+                </div>
+            `;
+
+            document.getElementById('compactWeatherWidget').innerHTML = html;
+        }
+        
+        function displayFullWeather(data) {
+            const current = data.current;
+            const hourly = data.hourly;
+            const daily = data.daily;
+            
+            const now = new Date();
+            const currentHour = now.getHours();
+            const isDay = currentHour >= 6 && currentHour < 18;
+
+            // Get hours every 2 hours for the next 24 hours
+            const hourlyData = [];
+            for (let i = 0; i < 24; i += 2) {
+                if (hourly.time[i]) {
+                    const hourTime = new Date(hourly.time[i]);
+                    hourlyData.push({
+                        time: hourTime,
+                        temp: Math.round(hourly.temperature_2m[i]),
+                        code: hourly.weather_code[i],
+                        hour: hourTime.getHours()
+                    });
+                }
+            }
+
+            // Split into AM and PM
+            const amHours = hourlyData.filter(h => h.hour < 12);
+            const pmHours = hourlyData.filter(h => h.hour >= 12);
+
+            // Get daily forecast
+            const dailyData = [];
+            for (let i = 0; i < 7; i++) {
+                dailyData.push({
+                    date: new Date(daily.time[i]),
+                    tempMax: Math.round(daily.temperature_2m_max[i]),
+                    tempMin: Math.round(daily.temperature_2m_min[i]),
+                    code: daily.weather_code[i]
+                });
+            }
+
+            const html = `
+                <div class="weather-container">
+                    <div class="current-weather" style="background: ${getWeatherBackground(current.weather_code, isDay)}; position: relative; overflow: hidden;">
+                        ${getWeatherAnimation(current.weather_code)}
+                        <div style="position: relative; z-index: 2;">
+                            <i class="${getWeatherIcon(current.weather_code)}" style="font-size: 4rem; color: white; text-shadow: 0 2px 10px rgba(0,0,0,0.3);"></i>
+                            <div class="current-temp" style="color: white; text-shadow: 0 2px 10px rgba(0,0,0,0.3);">${Math.round(current.temperature_2m)}°C</div>
+                            <div class="current-desc" style="color: white; text-shadow: 0 2px 10px rgba(0,0,0,0.3);">${getWeatherDescription(current.weather_code)}</div>
+                            <div style="font-size: 0.9rem; opacity: 0.95; color: white; text-shadow: 0 1px 5px rgba(0,0,0,0.3);">Feels like ${Math.round(current.apparent_temperature)}°C</div>
+
+                            <div class="current-details">
+                                <div class="detail-item" style="color: white;">
+                                    <i class="fas fa-tint"></i>
+                                    <span>${current.relative_humidity_2m}% Humidity</span>
+                                </div>
+                                <div class="detail-item" style="color: white;">
+                                    <i class="fas fa-wind"></i>
+                                    <span>${Math.round(current.wind_speed_10m)} km/h Wind</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.1); z-index: 1;"></div>
+                    </div>
+                    
+                    <div class="weather-forecasts">
+                        <div class="forecast-section">
+                            <div class="forecast-title">
+                                <i class="fas fa-clock"></i>
+                                24-Hour Forecast (Every 2 Hours)
+                            </div>
+                            ${amHours.length > 0 ? `
+                                <div class="hourly-period-label">AM Hours</div>
+                                <div class="hourly-forecast">
+                                    ${amHours.map(hour => `
+                                        <div class="hour-item">
+                                            <div class="hour-time">${hour.time.getHours()}:00</div>
+                                            <i class="${getWeatherIcon(hour.code)} hour-icon"></i>
+                                            <div class="hour-temp">${hour.temp}°</div>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            ` : ''}
+                            ${pmHours.length > 0 ? `
+                                <div class="hourly-period-label">PM Hours</div>
+                                <div class="hourly-forecast">
+                                    ${pmHours.map(hour => `
+                                        <div class="hour-item">
+                                            <div class="hour-time">${hour.time.getHours()}:00</div>
+                                            <i class="${getWeatherIcon(hour.code)} hour-icon"></i>
+                                            <div class="hour-temp">${hour.temp}°</div>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            ` : ''}
+                        </div>
+                        
+                        <div class="forecast-section">
+                            <div class="forecast-title">
+                                <i class="fas fa-calendar-week"></i>
+                                7-Day Forecast
+                            </div>
+                            <div class="daily-forecast">
+                                ${dailyData.map((day, index) => {
+                                    const dayName = index === 0 ? 'Today' : 
+                                                    index === 1 ? 'Tomorrow' : 
+                                                    day.date.toLocaleDateString('en-US', { weekday: 'long' });
+                                    return `
+                                        <div class="day-item">
+                                            <div class="day-name">${dayName}</div>
+                                            <i class="${getWeatherIcon(day.code)} day-icon"></i>
+                                            <div class="day-desc">${getWeatherDescription(day.code)}</div>
+                                            <div class="day-temp">
+                                                <span class="temp-high">${day.tempMax}°</span>
+                                                <span class="temp-low">${day.tempMin}°</span>
+                                            </div>
+                                        </div>
+                                    `;
+                                }).join('')}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('fullWeatherWidget').innerHTML = html;
+        }
+
+        // Load weather when page loads
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', loadWeather);
+        } else {
+            loadWeather();
+        }
+
+        // Calendar Events Loading
+        let calendarUpcomingEvents = [];
+        let currentCalendarView = localStorage.getItem('calendarView') || 'table';
+
+        async function loadCalendarEvents() {
+            try {
+                const response = await fetch('calendar-events.json');
+                const events = await response.json();
+
+                // Filter and sort events
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+
+                calendarUpcomingEvents = events
+                    .filter(event => new Date(event.date) >= today)
+                    .sort((a, b) => new Date(a.date) - new Date(b.date));
+
+                renderCalendarEvents(calendarUpcomingEvents);
+            } catch (error) {
+                console.error('Error loading calendar events:', error);
+                document.getElementById('calendarEmpty').style.display = 'block';
+                document.getElementById('calendarGrid').style.display = 'none';
+            }
+        }
+
+        function switchPublicView(view) {
+            currentCalendarView = view;
+            localStorage.setItem('calendarView', view);
+
+            document.getElementById('gridViewBtnPublic').classList.toggle('active', view === 'grid');
+            document.getElementById('tableViewBtnPublic').classList.toggle('active', view === 'table');
+
+            renderCalendarEvents(calendarUpcomingEvents);
+        }
+
+        function renderCalendarEvents(events) {
+            const grid = document.getElementById('calendarGrid');
+            const table = document.getElementById('calendarTable');
+            const tableBody = document.getElementById('calendarTableBody');
+            const emptyState = document.getElementById('calendarEmpty');
+
+            if (events.length === 0) {
+                grid.style.display = 'none';
+                table.style.display = 'none';
+                emptyState.style.display = 'block';
+                return;
+            }
+
+            emptyState.style.display = 'none';
+
+            if (currentCalendarView === 'table') {
+                grid.style.display = 'none';
+                table.style.display = 'table';
+                grid.classList.add('hidden');
+                table.classList.add('active');
+                renderCalendarTableView(events, tableBody);
+            } else {
+                grid.style.display = 'grid';
+                table.style.display = 'none';
+                grid.classList.remove('hidden');
+                table.classList.remove('active');
+                renderCalendarGridView(events, grid);
+            }
+        }
+
+        function renderCalendarGridView(events, grid) {
+            grid.innerHTML = events.map(event => `
+                <div class="calendar-event ${event.type}">
+                    <span class="event-type-badge ${event.type}">${formatEventType(event.type)}</span>
+                    <h3>${event.title}</h3>
+                    <div class="event-meta">
+                        <div class="event-meta-item">
+                            <i class="fas fa-calendar"></i>
+                            <span>${formatEventDate(event.date)}</span>
+                        </div>
+                        ${event.time ? `
+                        <div class="event-meta-item">
+                            <i class="fas fa-clock"></i>
+                            <span>${formatEventTime(event.time)}</span>
+                        </div>
+                        ` : ''}
+                    </div>
+                    ${event.description ? `<div class="event-description">${event.description}</div>` : ''}
+                    ${event.recurring !== 'none' ? `
+                        <div class="recurring-badge">
+                            <i class="fas fa-redo"></i>
+                            <span>${formatRecurringPattern(event.recurring)}</span>
+                        </div>
+                    ` : ''}
+                </div>
+            `).join('');
+        }
+
+        function renderCalendarTableView(events, tableBody) {
+            tableBody.innerHTML = events.map(event => `
+                <tr>
+                    <td class="event-title-cell">${event.title}</td>
+                    <td>
+                        <span class="event-type-cell ${event.type}">${formatEventType(event.type)}</span>
+                    </td>
+                    <td>${formatEventDate(event.date)}</td>
+                    <td>${event.time ? formatEventTime(event.time) : 'TBD'}</td>
+                    <td style="max-width: 300px;">${event.description || '-'}</td>
+                </tr>
+            `).join('');
+        }
+
+        function formatEventDate(dateStr) {
+            const date = new Date(dateStr);
+            return date.toLocaleDateString('en-ZA', {
+                weekday: 'short',
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
+            });
+        }
+
+        function formatEventTime(timeStr) {
+            if (!timeStr) return 'TBD';
+            const [hours, minutes] = timeStr.split(':');
+            const hour = parseInt(hours);
+            const ampm = hour >= 12 ? 'PM' : 'AM';
+            const displayHour = hour % 12 || 12;
+            return `${displayHour}:${minutes} ${ampm}`;
+        }
+
+        function formatRecurringPattern(pattern) {
+            const patterns = {
+                'weekly-monday': 'Every Monday',
+                'weekly-tuesday': 'Every Tuesday',
+                'weekly-wednesday': 'Every Wednesday',
+                'weekly-thursday': 'Every Thursday',
+                'weekly-friday': 'Every Friday',
+                'weekly-saturday': 'Every Saturday',
+                'weekly-sunday': 'Every Sunday',
+                'weekly-tuesday-thursday': 'Every Tuesday & Thursday'
+            };
+            return patterns[pattern] || pattern;
+        }
+
+        function formatEventType(type) {
+            const types = {
+                'social': 'Social Tennis',
+                'ladies': 'Ladies\' Group',
+                'coaching': 'Coaching',
+                'tournament': 'Tournament',
+                'league': 'League Match',
+                'championship': 'Championship',
+                'mixed': 'Mixed Doubles',
+                'junior': 'Junior Tennis',
+                'beginner': 'Beginner Session',
+                'social-event': 'Club Social',
+                'meeting': 'Members Meeting',
+                'maintenance': 'Court Maintenance',
+                'other': 'Other'
+            };
+            return types[type] || type;
+        }
+
+        // Load calendar events when page loads
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', loadCalendarEvents);
+        } else {
+            loadCalendarEvents();
+        }
+    </script>
+</body>
+</html>

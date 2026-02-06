@@ -156,7 +156,7 @@
 
         /* Hero Section */
         .hero {
-            margin-top: 70px;
+            margin-top: 0;
             background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
             color: white;
             padding: 5rem 2rem;
@@ -2052,6 +2052,58 @@
             color: white;
         }
 
+        /* Top Social Banner */
+        .social-top-banner {
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            text-align: center;
+            padding: 0.45rem 1rem;
+            font-size: 0.85rem;
+            position: relative;
+            z-index: 999;
+            margin-top: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .social-top-banner a {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .social-top-banner .top-countdown {
+            display: inline-flex;
+            gap: 0.4rem;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .social-top-banner .top-countdown-unit {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 0.1rem 0.35rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            min-width: 28px;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .social-top-banner {
+                font-size: 0.75rem;
+                padding: 0.35rem 0.75rem;
+                gap: 0.4rem;
+            }
+            .social-top-banner .top-countdown-unit {
+                font-size: 0.7rem;
+                padding: 0.1rem 0.25rem;
+                min-width: 22px;
+            }
+        }
+
         /* Social Countdown */
         .social-countdown {
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
@@ -3097,6 +3149,13 @@
             </ul>
         </div>
     </nav>
+
+    <div class="social-top-banner" id="socialTopBanner">
+        <span><i class="fas fa-calendar-alt"></i> Next Social:</span>
+        <span id="topBannerSessionName"></span>
+        <span class="top-countdown" id="topBannerCountdown"></span>
+        <a href="#social">View Details <i class="fas fa-arrow-right" style="font-size: 0.75rem;"></i></a>
+    </div>
 
     <section class="hero" id="heroSection">
         <div class="hero-sky" id="heroSky"></div>
@@ -4991,6 +5050,21 @@
 
             if (nameEl) {
                 nameEl.textContent = nextSession.name + ' \u2014 ' + nextSession.label;
+            }
+
+            // Update top banner
+            var topName = document.getElementById('topBannerSessionName');
+            var topCountdown = document.getElementById('topBannerCountdown');
+
+            if (topName) {
+                topName.textContent = nextSession.label;
+            }
+            if (topCountdown) {
+                topCountdown.innerHTML =
+                    (days > 0 ? '<span class="top-countdown-unit">' + days + 'd</span>' : '') +
+                    '<span class="top-countdown-unit">' + hours + 'h</span>' +
+                    '<span class="top-countdown-unit">' + minutes + 'm</span>' +
+                    '<span class="top-countdown-unit">' + seconds + 's</span>';
             }
         }
 

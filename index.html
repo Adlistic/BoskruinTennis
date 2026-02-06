@@ -3123,6 +3123,114 @@
                     sectionObserver.observe(element);
                 }
             });
+
+            // --- Nav Link Click Tracking ---
+            document.querySelectorAll('.nav-menu a').forEach(function(link) {
+                link.addEventListener('click', function() {
+                    var label = this.textContent.trim();
+                    var href = this.getAttribute('href') || '';
+                    gtag('event', 'nav_click', {
+                        'link_text': label,
+                        'link_url': href
+                    });
+                });
+            });
+
+            // --- CTA Button Click Tracking ---
+            document.querySelectorAll('.hero-buttons .btn, .sticky-apply-btn, .social-top-banner a').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    gtag('event', 'cta_click', {
+                        'button_text': this.textContent.trim(),
+                        'button_url': this.getAttribute('href') || 'action'
+                    });
+                });
+            });
+
+            // --- Apply for Membership Button ---
+            var applyBtn = document.querySelector('[onclick="openMembershipModal()"]');
+            if (applyBtn) {
+                applyBtn.addEventListener('click', function() {
+                    gtag('event', 'cta_click', {
+                        'button_text': 'Apply for Membership',
+                        'button_url': 'membership_modal'
+                    });
+                });
+            }
+
+            // --- Contact Form Submission Tracking ---
+            var contactForm = document.getElementById('contactForm');
+            if (contactForm) {
+                contactForm.addEventListener('submit', function() {
+                    gtag('event', 'form_submit', {
+                        'form_name': 'contact'
+                    });
+                });
+            }
+
+            // --- Membership Application Form Tracking ---
+            var membershipForm = document.getElementById('membershipApplicationForm');
+            if (membershipForm) {
+                membershipForm.addEventListener('submit', function() {
+                    var total = document.getElementById('total-price') ? document.getElementById('total-price').textContent : 'R0';
+                    gtag('event', 'form_submit', {
+                        'form_name': 'membership_application',
+                        'membership_total': total
+                    });
+                });
+            }
+
+            // --- WhatsApp Click Tracking ---
+            document.querySelectorAll('a[href*="wa.me"]').forEach(function(link) {
+                link.addEventListener('click', function() {
+                    gtag('event', 'whatsapp_click', {
+                        'link_text': this.textContent.trim() || 'WhatsApp Float',
+                        'link_url': this.getAttribute('href')
+                    });
+                });
+            });
+
+            // --- Coach WhatsApp / Email Click Tracking ---
+            document.querySelectorAll('a[href^="mailto:"]').forEach(function(link) {
+                link.addEventListener('click', function() {
+                    gtag('event', 'email_click', {
+                        'email_address': this.getAttribute('href').replace('mailto:', '')
+                    });
+                });
+            });
+
+            // --- FAQ Click Tracking ---
+            document.querySelectorAll('.faq-question').forEach(function(q) {
+                q.addEventListener('click', function() {
+                    var questionText = this.querySelector('span') ? this.querySelector('span').textContent.trim() : '';
+                    gtag('event', 'faq_click', {
+                        'question': questionText
+                    });
+                });
+            });
+
+            // --- Add to Calendar Tracking ---
+            document.addEventListener('click', function(e) {
+                var calBtn = e.target.closest('.add-to-cal-btn');
+                if (calBtn) {
+                    gtag('event', 'add_to_calendar', {
+                        'event_name': calBtn.closest('.calendar-event') ?
+                            calBtn.closest('.calendar-event').querySelector('h3').textContent : 'unknown'
+                    });
+                }
+            });
+
+            // --- External Link Tracking (SportyHQ, Instagram) ---
+            document.querySelectorAll('a[target="_blank"]').forEach(function(link) {
+                link.addEventListener('click', function() {
+                    var href = this.getAttribute('href') || '';
+                    if (href.indexOf('wa.me') === -1) { // skip WhatsApp, tracked separately
+                        gtag('event', 'external_link', {
+                            'link_text': this.textContent.trim(),
+                            'link_url': href
+                        });
+                    }
+                });
+            });
         });
     </script>
 </head>

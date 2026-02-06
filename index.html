@@ -163,6 +163,105 @@
             text-align: center;
             position: relative;
             overflow: hidden;
+            transition: background 1s ease;
+        }
+
+        /* Sun/Moon Cycle */
+        .hero-sky {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .celestial-body {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            transition: left 60s linear, top 60s linear;
+        }
+
+        .celestial-body.sun {
+            background: radial-gradient(circle, #fff7b0 0%, #ffdb4d 40%, #ff9500 100%);
+            box-shadow: 0 0 40px 15px rgba(255, 200, 50, 0.4), 0 0 80px 30px rgba(255, 150, 0, 0.15);
+        }
+
+        .celestial-body.moon {
+            background: radial-gradient(circle at 35% 35%, #f0f0f0 0%, #d4d4d4 50%, #b8b8b8 100%);
+            box-shadow: 0 0 30px 10px rgba(200, 210, 255, 0.3), 0 0 60px 20px rgba(150, 170, 220, 0.1);
+        }
+
+        .moon-crater {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.06);
+        }
+
+        .sun-rays {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 80px;
+            height: 80px;
+            transform: translate(-50%, -50%);
+            animation: sunRotate 20s linear infinite;
+        }
+
+        .sun-ray {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 2px;
+            height: 12px;
+            background: rgba(255, 220, 100, 0.5);
+            border-radius: 1px;
+            transform-origin: center -15px;
+        }
+
+        @keyframes sunRotate {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .hero-stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            transition: opacity 1s ease;
+        }
+
+        .hero-star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes twinkle {
+            from { opacity: 0.2; }
+            to { opacity: 0.8; }
+        }
+
+        @media (max-width: 768px) {
+            .celestial-body {
+                width: 35px;
+                height: 35px;
+            }
+            .sun-rays {
+                width: 55px;
+                height: 55px;
+            }
+            .sun-ray {
+                height: 8px;
+            }
         }
 
         .hero::before {
@@ -2999,7 +3098,8 @@
         </div>
     </nav>
 
-    <section class="hero">
+    <section class="hero" id="heroSection">
+        <div class="hero-sky" id="heroSky"></div>
         <div class="hero-content">
             <h1>Where Everyone Loves Tennis</h1>
             <p class="subtitle">Established in 1993. Join Johannesburg's premier tennis community with professional coaching, vibrant socials, and a welcoming atmosphere for all skill levels.</p>
@@ -4333,6 +4433,117 @@
 
         window.addEventListener('scroll', updateQuickNav);
         updateQuickNav();
+
+        // ----------------------------------------------------
+        // ☀️🌙 SUN/MOON CYCLE
+        // ----------------------------------------------------
+        (function initSkyCycle() {
+            var hero = document.getElementById('heroSection');
+            var sky = document.getElementById('heroSky');
+            if (!hero || !sky) return;
+
+            // Johannesburg approximate sunrise/sunset (varies by season)
+            // Summer: ~5:30 rise, ~19:00 set | Winter: ~6:45 rise, ~17:30 set
+            var now = new Date();
+            var month = now.getMonth(); // 0-11
+            // Simple seasonal approximation for Joburg (Southern hemisphere)
+            var summerFactor = Math.cos((month - 0) * Math.PI / 6); // peaks Dec(11)/Jan(0)
+            var sunriseHour = 6.25 - summerFactor * 0.75;  // ~5.5 summer, ~7 winter
+            var sunsetHour = 18.25 + summerFactor * 0.75;  // ~19 summer, ~17.5 winter
+
+            var currentHour = now.getHours() + now.getMinutes() / 60;
+            var isDaytime = currentHour >= sunriseHour && currentHour < sunsetHour;
+
+            // Calculate arc position (0 = rise, 0.5 = peak, 1 = set)
+            var progress;
+            if (isDaytime) {
+                progress = (currentHour - sunriseHour) / (sunsetHour - sunriseHour);
+            } else {
+                // Night: moon rises at sunset, sets at sunrise
+                var nightDuration = 24 - (sunsetHour - sunriseHour);
+                if (currentHour >= sunsetHour) {
+                    progress = (currentHour - sunsetHour) / nightDuration;
+                } else {
+                    progress = (currentHour + 24 - sunsetHour) / nightDuration;
+                }
+            }
+            progress = Math.max(0, Math.min(1, progress));
+
+            // Arc path: x goes 5% to 95%, y follows a parabola (high in middle)
+            var xPercent = 5 + progress * 90;
+            // Parabola: y = 1 - 4*(x-0.5)^2 — peaks at 0.5
+            var arcHeight = 1 - 4 * Math.pow(progress - 0.5, 2);
+            // Map arc to pixel range: top 8% at peak, 85% at horizon
+            var yPercent = 85 - arcHeight * 77;
+
+            // Set hero gradient based on time of day
+            var gradient;
+            if (isDaytime) {
+                if (progress < 0.15) {
+                    // Sunrise
+                    gradient = 'linear-gradient(135deg, #1a3a4a 0%, #2a6a6a 30%, #c86030 70%, #e8a040 100%)';
+                } else if (progress > 0.85) {
+                    // Sunset
+                    gradient = 'linear-gradient(135deg, #2a5a6a 0%, #c85030 40%, #e07020 70%, #d4a040 100%)';
+                } else {
+                    // Day - keep the original teal gradient with slight warm tint
+                    gradient = 'linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%)';
+                }
+            } else {
+                if (progress < 0.1 || progress > 0.9) {
+                    // Twilight
+                    gradient = 'linear-gradient(135deg, #0a1a2a 0%, #1a3050 50%, #2a4060 100%)';
+                } else {
+                    // Deep night
+                    gradient = 'linear-gradient(135deg, #050d18 0%, #0d1f30 50%, #162a3d 100%)';
+                }
+            }
+            hero.style.background = gradient;
+
+            // Build sky HTML
+            var skyHTML = '';
+
+            // Stars (visible at night and during twilight)
+            if (!isDaytime) {
+                var starOpacity = (progress > 0.1 && progress < 0.9) ? 1 : 0.4;
+                skyHTML += '<div class="hero-stars" style="opacity: ' + starOpacity + ';">';
+                for (var i = 0; i < 40; i++) {
+                    var sx = Math.random() * 100;
+                    var sy = Math.random() * 100;
+                    var sd = (1 + Math.random() * 4).toFixed(1);
+                    var sDelay = (Math.random() * 3).toFixed(1);
+                    var sSize = (1 + Math.random() * 2).toFixed(0);
+                    skyHTML += '<div class="hero-star" style="left:' + sx + '%;top:' + sy + '%;width:' + sSize + 'px;height:' + sSize + 'px;animation-duration:' + sd + 's;animation-delay:' + sDelay + 's;"></div>';
+                }
+                skyHTML += '</div>';
+            }
+
+            // Celestial body
+            if (isDaytime) {
+                // Sun
+                skyHTML += '<div class="celestial-body sun" style="left:' + xPercent + '%;top:' + yPercent + '%;">';
+                // Sun rays
+                skyHTML += '<div class="sun-rays">';
+                for (var r = 0; r < 12; r++) {
+                    skyHTML += '<div class="sun-ray" style="transform: rotate(' + (r * 30) + 'deg) translateY(-15px);"></div>';
+                }
+                skyHTML += '</div></div>';
+            } else {
+                // Moon
+                skyHTML += '<div class="celestial-body moon" style="left:' + xPercent + '%;top:' + yPercent + '%;">';
+                // Moon craters
+                skyHTML += '<div class="moon-crater" style="width:10px;height:10px;top:12px;left:8px;"></div>';
+                skyHTML += '<div class="moon-crater" style="width:7px;height:7px;top:25px;left:28px;"></div>';
+                skyHTML += '<div class="moon-crater" style="width:5px;height:5px;top:8px;left:30px;"></div>';
+                skyHTML += '<div class="moon-crater" style="width:12px;height:12px;top:30px;left:12px;opacity:0.04;"></div>';
+                skyHTML += '</div>';
+            }
+
+            sky.innerHTML = skyHTML;
+
+            // Update position every minute
+            setTimeout(function() { initSkyCycle(); }, 60000);
+        })();
 
         // ----------------------------------------------------
         // ✅ EMAILJS CONFIGURATION

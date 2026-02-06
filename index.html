@@ -9,7 +9,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
+    <!-- EmailJS -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
     <style>
         * {
             margin: 0;
@@ -36,6 +39,7 @@
             font-family: 'Inter', sans-serif;
             line-height: 1.6;
             color: var(--text-dark);
+            background: var(--bg-light);
             overflow-x: hidden;
         }
 
@@ -78,6 +82,11 @@
             font-size: 1.4rem;
             color: var(--primary-color);
             text-decoration: none;
+        }
+
+        .logo img {
+            height: 50px;
+            width: auto;
         }
 
         .logo i {
@@ -266,11 +275,13 @@
         .section-header p {
             font-size: 1.1rem;
             color: var(--text-light);
+            max-width: 100%;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
+            padding: 0 2rem;
         }
 
         /* Benefits Section */
@@ -282,6 +293,8 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 2rem;
+            max-width: 900px;
+            margin: 0 auto;
         }
 
         .benefit-card {
@@ -400,7 +413,7 @@
             max-width: 800px;
             margin: 0 auto;
             background: white;
-            padding: 3rem;
+            padding: 2rem;
             border-radius: 20px;
             box-shadow: var(--shadow-lg);
         }
@@ -622,6 +635,142 @@
             margin-top: 1rem;
             font-size: 0.9rem;
             opacity: 0.9;
+        }
+
+        /* Membership Application Modal */
+        .membership-modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.7);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .membership-modal.show {
+            display: block;
+        }
+
+        .membership-modal-content {
+            background: white;
+            margin: 3% auto;
+            padding: 2rem;
+            border-radius: 20px;
+            max-width: 600px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            animation: slideDown 0.3s ease;
+            position: relative;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .membership-modal-close {
+            position: absolute;
+            right: 1.5rem;
+            top: 1.5rem;
+            color: #999;
+            font-size: 2rem;
+            font-weight: 300;
+            cursor: pointer;
+            transition: color 0.3s;
+            line-height: 1;
+        }
+
+        .membership-modal-close:hover {
+            color: var(--danger);
+        }
+
+        .membership-modal-content h2 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-size: 1.8rem;
+        }
+
+        .membership-modal-content h2 i {
+            color: var(--secondary-color);
+            margin-right: 0.5rem;
+        }
+
+        .membership-modal-content > p {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+        }
+
+        .selected-packages-summary {
+            background: var(--bg-light);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        .selected-packages-summary h3 {
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .selected-packages-summary .package-line {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .selected-packages-summary .package-line:last-child {
+            border-bottom: none;
+            font-weight: 600;
+            color: var(--primary-color);
+            padding-top: 0.75rem;
+            margin-top: 0.5rem;
+            border-top: 2px solid var(--secondary-color);
+        }
+
+        .membership-modal-content .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .membership-modal-content .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .membership-modal-content .form-group input,
+        .membership-modal-content .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            transition: border-color 0.3s;
+        }
+
+        .membership-modal-content .form-group input:focus,
+        .membership-modal-content .form-group textarea:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+        }
+
+        .membership-modal-content .form-group textarea {
+            resize: vertical;
         }
 
         /* Coaching Section */
@@ -893,6 +1042,38 @@
             border-left-color: var(--accent-color);
         }
 
+        .calendar-event.league {
+            border-left-color: #f57f17;
+        }
+
+        .calendar-event.championship {
+            border-left-color: #f57c00;
+        }
+
+        .calendar-event.mixed {
+            border-left-color: #7b1fa2;
+        }
+
+        .calendar-event.junior {
+            border-left-color: #558b2f;
+        }
+
+        .calendar-event.beginner {
+            border-left-color: #2e7d32;
+        }
+
+        .calendar-event.social-event {
+            border-left-color: #d84315;
+        }
+
+        .calendar-event.meeting {
+            border-left-color: #37474f;
+        }
+
+        .calendar-event.maintenance {
+            border-left-color: #5d4037;
+        }
+
         .event-type-badge {
             display: inline-block;
             padding: 4px 12px;
@@ -926,6 +1107,46 @@
         .event-type-badge.other {
             background: #fffde7;
             color: #827717;
+        }
+
+        .event-type-badge.league {
+            background: linear-gradient(135deg, #fff9c4, #fff59d);
+            color: #f57f17;
+        }
+
+        .event-type-badge.championship {
+            background: linear-gradient(135deg, #ffd54f, #ffca28);
+            color: #f57c00;
+        }
+
+        .event-type-badge.mixed {
+            background: linear-gradient(135deg, #e1bee7, #ce93d8);
+            color: #7b1fa2;
+        }
+
+        .event-type-badge.junior {
+            background: linear-gradient(135deg, #c5e1a5, #aed581);
+            color: #558b2f;
+        }
+
+        .event-type-badge.beginner {
+            background: linear-gradient(135deg, #a5d6a7, #81c784);
+            color: #2e7d32;
+        }
+
+        .event-type-badge.social-event {
+            background: linear-gradient(135deg, #ffccbc, #ffab91);
+            color: #d84315;
+        }
+
+        .event-type-badge.meeting {
+            background: linear-gradient(135deg, #b0bec5, #90a4ae);
+            color: #37474f;
+        }
+
+        .event-type-badge.maintenance {
+            background: linear-gradient(135deg, #d7ccc8, #bcaaa4);
+            color: #5d4037;
         }
 
         .calendar-event h3 {
@@ -988,6 +1209,118 @@
             color: #ddd;
             margin-bottom: 1rem;
         }
+
+        /* Calendar View Toggle */
+        .view-toggle {
+            display: flex;
+            gap: 5px;
+            background: #f0f0f0;
+            padding: 4px;
+            border-radius: 8px;
+        }
+
+        .view-toggle-btn {
+            padding: 8px 12px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            color: #666;
+            font-size: 16px;
+        }
+
+        .view-toggle-btn:hover {
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        .view-toggle-btn.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        /* Calendar Table View */
+        .events-table {
+            display: none;
+            width: 100%;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+            margin-top: 2rem;
+        }
+
+        .events-table.active {
+            display: table;
+        }
+
+        .calendar-grid.hidden {
+            display: none;
+        }
+
+        .events-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .events-table thead {
+            background: linear-gradient(135deg, #f8f9fa, #ffffff);
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .events-table th {
+            padding: 12px 15px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 12px;
+            color: var(--dark);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .events-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #f5f5f5;
+            font-size: 13px;
+            color: #555;
+        }
+
+        .events-table tbody tr {
+            transition: background 0.2s ease;
+        }
+
+        .events-table tbody tr:hover {
+            background: #f8f9fa;
+        }
+
+        .events-table .event-title-cell {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .events-table .event-type-cell {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .events-table .event-type-cell.social { background: linear-gradient(135deg, #e3f2fd, #bbdefb); color: #1565c0; }
+        .events-table .event-type-cell.ladies { background: linear-gradient(135deg, #fce4ec, #f8bbd0); color: #ad1457; }
+        .events-table .event-type-cell.coaching { background: linear-gradient(135deg, #fff3e0, #ffe0b2); color: #e65100; }
+        .events-table .event-type-cell.tournament { background: linear-gradient(135deg, #f3e5f5, #e1bee7); color: #6a1b9a; }
+        .events-table .event-type-cell.other { background: linear-gradient(135deg, #e0f2f1, #b2dfdb); color: #00695c; }
+        .events-table .event-type-cell.league { background: linear-gradient(135deg, #fff9c4, #fff59d); color: #f57f17; }
+        .events-table .event-type-cell.championship { background: linear-gradient(135deg, #ffd54f, #ffca28); color: #f57c00; }
+        .events-table .event-type-cell.mixed { background: linear-gradient(135deg, #e1bee7, #ce93d8); color: #7b1fa2; }
+        .events-table .event-type-cell.junior { background: linear-gradient(135deg, #c5e1a5, #aed581); color: #558b2f; }
+        .events-table .event-type-cell.beginner { background: linear-gradient(135deg, #a5d6a7, #81c784); color: #2e7d32; }
+        .events-table .event-type-cell.social-event { background: linear-gradient(135deg, #ffccbc, #ffab91); color: #d84315; }
+        .events-table .event-type-cell.meeting { background: linear-gradient(135deg, #cfd8dc, #b0bec5); color: #37474f; }
+        .events-table .event-type-cell.maintenance { background: linear-gradient(135deg, #d7ccc8, #bcaaa4); color: #5d4037; }
 
         /* Visitor Info */
         .visitor-info {
@@ -1337,9 +1670,34 @@
                 grid-template-columns: 1fr; /* Stack on smaller screens */
                 gap: 2rem;
             }
+
+            .nav-container {
+                padding: 1rem 1.5rem;
+            }
+
+            .nav-menu {
+                gap: 1rem;
+            }
+
+            .nav-menu a {
+                font-size: 0.85rem;
+            }
+
+            .nav-cta {
+                padding: 0.5rem 1rem;
+                font-size: 0.85rem;
+            }
+
+            .logo {
+                font-size: 1.2rem;
+            }
+
+            .logo img {
+                height: 40px;
+            }
         }
-        
-        @media (max-width: 768px) {
+
+        @media (max-width: 850px) {
             .nav-menu {
                 display: none;
                 position: absolute;
@@ -1348,16 +1706,95 @@
                 right: 0;
                 background: white;
                 flex-direction: column;
-                padding: 1rem;
-                box-shadow: var(--shadow-lg);
+                padding: 0.5rem 1rem 1rem 1rem;
+                box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+                gap: 0;
+                border-radius: 0 0 15px 15px;
+                animation: slideDown 0.3s ease;
+            }
+
+            @keyframes slideDown {
+                from {
+                    opacity: 0;
+                    transform: translateY(-10px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
             }
 
             .nav-menu.active {
                 display: flex;
             }
 
+            .nav-menu li {
+                border-bottom: 1px solid var(--border-color);
+            }
+
+            .nav-menu li:last-child {
+                border-bottom: none;
+                margin-top: 0.5rem;
+            }
+
+            .nav-menu a {
+                font-size: 1rem;
+                padding: 1rem 0.5rem;
+                display: block;
+                width: 100%;
+                border-radius: 8px;
+                transition: all 0.2s;
+            }
+
+            .nav-menu a:hover {
+                background: var(--bg-light);
+                padding-left: 1rem;
+                color: var(--primary-color);
+            }
+
+            .nav-cta {
+                background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)) !important;
+                color: white !important;
+                text-align: center;
+                padding: 0.75rem 1rem !important;
+                border-radius: 25px !important;
+            }
+
+            .nav-cta:hover {
+                background: linear-gradient(135deg, var(--secondary-color), var(--primary-color)) !important;
+                transform: scale(1.02);
+                padding-left: 1rem !important;
+            }
+
             .mobile-menu-toggle {
                 display: block;
+                transition: transform 0.3s;
+            }
+
+            .mobile-menu-toggle:active {
+                transform: scale(0.95);
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                overflow-x: hidden !important;
+            }
+
+            .container {
+                padding: 0 1rem;
+                max-width: 100vw !important;
+                overflow-x: hidden !important;
+            }
+
+            #fullWeatherWidget {
+                max-width: 100% !important;
+                overflow-x: hidden !important;
+            }
+
+            #fullWeatherWidget * {
+                max-width: 100% !important;
+                box-sizing: border-box !important;
             }
 
             .hero h1 {
@@ -1377,7 +1814,160 @@
             }
 
             .calculator-container {
-                padding: 2rem 1.5rem;
+                padding: 1rem 0.5rem;
+            }
+
+            .price-total {
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                gap: 0.5rem !important;
+            }
+
+            .benefit-card {
+                padding: 1rem 0.75rem;
+            }
+
+            .stats {
+                margin-top: 0;
+                padding: 2rem 1rem;
+            }
+
+            .benefits {
+                padding: 0.75rem 0 !important;
+            }
+
+            .calculator {
+                padding: 0.75rem 0 !important;
+            }
+
+            .coaching {
+                padding: 0.75rem 0 !important;
+            }
+
+            .social-tennis {
+                padding: 0.75rem 0 !important;
+            }
+
+            .visitor-info {
+                padding: 0.75rem 0 !important;
+            }
+
+            .faq {
+                padding: 0.75rem 0 !important;
+            }
+
+            .location {
+                padding: 0.75rem 0 !important;
+            }
+
+            .calendar-section {
+                padding: 0.75rem 0 !important;
+            }
+
+            .contact-form {
+                padding: 1.5rem 1rem !important;
+            }
+
+            .weather-section-compact {
+                padding: 0.75rem 0 !important;
+            }
+
+            .weather-section {
+                padding: 0.75rem 0 !important;
+            }
+
+            .weather-container {
+                padding: 1rem 0.5rem !important;
+                max-width: 100% !important;
+                overflow-x: hidden !important;
+                box-sizing: border-box !important;
+            }
+
+            .current-weather {
+                padding: 1rem 0.5rem !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                margin: 0 !important;
+            }
+
+            .current-temp {
+                font-size: 2.5rem !important;
+                word-wrap: break-word !important;
+            }
+
+            .current-desc {
+                font-size: 1rem !important;
+                word-wrap: break-word !important;
+            }
+
+            .current-details {
+                grid-template-columns: 1fr !important;
+                gap: 0.5rem !important;
+                font-size: 0.85rem !important;
+                padding-top: 1rem !important;
+                width: 100% !important;
+                max-width: 100% !important;
+            }
+
+            .detail-item {
+                font-size: 0.85rem !important;
+            }
+
+            .weather-forecasts {
+                gap: 1rem !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                overflow-x: hidden !important;
+            }
+
+            .forecast-section {
+                width: 100% !important;
+                max-width: 100% !important;
+                overflow-x: hidden !important;
+            }
+
+            .daily-forecast {
+                width: 100% !important;
+                max-width: 100% !important;
+                overflow-x: hidden !important;
+            }
+
+            .hourly-forecast {
+                width: 100% !important;
+                max-width: 100% !important;
+                overflow-x: auto !important;
+            }
+
+            .day-item {
+                grid-template-columns: 55px 28px 1fr 50px 60px !important;
+                gap: 0.3rem !important;
+                padding: 0.5rem 0.3rem !important;
+                font-size: 0.75rem !important;
+            }
+
+            .day-name {
+                font-size: 0.8rem !important;
+            }
+
+            .day-icon {
+                font-size: 1.2rem !important;
+            }
+
+            .hour-item {
+                min-width: 65px !important;
+                padding: 0.5rem 0.4rem !important;
+            }
+
+            .hour-icon {
+                font-size: 1.5rem !important;
+            }
+
+            .hour-temp {
+                font-size: 0.9rem !important;
+            }
+
+            .compact-weather-display {
+                padding: 1rem 0.75rem !important;
             }
 
             .location-content-container {
@@ -1404,6 +1994,7 @@
         /* Smooth Scroll */
         html {
             scroll-behavior: smooth;
+            scroll-padding-top: 80px;
         }
 
         /* Loading Animation */
@@ -1452,7 +2043,7 @@
             color: white;
             text-align: center;
         }
-        
+
         .current-temp {
             font-size: 4rem;
             font-weight: 700;
@@ -1554,12 +2145,30 @@
             min-width: 80px;
             box-shadow: var(--shadow);
             transition: transform 0.2s;
+            position: relative;
+            overflow: hidden;
         }
         
         .hour-item:hover {
             transform: translateY(-3px);
         }
-        
+
+        .hour-item.hour-past {
+            opacity: 0.4;
+        }
+
+        .hour-item.hour-past::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 120%;
+            height: 3px;
+            background: rgba(0, 0, 0, 0.4);
+            transform: translate(-50%, -50%) rotate(-45deg);
+            z-index: 3;
+        }
+
         .hour-time {
             font-weight: 600;
             color: var(--primary-color);
@@ -1583,7 +2192,7 @@
         
         .day-item {
             display: grid;
-            grid-template-columns: 100px 50px 1fr 80px;
+            grid-template-columns: 100px 50px 1fr 80px 90px;
             align-items: center;
             gap: 1rem;
             padding: 1rem;
@@ -1629,7 +2238,20 @@
             font-size: 0.9rem;
             margin-left: 0.5rem;
         }
-        
+
+        .day-wind {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.9rem;
+            color: var(--text-light);
+            justify-content: flex-end;
+        }
+
+        .day-wind i {
+            font-size: 0.85rem;
+        }
+
         @media (max-width: 968px) {
             .weather-container {
                 grid-template-columns: 1fr;
@@ -1641,13 +2263,204 @@
                 font-size: 0.9rem;
             }
         }
+
+        /* Weather Animations */
+        @keyframes rainFall {
+            0% {
+                transform: translateY(-100vh) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) translateX(-20px);
+                opacity: 0;
+            }
+        }
+
+        @keyframes snowFall {
+            0% {
+                transform: translateY(-100vh) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) translateX(50px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes cloudMove {
+            0% {
+                transform: translateX(0) translateZ(0);
+                -webkit-transform: translateX(0) translateZ(0);
+            }
+            100% {
+                transform: translateX(calc(100vw + 100px)) translateZ(0);
+                -webkit-transform: translateX(calc(100vw + 100px)) translateZ(0);
+            }
+        }
+
+        @-webkit-keyframes cloudMove {
+            0% {
+                -webkit-transform: translateX(0) translateZ(0);
+                transform: translateX(0) translateZ(0);
+            }
+            100% {
+                -webkit-transform: translateX(calc(100vw + 100px)) translateZ(0);
+                transform: translateX(calc(100vw + 100px)) translateZ(0);
+            }
+        }
+
+        @keyframes lightning {
+            0%, 10%, 20%, 100% {
+                opacity: 0;
+            }
+            5%, 15% {
+                opacity: 0.8;
+            }
+        }
+
+        @keyframes twinkle {
+            0%, 100% {
+                opacity: 0.3;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+
+        .weather-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .rain-drop {
+            position: absolute;
+            width: 2px;
+            height: 20px;
+            background: linear-gradient(180deg, rgba(100,150,255,0.9), rgba(100,150,255,0.4));
+            animation: rainFall linear infinite;
+            border-radius: 2px;
+        }
+
+        .snow-flake {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: white;
+            border-radius: 50%;
+            animation: snowFall linear infinite;
+            box-shadow: 0 0 5px rgba(255,255,255,0.8);
+        }
+
+        .cloud-shape {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.6);
+            animation: cloudMove linear infinite;
+            -webkit-animation: cloudMove linear infinite;
+            will-change: transform;
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+
+        .lightning-flash {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.3);
+            animation: lightning 4s infinite;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle ease-in-out infinite;
+            box-shadow: 0 0 3px rgba(255,255,255,0.8);
+        }
     </style>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-69S3Q6N7WS"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-69S3Q6N7WS');
+    </script>
+
+    <!-- Section Visibility Tracking -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Track which sections users view
+            const sectionsToTrack = [
+                { id: 'benefits', name: 'Why Join Section' },
+                { id: 'membership', name: 'Membership Calculator' },
+                { id: 'coaching', name: 'Coaching Section' },
+                { id: 'social', name: 'Social Tennis Section' },
+                { id: 'calendar', name: 'Calendar Section' },
+                { id: 'weather', name: 'Weather Section' },
+                { id: 'visitor', name: 'Visitor Info Section' },
+                { id: 'contact', name: 'Contact Section' }
+            ];
+
+            const trackedSections = new Set();
+
+            const sectionObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && !trackedSections.has(entry.target.id)) {
+                        const sectionData = sectionsToTrack.find(s => s.id === entry.target.id);
+                        if (sectionData) {
+                            // Send event to Google Analytics
+                            gtag('event', 'section_view', {
+                                'section_name': sectionData.name,
+                                'section_id': sectionData.id
+                            });
+                            trackedSections.add(entry.target.id);
+                        }
+                    }
+                });
+            }, {
+                threshold: 0.3 // Section is considered "viewed" when 30% is visible
+            });
+
+            // Observe each section
+            sectionsToTrack.forEach(section => {
+                const element = document.getElementById(section.id);
+                if (element) {
+                    sectionObserver.observe(element);
+                }
+            });
+        });
+    </script>
 </head>
 <body>
     <nav class="navbar">
         <div class="nav-container">
-            <a href="#" class="logo">
-                <i class="fas fa-table-tennis"></i>
+            <a href="#" class="logo" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">
+                <img src="logo.png" alt="Boskruin Tennis Club">
                 <span>Boskruin Tennis</span>
             </a>
             <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
@@ -1669,7 +2482,7 @@
     <section class="hero">
         <div class="hero-content">
             <h1>Where Everyone Loves Tennis</h1>
-            <p class="subtitle">Join Johannesburg's premier tennis community. Professional coaching, vibrant socials, and a welcoming atmosphere for all skill levels.</p>
+            <p class="subtitle">Established in 1993. Join Johannesburg's premier tennis community with professional coaching, vibrant socials, and a welcoming atmosphere for all skill levels.</p>
             <div class="hero-buttons">
                 <a href="#membership" class="btn btn-primary">Calculate Membership</a>
                 <a href="https://www.sportyhq.com/" target="_blank" class="btn btn-secondary">Book a Court</a>
@@ -1716,7 +2529,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 2rem;
             background: white;
             border-radius: 15px;
             padding: 1.5rem 2rem;
@@ -1724,65 +2536,76 @@
             max-width: 800px;
             margin: 0 auto;
         }
-        
+
+        /* Desktop: Horizontal Layout */
+        .compact-weather-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            width: 100%;
+        }
+
         .compact-current {
             display: flex;
             align-items: center;
             gap: 1rem;
         }
-        
+
         .compact-icon {
             font-size: 2.5rem;
             color: var(--secondary-color);
         }
-        
+
         .compact-temp-info {
             text-align: left;
         }
-        
+
         .compact-temp {
             font-size: 2rem;
             font-weight: 700;
             color: var(--primary-color);
             font-family: 'Poppins', sans-serif;
         }
-        
+
         .compact-desc {
             color: var(--text-light);
             font-size: 0.9rem;
             text-transform: capitalize;
         }
-        
+
         .compact-details {
             display: flex;
             gap: 1.5rem;
             padding-left: 2rem;
             border-left: 2px solid var(--border-color);
         }
-        
+
         .compact-detail {
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 0.25rem;
         }
-        
+
         .compact-detail i {
             color: var(--secondary-color);
             font-size: 1.2rem;
         }
-        
+
         .compact-detail-value {
             font-weight: 600;
             color: var(--text-dark);
             font-size: 0.9rem;
         }
-        
+
         .compact-detail-label {
             color: var(--text-light);
             font-size: 0.75rem;
         }
-        
+
         .view-full-weather {
             display: inline-flex;
             align-items: center;
@@ -1796,17 +2619,115 @@
             font-size: 0.9rem;
         }
         
+        /* Mobile: Vertical Layout */
         @media (max-width: 768px) {
             .compact-weather-display {
-                flex-direction: column;
-                gap: 1rem;
+                padding: 1.5rem 1rem !important;
+                max-width: 100%;
             }
-            
+
+            .compact-weather-content {
+                flex-direction: column !important;
+                gap: 1.5rem !important;
+            }
+
+            .compact-current {
+                flex-direction: column !important;
+                gap: 0.75rem !important;
+            }
+
+            .compact-icon {
+                font-size: 3.5rem !important;
+            }
+
+            .compact-temp-info {
+                text-align: center !important;
+            }
+
+            .compact-temp {
+                font-size: 2.5rem !important;
+            }
+
+            .compact-desc {
+                font-size: 1rem !important;
+            }
+
             .compact-details {
-                border-left: none;
-                border-top: 2px solid var(--border-color);
-                padding-left: 0;
-                padding-top: 1rem;
+                flex-wrap: wrap !important;
+                gap: 1.5rem !important;
+                padding: 1rem 1.5rem !important;
+                background: rgba(255,255,255,0.15) !important;
+                backdrop-filter: blur(10px) !important;
+                border-radius: 50px !important;
+                border: none !important;
+                justify-content: center;
+            }
+
+            .compact-detail {
+                min-width: 40%;
+                flex: 0 0 auto;
+            }
+
+            .compact-detail i {
+                font-size: 1.1rem !important;
+            }
+
+            .compact-detail-value {
+                font-size: 1rem !important;
+                font-weight: 700 !important;
+            }
+
+            .compact-detail-label {
+                font-size: 0.7rem !important;
+            }
+
+            .view-full-weather {
+                width: 100%;
+                text-align: center;
+                justify-content: center;
+                padding: 0.75rem 1.5rem !important;
+                border-radius: 50px !important;
+                border: 1px solid rgba(255,255,255,0.3) !important;
+            }
+
+            /* Force card view on mobile for calendar */
+            .view-toggle {
+                display: none !important;
+            }
+
+            .calendar-grid {
+                display: grid !important;
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .calendar-grid.hidden {
+                display: grid !important;
+            }
+
+            .events-table,
+            .events-table.active {
+                display: none !important;
+            }
+
+            /* Adjust calendar card sizing for mobile */
+            .calendar-event {
+                padding: 1.25rem;
+            }
+
+            /* Membership calculator mobile layout */
+            .package-item {
+                flex-direction: column !important;
+                align-items: stretch !important;
+                gap: 1rem !important;
+                padding: 1rem !important;
+            }
+
+            .counter-controls {
+                justify-content: center;
+                width: 100%;
+                padding-top: 0.5rem;
+                border-top: 1px solid var(--border-color);
             }
         }
     </style>
@@ -1863,40 +2784,45 @@
         </div>
     </section>
 
-    <!--section id="instagram" class="instagram-section">
+    <section id="instagram" class="instagram-section">
         <div class="container">
             <div class="section-header">
                 <h2>See Our Community in Action</h2>
                 <p>Follow us on Instagram for the latest updates, match highlights, and community moments</p>
             </div>
             <div class="instagram-feed">
-                <div class="instagram-placeholder">
-                    <i class="fab fa-instagram"></i>
+                <div class="embedsocial-hashtag" data-ref="38b9f926af0ba0b078cfb72dfe8bb5d97cbb9a10">
+                    <a class="feed-powered-by-es feed-powered-by-es-feed-img es-widget-branding" href="https://embedsocial.com/social-media-aggregator/" target="_blank" title="Instagram widget">
+                        <img src="https://embedsocial.com/cdn/icon/embedsocial-logo.webp" alt="EmbedSocial">
+                        <div class="es-widget-branding-text">Instagram widget</div>
+                    </a>
                 </div>
-                <div class="instagram-placeholder">
-                    <i class="fab fa-instagram"></i>
-                </div>
-                <div class="instagram-placeholder">
-                    <i class="fab fa-instagram"></i>
-                </div>
-                <div class="instagram-placeholder">
-                    <i class="fab fa-instagram"></i>
-                </div>
+                <script>
+                (function(d, s, id) {
+                    var js;
+                    if (d.getElementById(id)) {return;}
+                    js = d.createElement(s);
+                    js.id = id;
+                    js.src = "https://embedsocial.com/cdn/ht.js";
+                    d.getElementsByTagName("head")[0].appendChild(js);
+                }(document, "script", "EmbedSocialHashtagScript"));
+                </script>
             </div>
             <div class="instagram-cta">
-                <a href="https://www.instagram.com/boskruintennisclub/" target="_blank" class="instagram-button">
+                <a href="https://www.instagram.com/boskruintennisclubza/" target="_blank" class="instagram-button">
                     <i class="fab fa-instagram"></i>
-                    Follow @boskruintennisclub
+                    Follow @boskruintennisclubza
                 </a>
             </div>
         </div>
-    </section-->
+    </section>
 
     <section id="membership" class="calculator">
         <div class="container">
             <div class="section-header">
                 <h2>Calculate Your Membership</h2>
                 <p>Get an instant quote for your membership based on your family size and league participation</p>
+                <p style="color: #e67e22; font-weight: 600; margin-top: 1rem;"><i class="fas fa-info-circle"></i> Applications currently open but limited. Membership may close upon reaching capacity for the year.</p>
             </div>
             <div class="calculator-container">
                 <div class="calculator-intro">
@@ -2112,17 +3038,64 @@
                             <span id="total-price">R0</span>
                         </div>
                         <p class="price-note">
-                            <i class="fas fa-info-circle"></i> All packages include mandatory TSA&GTA and GCTA fees. Court usage is free for members.
+                            <i class="fas fa-info-circle"></i> All packages include mandatory TSA&amp;GTA and GCTA fees. Court usage is free for members.
                         </p>
                     </div>
 
                     <div style="display: grid; gap: 1rem; margin-top: 2rem;">
-                        <a href="#contact" class="btn btn-primary" style="text-align: center;">Apply for Membership</a>
+                        <button onclick="openMembershipModal()" class="btn btn-primary" style="text-align: center; width: 100%; border: none; cursor: pointer;">Apply for Membership</button>
                         </div>
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- Membership Application Modal -->
+    <div id="membershipModal" class="membership-modal">
+        <div class="membership-modal-content">
+            <span class="membership-modal-close" onclick="closeMembershipModal()">&times;</span>
+            <h2><i class="fas fa-paper-plane"></i> Apply for Membership</h2>
+            <p>Complete the form below and we'll contact you shortly regarding your membership application.</p>
+
+            <div class="selected-packages-summary" id="selectedPackagesSummary">
+                <!-- Selected packages will be displayed here -->
+            </div>
+
+            <form id="membershipApplicationForm" onsubmit="sendMembershipEmail(event)">
+                <div class="form-group">
+                    <label for="applicantName">Full Name *</label>
+                    <input type="text" id="applicantName" name="from_name" required placeholder="Enter your full name">
+                </div>
+
+                <div class="form-group">
+                    <label for="applicantEmail">Email Address *</label>
+                    <input type="email" id="applicantEmail" name="from_email" required placeholder="your.email@example.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="applicantPhone">Phone Number (Optional)</label>
+                    <input type="tel" id="applicantPhone" name="phone" placeholder="083 123 4567">
+                </div>
+
+                <div class="form-group">
+                    <label for="applicantMessage">Additional Information (Optional)</label>
+                    <textarea id="applicantMessage" name="message" rows="3" placeholder="Any questions or special requests?"></textarea>
+                </div>
+
+                <!-- Hidden fields for package information -->
+                <input type="hidden" id="selectedPackages" name="selected_packages">
+                <input type="hidden" id="totalAmount" name="total_fee">
+                <input type="hidden" name="subject" value="Membership Enquiry">
+                <input type="hidden" name="to_email" value="accounts@boskruintennis.co.za">
+
+                <button type="submit" class="btn btn-primary" style="width: 100%; border: none; cursor: pointer;">
+                    <span class="btn-text"><i class="fas fa-check-circle"></i> Submit Application</span>
+                    <span class="btn-loading" style="display: none;"><i class="fas fa-spinner fa-spin"></i> Submitting...</span>
+                </button>
+            </form>
+            <div id="membershipFormStatus" style="margin-top: 1rem; text-align: center; display: none;"></div>
+        </div>
+    </div>
 
     <section id="coaching" class="coaching">
         <div class="container">
@@ -2130,137 +3103,46 @@
                 <h2>Professional Tennis Coaching</h2>
                 <p>Learn from experienced coaches who are passionate about developing players at every level</p>
             </div>
-            <div class="coaches-grid">
-                <div class="coach-card">
-                    <div class="coach-image">
-                        <img src="waynekets.jpg" alt="Wayne Kets" />
-                    </div>
-                    <div class="coach-info">
-                        <h3>Wayne Kets</h3>
-                        <p class="coach-title">Head Coach & Founding Member</p>
-                        <p>Wayne is a qualified professional tennis coach and founding member of Boskruin Tennis Club (est. 1993). He believes in finding potential in each player and teaching the skills needed for a great game.</p>
-                        <div class="coach-pricing">
-                            <h4>Coaching Fees</h4>
-                            <div class="price-list">
-                                <div class="price-list-item">
-                                    <span>Mini Tennis (Age 4+, 30min)</span>
-                                    <span>R550/month</span>
-                                </div>
-                                <div class="price-list-item">
-                                    <span>Beginners (45min)</span>
-                                    <span>R700/month</span>
-                                </div>
-                                <div class="price-list-item">
-                                    <span>Intermediate (90min)</span>
-                                    <span>R800/month</span>
-                                </div>
-                                <div class="price-list-item">
-                                    <span>Squad Level (2 hours)</span>
-                                    <span>R1,000/month</span>
-                                </div>
-                                <div class="price-list-item">
-                                    <span>Individual Coaching</span>
-                                    <span>R400/30min</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="coach-whatsapp-btn-container" style="padding: 0 2rem 2rem;">
-                        <a href="https://wa.me/27837031434" class="coach-whatsapp-btn" target="_blank">
-                            <i class="fab fa-whatsapp"></i>
-                            WhatsApp Wayne
-                        </a>
-                    </div>
-                </div>
-
-                <div class="coach-card">
-                    <div class="coach-image">
-                        <img src="jaysoncerovich.jpg" alt="Wayne Kets" />
-                    </div>
-                    <div class="coach-info">
-                        <h3>Jayson Cerovich</h3>
-                        <p class="coach-title">Tennis & Fitness Coach</p>
-                        <p>With 15+ years of experience and training with German ex-pro Marc Kevin Goellner, Jayson helps players reach their goals through dedication and commitment while ensuring everyone has fun.</p>
-                        <div class="coach-pricing">
-                            <h4>Coaching Fees</h4>
-                            <div class="price-list">
-                                <div class="price-list-item">
-                                    <span>Squad Level</span>
-                                    <span>R900/month</span>
-                                </div>
-                                <div class="price-list-item">
-                                    <span>Individual Coaching</span>
-                                    <span>R370/30min</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="coach-whatsapp-btn-container" style="padding: 0 2rem 2rem;">
-                        <a href="https://wa.me/27834159042" class="coach-whatsapp-btn" target="_blank">
-                            <i class="fab fa-whatsapp"></i>
-                            WhatsApp Jayson
-                        </a>
-                    </div>
-                </div>
-				
-				
-                <div class="coach-card">
-                    <div class="coach-image">
-                        <img src="jdta.jpg" alt="Jamie Davis Tennis Academy" />
-                    </div>
-                    <div class="coach-info">
-                        <h3>Jamie Davis Tennis Academy</h3>
-                        <p class="coach-title">High-Performance Tennis Academy</p>
-                        <p>Jamie Davis Tennis Academy (JDTA) is a professional high-performance tennis academy based at the Boskruin Tennis Club. Founded in 2023, JDTA offers professional coaching services to all ages and levels, from beginners to high-level players.</p>
-                        <div class="coach-pricing">
-                            <h4>Academy Programs</h4>
-                            <div class="price-list">
-                                <div class="price-list-item">
-                                    <span>All Ages & Skill Levels</span>
-                                    <span>Contact for Details</span>
-                                </div>
-                                <div class="price-list-item">
-                                    <span>High-Performance Training</span>
-                                    <span>Available</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="coach-whatsapp-btn-container" style="padding: 0 2rem 2rem;">
-                        <a href="https://wa.me/27718689388" class="coach-whatsapp-btn" target="_blank">
-                            <i class="fab fa-whatsapp"></i>
-                            WhatsApp Jamie Davis
-                        </a>
-                    </div>
-                </div>
-
-                <div class="coach-card">
-                    <div class="coach-image">
-                        <i class="fas fa-user-tie"></i>
-                    </div>
-                    <div class="coach-info">
-                        <h3>Preatchy Dlamini</h3>
-                        <p class="coach-title">Tennis Coach</p>
-                        <p>Preatchy offers personalized coaching to help players develop their skills and reach their full potential on the court.</p>
-                        <div class="coach-pricing">
-                            <h4>Coaching Fees</h4>
-                            <div class="price-list">
-                                <div class="price-list-item">
-                                    <span>Individual Coaching</span>
-                                    <span>R270/30min</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="coach-whatsapp-btn-container" style="padding: 0 2rem 2rem;">
-                        <a href="https://wa.me/27738311751" class="coach-whatsapp-btn" target="_blank">
-                            <i class="fab fa-whatsapp"></i>
-                            WhatsApp Preatchy
-                        </a>
-                    </div>
-                </div>
-
+            <div class="coaches-grid" id="coachesGrid">
+                <!-- Coaches loaded dynamically from coaches.json -->
             </div>
+            <script>
+                (async function loadCoaches() {
+                    try {
+                        const response = await fetch('coaches.json');
+                        const coaches = await response.json();
+                        const grid = document.getElementById('coachesGrid');
+                        grid.innerHTML = coaches.map(coach => {
+                            const firstName = coach.name.split(' ')[0];
+                            const imageHtml = coach.image
+                                ? '<img src="' + coach.image + '" alt="' + coach.name + '" />'
+                                : '<i class="fas fa-user-tie"></i>';
+                            const pricingHtml = coach.pricing.map(p =>
+                                '<div class="price-list-item"><span>' + p.label + '</span><span>' + p.price + '</span></div>'
+                            ).join('');
+                            return '<div class="coach-card">' +
+                                '<div class="coach-image">' + imageHtml + '</div>' +
+                                '<div class="coach-info">' +
+                                    '<h3>' + coach.name + '</h3>' +
+                                    '<p class="coach-title">' + coach.title + '</p>' +
+                                    '<p>' + coach.bio + '</p>' +
+                                    '<div class="coach-pricing">' +
+                                        '<h4>' + (coach.pricingHeader || 'Coaching Fees') + '</h4>' +
+                                        '<div class="price-list">' + pricingHtml + '</div>' +
+                                    '</div>' +
+                                '</div>' +
+                                '<div class="coach-whatsapp-btn-container" style="padding: 0 2rem 2rem;">' +
+                                    '<a href="https://wa.me/' + coach.whatsapp + '" class="coach-whatsapp-btn" target="_blank">' +
+                                        '<i class="fab fa-whatsapp"></i> WhatsApp ' + firstName +
+                                    '</a>' +
+                                '</div>' +
+                            '</div>';
+                        }).join('');
+                    } catch (error) {
+                        console.error('Error loading coaches:', error);
+                    }
+                })();
+            </script>
             <div style="text-align: center; margin-top: 3rem;">
                 <a href="mailto:tennis@waynekets.co.za" class="btn btn-primary">Enquire About Lessons</a>
                 <p style="margin-top: 1rem; color: var(--text-light);">
@@ -2405,9 +3287,41 @@
                 <h2>Upcoming Events</h2>
                 <p>Stay updated with our latest tennis events, tournaments, and activities</p>
             </div>
+
+            <!-- View Toggle -->
+            <div style="display: flex; justify-content: center; margin-bottom: 2rem;">
+                <div class="view-toggle">
+                    <button class="view-toggle-btn" id="gridViewBtnPublic" onclick="switchPublicView('grid')">
+                        <i class="fas fa-th-large"></i>
+                    </button>
+                    <button class="view-toggle-btn active" id="tableViewBtnPublic" onclick="switchPublicView('table')">
+                        <i class="fas fa-list"></i>
+                    </button>
+                </div>
+            </div>
+
             <div class="calendar-grid" id="calendarGrid">
                 <!-- Events will be loaded dynamically -->
             </div>
+
+            <div class="events-table" id="calendarTable">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Event</th>
+                            <th>Organizer</th>
+                            <th>Type</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody id="calendarTableBody">
+                        <!-- Table rows will be loaded here dynamically -->
+                    </tbody>
+                </table>
+            </div>
+
             <div class="calendar-empty" id="calendarEmpty" style="display: none;">
                 <i class="fas fa-calendar-times"></i>
                 <h3>No Upcoming Events</h3>
@@ -2603,25 +3517,30 @@
                     
                     <div class="contact-form">
                         <h3>Send Us a Message</h3>
-                        <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+                        <form id="contactForm" onsubmit="sendContactEmail(event)">
+                            <input type="hidden" name="to_email" value="info@boskruintennis.co.za">
                             <div class="form-field">
-                                <label for="name">Full Name</label>
-                                <input type="text" id="name" name="name" required>
+                                <label for="contact_name">Full Name</label>
+                                <input type="text" id="contact_name" name="from_name" required>
                             </div>
                             <div class="form-field">
-                                <label for="email">Email Address</label>
-                                <input type="email" id="email" name="email" required>
+                                <label for="contact_email">Email Address</label>
+                                <input type="email" id="contact_email" name="from_email" required>
                             </div>
                             <div class="form-field">
-                                <label for="subject">Subject</label>
-                                <input type="text" id="subject" name="subject" required>
+                                <label for="contact_subject">Subject</label>
+                                <input type="text" id="contact_subject" name="subject" required>
                             </div>
                             <div class="form-field">
-                                <label for="message">Message</label>
-                                <textarea id="message" name="message" required></textarea>
+                                <label for="contact_message">Message</label>
+                                <textarea id="contact_message" name="message" required></textarea>
                             </div>
-                            <button type="submit" class="submit-btn">Send Message</button>
+                            <button type="submit" class="submit-btn">
+                                <span class="btn-text">Send Message</span>
+                                <span class="btn-loading" style="display: none;"><i class="fas fa-spinner fa-spin"></i> Sending...</span>
+                            </button>
                         </form>
+                        <div id="contactFormStatus" style="margin-top: 1rem; text-align: center; display: none;"></div>
                     </div>
                 </div>
             </div>
@@ -2633,7 +3552,7 @@
             <div class="footer-section">
                 <h3>Boskruin Tennis Club</h3>
                 <p>Established in 1993, Boskruin Tennis Club is one of Johannesburg's premier tennis communities, offering world-class facilities and a welcoming atmosphere for players of all levels.</p>
-                <div class="social-links">
+                <!-- <div class="social-links">
                     <a href="https://www.instagram.com/boskruintennisclub/" target="_blank" class="social-link">
                         <i class="fab fa-instagram"></i>
                     </a>
@@ -2643,7 +3562,7 @@
                     <a href="https://wa.me/27837031434" target="_blank" class="social-link">
                         <i class="fab fa-whatsapp"></i>
                     </a>
-                </div>
+                </div> -->
             </div>
             <div class="footer-section">
                 <h3>Quick Links</h3>
@@ -2667,7 +3586,13 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>© 2025 Boskruin Tennis Club. All rights reserved. | <a href="#" style="color: var(--accent-color);">Privacy Policy</a></p>
+            <p>© <script>document.write(new Date().getFullYear())</script> Boskruin Tennis Club. All rights reserved. | <a href="#" style="color: var(--accent-color);">Privacy Policy</a></p>
+            <p style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.8;">
+                Website crafted with care by <strong>Chris Cousens</strong>.
+                Looking for a website or digital solution?
+                <a href="mailto:cousens@gmail.com" style="color: var(--accent-color); text-decoration: underline;">Email</a> or
+                <a href="https://wa.me/27846261552" style="color: var(--accent-color); text-decoration: underline;">WhatsApp</a> to bring your vision to life.
+            </p>
         </div>
     </footer>
 
@@ -2682,6 +3607,16 @@
             navMenu.classList.toggle('active');
         }
 
+        // Auto-close mobile menu when clicking a link
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                const navMenu = document.getElementById('navMenu');
+                if (navMenu.classList.contains('active')) {
+                    navMenu.classList.remove('active');
+                }
+            });
+        });
+
         // Navbar Scroll Effect
         window.addEventListener('scroll', function() {
             const navbar = document.querySelector('.navbar');
@@ -2691,6 +3626,125 @@
                 navbar.classList.remove('scrolled');
             }
         });
+
+        // ----------------------------------------------------
+        // ✅ EMAILJS CONFIGURATION
+        // ----------------------------------------------------
+
+        // Initialize EmailJS with your Public Key
+        (function() {
+            emailjs.init('ORzlasdcn0K_wWlmR');
+        })();
+
+        // Contact Form Submission
+        function sendContactEmail(event) {
+            event.preventDefault();
+
+            const form = event.target;
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const btnText = submitBtn.querySelector('.btn-text');
+            const btnLoading = submitBtn.querySelector('.btn-loading');
+            const statusDiv = document.getElementById('contactFormStatus');
+
+            // Show loading state
+            btnText.style.display = 'none';
+            btnLoading.style.display = 'inline';
+            submitBtn.disabled = true;
+            statusDiv.style.display = 'none';
+
+            // Send email using EmailJS
+            emailjs.sendForm('service_btc_info', 'template_generalenquirie', form)
+                .then(function() {
+                    // Success
+                    statusDiv.innerHTML = '<p style="color: var(--success-color); font-weight: 600;"><i class="fas fa-check-circle"></i> Message sent successfully! We\'ll be in touch soon.</p>';
+                    statusDiv.style.display = 'block';
+                    form.reset();
+                }, function(error) {
+                    // Error
+                    statusDiv.innerHTML = '<p style="color: #dc3545; font-weight: 600;"><i class="fas fa-exclamation-circle"></i> Failed to send message. Please try again or contact us directly.</p>';
+                    statusDiv.style.display = 'block';
+                    console.error('EmailJS Error:', error);
+                })
+                .finally(function() {
+                    // Reset button state
+                    btnText.style.display = 'inline';
+                    btnLoading.style.display = 'none';
+                    submitBtn.disabled = false;
+                });
+        }
+
+        // Membership Application Form Submission
+        function sendMembershipEmail(event) {
+            event.preventDefault();
+
+            // Build selected packages list
+            let packagesList = '';
+            Object.keys(packageCounts).forEach(key => {
+                const count = packageCounts[key];
+                if (count > 0) {
+                    const pkg = packages[key];
+                    packagesList += `${pkg.name} × ${count} (R${(count * pkg.price).toLocaleString('en-US')})\n`;
+                }
+            });
+
+            // Calculate total
+            let total = 0;
+            Object.keys(packageCounts).forEach(key => {
+                total += packageCounts[key] * packages[key].price;
+            });
+
+            // Get user's additional message
+            const userMessage = document.getElementById('applicantMessage').value;
+
+            // Combine package info with user's message
+            const fullMessage = `SELECTED MEMBERSHIP PACKAGES:\n\n${packagesList}\nTOTAL ANNUAL FEE: R${total.toLocaleString('en-US')}\n\n` +
+                (userMessage ? `ADDITIONAL INFORMATION:\n${userMessage}` : 'No additional information provided.');
+
+            // Populate hidden fields
+            document.getElementById('selectedPackages').value = packagesList;
+            document.getElementById('totalAmount').value = 'R' + total.toLocaleString('en-US');
+
+            // Update message field with complete information
+            document.getElementById('applicantMessage').value = fullMessage;
+
+            const form = event.target;
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const btnText = submitBtn.querySelector('.btn-text');
+            const btnLoading = submitBtn.querySelector('.btn-loading');
+            const statusDiv = document.getElementById('membershipFormStatus');
+
+            // Show loading state
+            btnText.style.display = 'none';
+            btnLoading.style.display = 'inline';
+            submitBtn.disabled = true;
+            statusDiv.style.display = 'none';
+
+            // Send email using EmailJS
+            emailjs.sendForm('service_btc_accounts', 'template_membershipqueri', form)
+                .then(function() {
+                    // Success
+                    statusDiv.innerHTML = '<p style="color: var(--success-color); font-weight: 600;"><i class="fas fa-check-circle"></i> Application submitted successfully! We\'ll contact you shortly.</p>';
+                    statusDiv.style.display = 'block';
+
+                    // Reset form and close modal after delay
+                    setTimeout(function() {
+                        closeMembershipModal();
+                        form.reset();
+                        statusDiv.style.display = 'none';
+                    }, 3000);
+                }, function(error) {
+                    // Error
+                    statusDiv.innerHTML = '<p style="color: #dc3545; font-weight: 600;"><i class="fas fa-exclamation-circle"></i> Failed to submit application. Please try again.</p>';
+                    statusDiv.style.display = 'block';
+                    console.error('EmailJS Error:', error);
+                })
+                .finally(function() {
+                    // Reset button state
+                    btnText.style.display = 'inline';
+                    btnLoading.style.display = 'none';
+                    submitBtn.disabled = false;
+                });
+        }
 
         // ----------------------------------------------------
         // ✅ CORRECTED MEMBERSHIP CALCULATOR LOGIC
@@ -2722,6 +3776,20 @@
             junior: 0,
             pensionerSocial: 0,
             pensionerLeague: 0
+        };
+
+        // Package definitions with names and prices for modal display
+        const packages = {
+            adultLeague: { name: 'Adult League', price: 3820 },
+            adultSocial: { name: 'Adult Social', price: 3350 },
+            coupleLeague: { name: 'Couple League', price: 6190 },
+            coupleSocial: { name: 'Couple Social', price: 5250 },
+            coupleMixed: { name: 'Couple 1x Social 1x League', price: 5720 },
+            studentSocial: { name: 'Student 18+ Social', price: 1650 },
+            studentLeague: { name: 'Student 18+ League', price: 2120 },
+            junior: { name: 'Junior & Scholar (Under 18)', price: 1550 },
+            pensionerSocial: { name: 'Pensioner Social', price: 1550 },
+            pensionerLeague: { name: 'Pensioner League', price: 2020 }
         };
 
         // 3. New update function called by the buttons (updatePackageCount)
@@ -2803,6 +3871,60 @@
         // END CORRECTED CALCULATOR LOGIC
         // ----------------------------------------------------
 
+        // Membership Application Modal Functions
+        function openMembershipModal() {
+            const modal = document.getElementById('membershipModal');
+            const summary = document.getElementById('selectedPackagesSummary');
+
+            // Check if any packages are selected
+            const hasSelections = Object.values(packageCounts).some(count => count > 0);
+
+            if (!hasSelections) {
+                alert('Please select at least one membership package before applying.');
+                return;
+            }
+
+            // Build the summary of selected packages
+            let summaryHTML = '<h3><i class="fas fa-shopping-cart"></i> Your Selected Packages</h3>';
+
+            Object.keys(packageCounts).forEach(key => {
+                const count = packageCounts[key];
+                if (count > 0) {
+                    const pkg = packages[key];
+                    const itemTotal = count * pkg.price;
+                    summaryHTML += `
+                        <div class="package-line">
+                            <span>${pkg.name} × ${count}</span>
+                            <strong>R${itemTotal.toLocaleString('en-US')}</strong>
+                        </div>
+                    `;
+                }
+            });
+
+            // Calculate and add total
+            let total = 0;
+            Object.keys(packageCounts).forEach(key => {
+                total += packageCounts[key] * packages[key].price;
+            });
+
+            summaryHTML += `
+                <div class="package-line">
+                    <span><strong>Total Annual Fee</strong></span>
+                    <strong style="color: var(--secondary-color); font-size: 1.2rem;">R${total.toLocaleString('en-US')}</strong>
+                </div>
+            `;
+
+            summary.innerHTML = summaryHTML;
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMembershipModal() {
+            const modal = document.getElementById('membershipModal');
+            modal.classList.remove('show');
+            document.body.style.overflow = 'auto';
+        }
+
         // FAQ Toggle
         function toggleFAQ(element) {
             const faqItem = element.parentElement;
@@ -2822,15 +3944,18 @@
         // Smooth scroll for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                    // Close mobile menu if open
-                    document.getElementById('navMenu').classList.remove('active');
+                const href = this.getAttribute('href');
+                if (href && href !== '#') {
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                        // Close mobile menu if open
+                        document.getElementById('navMenu').classList.remove('active');
+                    }
                 }
             });
         });
@@ -2848,11 +3973,12 @@
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('fade-in-up');
+                    observer.unobserve(entry.target); // Stop observing after animation triggers once
                 }
             });
         }, observerOptions);
 
-        document.querySelectorAll('.benefit-card, .coach-card, .social-card').forEach(el => {
+        document.querySelectorAll('.benefit-card').forEach(el => {
             observer.observe(el);
         });
     </script>
@@ -2869,7 +3995,7 @@
                 const lon = 28.01;
                 
                 const response = await fetch(
-                    `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m&hourly=temperature_2m,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=Africa/Johannesburg`
+                    `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m&hourly=temperature_2m,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min,wind_speed_10m_max&timezone=Africa/Johannesburg`
                 );
                 
                 const data = await response.json();
@@ -2929,8 +4055,8 @@
                 1: 'Mainly clear',
                 2: 'Partly cloudy',
                 3: 'Overcast',
-                45: 'Foggy',
-                48: 'Foggy',
+                45: 'Misty',
+                48: 'Misty',
                 51: 'Light drizzle',
                 53: 'Drizzle',
                 55: 'Heavy drizzle',
@@ -2949,49 +4075,295 @@
             };
             return descriptions[code] || 'Unknown';
         }
-        
+
+        function getWeatherBackground(code, isDay = true) {
+            const dayBackgrounds = {
+                // Clear/Sunny (0-1)
+                0: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 50%, #a8e6f3 100%)',
+                1: 'linear-gradient(135deg, #5ca9fb 0%, #6ac5fe 50%, #b8e8fc 100%)',
+
+                // Partly cloudy (2)
+                2: 'linear-gradient(135deg, #89b5e1 0%, #a8c5dd 50%, #c5dae8 100%)',
+
+                // Overcast (3)
+                3: 'linear-gradient(135deg, #8e9eab 0%, #b6c2cf 50%, #d4dce4 100%)',
+
+                // Misty (45-48)
+                45: 'linear-gradient(135deg, #bdc3c7 0%, #dfe4e8 50%, #ecf0f1 100%)',
+                48: 'linear-gradient(135deg, #bdc3c7 0%, #dfe4e8 50%, #ecf0f1 100%)',
+
+                // Drizzle (51-55)
+                51: 'linear-gradient(135deg, #667eea 0%, #89a4e8 50%, #afc3f0 100%)',
+                53: 'linear-gradient(135deg, #5f72bd 0%, #7b8fc7 50%, #99aad4 100%)',
+                55: 'linear-gradient(135deg, #4b5c94 0%, #6c7db3 50%, #8a9cc8 100%)',
+
+                // Rain (61-65)
+                61: 'linear-gradient(135deg, #4a6fa5 0%, #6688bb 50%, #89a4d1 100%)',
+                63: 'linear-gradient(135deg, #3d5a80 0%, #5c7a9d 50%, #7e9bbd 100%)',
+                65: 'linear-gradient(135deg, #2e4057 0%, #4a5f7b 50%, #6b819e 100%)',
+
+                // Snow (71-75)
+                71: 'linear-gradient(135deg, #e0eafc 0%, #f0f5fa 50%, #ffffff 100%)',
+                73: 'linear-gradient(135deg, #d4e2f1 0%, #e8f0f7 50%, #f7fbff 100%)',
+                75: 'linear-gradient(135deg, #c7d9ed 0%, #dce8f4 50%, #f0f6fc 100%)',
+
+                // Showers (80-82)
+                80: 'linear-gradient(135deg, #4e73a8 0%, #6a8fbe 50%, #8aaed4 100%)',
+                81: 'linear-gradient(135deg, #3b5d8c 0%, #5678a8 50%, #7395c2 100%)',
+                82: 'linear-gradient(135deg, #2a4a73 0%, #43628f 50%, #5f7fab 100%)',
+
+                // Thunderstorm (95-99)
+                95: 'linear-gradient(135deg, #373b44 0%, #4a5160 50%, #6d7583 100%)',
+                96: 'linear-gradient(135deg, #2d3142 0%, #434858 50%, #5d6270 100%)',
+                99: 'linear-gradient(135deg, #1f2533 0%, #363b4d 50%, #4d5567 100%)'
+            };
+
+            const nightBackgrounds = {
+                // Clear night (0-1) - starry sky
+                0: 'linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%)',
+                1: 'linear-gradient(135deg, #1a2a6c 0%, #2e4482 50%, #4a628f 100%)',
+
+                // Partly cloudy night (2)
+                2: 'linear-gradient(135deg, #2c3e50 0%, #3d5161 50%, #506374 100%)',
+
+                // Overcast night (3)
+                3: 'linear-gradient(135deg, #232526 0%, #414345 50%, #5a5c5e 100%)',
+
+                // Foggy night (45-48)
+                45: 'linear-gradient(135deg, #4b4f56 0%, #5d6169 50%, #73767d 100%)',
+                48: 'linear-gradient(135deg, #4b4f56 0%, #5d6169 50%, #73767d 100%)',
+
+                // Drizzle night (51-55)
+                51: 'linear-gradient(135deg, #2c3e50 0%, #3f5468 50%, #556d82 100%)',
+                53: 'linear-gradient(135deg, #1e3c50 0%, #2f5167 50%, #43697f 100%)',
+                55: 'linear-gradient(135deg, #0d2738 0%, #1e4156 50%, #315b70 100%)',
+
+                // Rain night (61-65)
+                61: 'linear-gradient(135deg, #1a3a52 0%, #2d5268 50%, #436a7f 100%)',
+                63: 'linear-gradient(135deg, #0f2537 0%, #1f3d53 50%, #32566d 100%)',
+                65: 'linear-gradient(135deg, #0a1929 0%, #1a2f42 50%, #2b465a 100%)',
+
+                // Snow night (71-75)
+                71: 'linear-gradient(135deg, #4d5f7f 0%, #6a7c98 50%, #8899b0 100%)',
+                73: 'linear-gradient(135deg, #3d5066 0%, #566982 50%, #70849c 100%)',
+                75: 'linear-gradient(135deg, #2d4157 0%, #465b73 50%, #61778f 100%)',
+
+                // Showers night (80-82)
+                80: 'linear-gradient(135deg, #1e3651 0%, #314d6a 50%, #476585 100%)',
+                81: 'linear-gradient(135deg, #142c42 0%, #26445d 50%, #3b5d78 100%)',
+                82: 'linear-gradient(135deg, #0c1f35 0%, #1b374d 50%, #2d5065 100%)',
+
+                // Thunderstorm night (95-99)
+                95: 'linear-gradient(135deg, #1a1d29 0%, #2b2e3b 50%, #3d4050 100%)',
+                96: 'linear-gradient(135deg, #0d0f1a 0%, #1e202b 50%, #30323d 100%)',
+                99: 'linear-gradient(135deg, #000000 0%, #1a1c25 50%, #2d2f38 100%)'
+            };
+
+            const backgrounds = isDay ? dayBackgrounds : nightBackgrounds;
+            return backgrounds[code] || (isDay ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' : 'linear-gradient(135deg, #2c3e50 0%, #3f4c6b 100%)');
+        }
+
+        function getWeatherAnimation(code) {
+            // Rain animation (drizzle and rain)
+            if ([51, 53, 55, 61, 63, 65, 80, 81, 82].includes(code)) {
+                const dropCount = code >= 63 ? 50 : code >= 61 ? 30 : 20;
+                let drops = '';
+                for (let i = 0; i < dropCount; i++) {
+                    const left = Math.random() * 100;
+                    const duration = 0.5 + Math.random() * 0.5;
+                    const delay = Math.random() * 2;
+                    drops += `<div class="rain-drop" style="left: ${left}%; animation-duration: ${duration}s; animation-delay: ${delay}s;"></div>`;
+                }
+                return `<div class="weather-animation">${drops}</div>`;
+            }
+
+            // Snow animation
+            if ([71, 73, 75].includes(code)) {
+                const flakeCount = code >= 73 ? 40 : 25;
+                let flakes = '';
+                for (let i = 0; i < flakeCount; i++) {
+                    const left = Math.random() * 100;
+                    const duration = 3 + Math.random() * 4;
+                    const delay = Math.random() * 5;
+                    const size = 4 + Math.random() * 6;
+                    flakes += `<div class="snow-flake" style="left: ${left}%; animation-duration: ${duration}s; animation-delay: ${delay}s; width: ${size}px; height: ${size}px;"></div>`;
+                }
+                return `<div class="weather-animation">${flakes}</div>`;
+            }
+
+            // Thunderstorm (lightning + rain)
+            if ([95, 96, 99].includes(code)) {
+                const dropCount = 60;
+                let drops = '';
+                for (let i = 0; i < dropCount; i++) {
+                    const left = Math.random() * 100;
+                    const duration = 0.4 + Math.random() * 0.4;
+                    const delay = Math.random() * 2;
+                    drops += `<div class="rain-drop" style="left: ${left}%; animation-duration: ${duration}s; animation-delay: ${delay}s;"></div>`;
+                }
+                return `<div class="weather-animation">${drops}<div class="lightning-flash"></div></div>`;
+            }
+
+            // Cloudy (floating clouds)
+            if ([2, 3].includes(code)) {
+                let clouds = '';
+                const cloudCount = 3;
+                const durations = [30, 45, 60];
+                const startPositions = [-10, 30, 70];
+                for (let i = 0; i < cloudCount; i++) {
+                    const top = 10 + Math.random() * 70;
+                    const left = startPositions[i];
+                    const size = 2 + Math.random() * 2;
+                    const opacity = 0.3 + Math.random() * 0.4;
+                    const duration = durations[i];
+                    clouds += `<i class="fas fa-cloud cloud-shape" style="top: ${top}%; left: ${left}%; font-size: ${size}rem; animation-duration: ${duration}s; opacity: ${opacity};"></i>`;
+                }
+                return `<div class="weather-animation">${clouds}</div>`;
+            }
+
+            // Clear night (stars)
+            if ([0, 1].includes(code)) {
+                const hour = new Date().getHours();
+                const isNight = hour < 6 || hour > 18;
+                if (isNight) {
+                    let stars = '';
+                    for (let i = 0; i < 50; i++) {
+                        const left = Math.random() * 100;
+                        const top = Math.random() * 100;
+                        const duration = 1 + Math.random() * 3;
+                        const delay = Math.random() * 3;
+                        stars += `<div class="star" style="left: ${left}%; top: ${top}%; animation-duration: ${duration}s; animation-delay: ${delay}s;"></div>`;
+                    }
+                    return `<div class="weather-animation">${stars}</div>`;
+                }
+            }
+
+            return '';
+        }
+
+        function getHourlyWeatherAnimation(code, hourTime) {
+            const hour = hourTime.getHours();
+            const isNight = hour < 6 || hour > 18;
+
+            // Rain animation (simplified for small containers)
+            if ([51, 53, 55, 61, 63, 65, 80, 81, 82].includes(code)) {
+                const dropCount = code >= 63 ? 8 : code >= 61 ? 5 : 3;
+                let drops = '';
+                for (let i = 0; i < dropCount; i++) {
+                    const left = Math.random() * 100;
+                    const duration = 0.5 + Math.random() * 0.5;
+                    const delay = Math.random() * 2;
+                    drops += `<div class="rain-drop" style="left: ${left}%; animation-duration: ${duration}s; animation-delay: ${delay}s; animation-iteration-count: infinite;"></div>`;
+                }
+                return `<div class="weather-animation">${drops}</div>`;
+            }
+
+            // Snow animation (simplified)
+            if ([71, 73, 75].includes(code)) {
+                const flakeCount = code >= 73 ? 6 : 4;
+                let flakes = '';
+                for (let i = 0; i < flakeCount; i++) {
+                    const left = Math.random() * 100;
+                    const duration = 3 + Math.random() * 4;
+                    const delay = Math.random() * 5;
+                    const size = 3 + Math.random() * 4;
+                    flakes += `<div class="snow-flake" style="left: ${left}%; animation-duration: ${duration}s; animation-delay: ${delay}s; animation-iteration-count: infinite; width: ${size}px; height: ${size}px; background: rgba(200,220,255,0.9); box-shadow: 0 0 3px rgba(200,220,255,0.5);"></div>`;
+                }
+                return `<div class="weather-animation">${flakes}</div>`;
+            }
+
+            // Thunderstorm (simplified)
+            if ([95, 96, 99].includes(code)) {
+                const dropCount = 10;
+                let drops = '';
+                for (let i = 0; i < dropCount; i++) {
+                    const left = Math.random() * 100;
+                    const duration = 0.4 + Math.random() * 0.4;
+                    const delay = Math.random() * 2;
+                    drops += `<div class="rain-drop" style="left: ${left}%; animation-duration: ${duration}s; animation-delay: ${delay}s; animation-iteration-count: infinite;"></div>`;
+                }
+                return `<div class="weather-animation">${drops}<div class="lightning-flash"></div></div>`;
+            }
+
+            // Cloudy (simplified - just 1 cloud)
+            if ([2, 3].includes(code)) {
+                const opacity = isNight ? 0.2 : 0.25;
+                const cloudColor = isNight ? 'rgba(255, 255, 255, 0.3)' : 'rgba(150, 160, 170, 0.4)';
+                return `<div class="weather-animation"><i class="fas fa-cloud cloud-shape" style="top: 50%; left: -10%; font-size: 1.5rem; animation-duration: 40s; animation-iteration-count: infinite; opacity: ${opacity}; color: ${cloudColor};"></i></div>`;
+            }
+
+            // Clear night (stars - simplified)
+            if ([0, 1].includes(code) && isNight) {
+                let stars = '';
+                for (let i = 0; i < 8; i++) {
+                    const left = Math.random() * 100;
+                    const top = Math.random() * 100;
+                    const duration = 1 + Math.random() * 3;
+                    const delay = Math.random() * 3;
+                    stars += `<div class="star" style="left: ${left}%; top: ${top}%; animation-duration: ${duration}s; animation-delay: ${delay}s; animation-iteration-count: infinite;"></div>`;
+                }
+                return `<div class="weather-animation">${stars}</div>`;
+            }
+
+            // No additional animation overlay needed - base backgrounds are sufficient
+            return '';
+        }
+
         function displayCompactWeather(data) {
             const current = data.current;
             const daily = data.daily;
-            
+
+            const now = new Date();
+            const currentHour = now.getHours();
+            const isDay = currentHour >= 6 && currentHour < 18;
+
             const html = `
-                <div class="compact-weather-display">
-                    <div class="compact-current">
-                        <i class="${getWeatherIcon(current.weather_code)} compact-icon"></i>
-                        <div class="compact-temp-info">
-                            <div class="compact-temp">${Math.round(current.temperature_2m)}°C</div>
-                            <div class="compact-desc">${getWeatherDescription(current.weather_code)}</div>
+                <div class="compact-weather-display" style="background: ${getWeatherBackground(current.weather_code, isDay)}; position: relative; overflow: hidden;">
+                    ${getWeatherAnimation(current.weather_code)}
+                    <div class="compact-weather-content">
+                        <!-- Main Weather Info -->
+                        <div class="compact-current">
+                            <i class="${getWeatherIcon(current.weather_code)} compact-icon" style="color: white; text-shadow: 0 2px 8px rgba(0,0,0,0.3);"></i>
+                            <div class="compact-temp-info">
+                                <div class="compact-temp" style="color: white; text-shadow: 0 2px 8px rgba(0,0,0,0.3);">${Math.round(current.temperature_2m)}°C</div>
+                                <div class="compact-desc" style="color: white; text-shadow: 0 1px 5px rgba(0,0,0,0.3);">${getWeatherDescription(current.weather_code)}</div>
+                            </div>
                         </div>
+
+                        <!-- Weather Details -->
+                        <div class="compact-details" style="border-left-color: rgba(255,255,255,0.3);">
+                            <div class="compact-detail">
+                                <i class="fas fa-temperature-high" style="color: white;"></i>
+                                <span class="compact-detail-value" style="color: white;">${Math.round(daily.temperature_2m_max[0])}°</span>
+                                <span class="compact-detail-label" style="color: rgba(255,255,255,0.85);">High</span>
+                            </div>
+                            <div class="compact-detail">
+                                <i class="fas fa-temperature-low" style="color: white;"></i>
+                                <span class="compact-detail-value" style="color: white;">${Math.round(daily.temperature_2m_min[0])}°</span>
+                                <span class="compact-detail-label" style="color: rgba(255,255,255,0.85);">Low</span>
+                            </div>
+                            <div class="compact-detail">
+                                <i class="fas fa-tint" style="color: white;"></i>
+                                <span class="compact-detail-value" style="color: white;">${current.relative_humidity_2m}%</span>
+                                <span class="compact-detail-label" style="color: rgba(255,255,255,0.85);">Humidity</span>
+                            </div>
+                            <div class="compact-detail">
+                                <i class="fas fa-wind" style="color: white;"></i>
+                                <span class="compact-detail-value" style="color: white;">${Math.round(current.wind_speed_10m)} km/h</span>
+                                <span class="compact-detail-label" style="color: rgba(255,255,255,0.85);">Wind</span>
+                            </div>
+                        </div>
+
+                        <!-- View Full Forecast Button -->
+                        <a href="#weather" class="view-full-weather" style="color: white; background: rgba(255,255,255,0.2); backdrop-filter: blur(10px);">
+                            View Full Forecast
+                            <i class="fas fa-arrow-down"></i>
+                        </a>
                     </div>
-                    <div class="compact-details">
-                        <div class="compact-detail">
-                            <i class="fas fa-temperature-high"></i>
-                            <span class="compact-detail-value">${Math.round(daily.temperature_2m_max[0])}°</span>
-                            <span class="compact-detail-label">High</span>
-                        </div>
-                        <div class="compact-detail">
-                            <i class="fas fa-temperature-low"></i>
-                            <span class="compact-detail-value">${Math.round(daily.temperature_2m_min[0])}°</span>
-                            <span class="compact-detail-label">Low</span>
-                        </div>
-                        <div class="compact-detail">
-                            <i class="fas fa-tint"></i>
-                            <span class="compact-detail-value">${current.relative_humidity_2m}%</span>
-                            <span class="compact-detail-label">Humidity</span>
-                        </div>
-						<div class="compact-detail">
-							<i class="fas fa-wind"></i>
-							<span class="compact-detail-value">${Math.round(current.wind_speed_10m)} km/h</span>
-							<span class="compact-detail-label">Wind</span>
-						</div>
-                    </div>
-                    <a href="#weather" class="view-full-weather">
-                        View Full Forecast
-                        <i class="fas fa-arrow-down"></i>
-                    </a>
+                    <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.1); z-index: 1;"></div>
                 </div>
             `;
-            
+
             document.getElementById('compactWeatherWidget').innerHTML = html;
         }
         
@@ -3001,7 +4373,9 @@
             const daily = data.daily;
             
             const now = new Date();
-            
+            const currentHour = now.getHours();
+            const isDay = currentHour >= 6 && currentHour < 18;
+
             // Get hours every 2 hours for the next 24 hours
             const hourlyData = [];
             for (let i = 0; i < 24; i += 2) {
@@ -3015,11 +4389,11 @@
                     });
                 }
             }
-            
+
             // Split into AM and PM
             const amHours = hourlyData.filter(h => h.hour < 12);
             const pmHours = hourlyData.filter(h => h.hour >= 12);
-            
+
             // Get daily forecast
             const dailyData = [];
             for (let i = 0; i < 7; i++) {
@@ -3027,28 +4401,33 @@
                     date: new Date(daily.time[i]),
                     tempMax: Math.round(daily.temperature_2m_max[i]),
                     tempMin: Math.round(daily.temperature_2m_min[i]),
-                    code: daily.weather_code[i]
+                    code: daily.weather_code[i],
+                    windSpeed: Math.round(daily.wind_speed_10m_max[i])
                 });
             }
-            
+
             const html = `
                 <div class="weather-container">
-                    <div class="current-weather">
-                        <i class="${getWeatherIcon(current.weather_code)}" style="font-size: 4rem; color: var(--accent-color);"></i>
-                        <div class="current-temp">${Math.round(current.temperature_2m)}°C</div>
-                        <div class="current-desc">${getWeatherDescription(current.weather_code)}</div>
-                        <div style="font-size: 0.9rem; opacity: 0.9;">Feels like ${Math.round(current.apparent_temperature)}°C</div>
-                        
-                        <div class="current-details">
-                            <div class="detail-item">
-                                <i class="fas fa-tint"></i>
-                                <span>${current.relative_humidity_2m}% Humidity</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-wind"></i>
-                                <span>${Math.round(current.wind_speed_10m)} km/h Wind</span>
+                    <div class="current-weather" style="background: ${getWeatherBackground(current.weather_code, isDay)}; position: relative; overflow: hidden;">
+                        ${getWeatherAnimation(current.weather_code)}
+                        <div style="position: relative; z-index: 2;">
+                            <i class="${getWeatherIcon(current.weather_code)}" style="font-size: 4rem; color: white; text-shadow: 0 2px 10px rgba(0,0,0,0.3);"></i>
+                            <div class="current-temp" style="color: white; text-shadow: 0 2px 10px rgba(0,0,0,0.3);">${Math.round(current.temperature_2m)}°C</div>
+                            <div class="current-desc" style="color: white; text-shadow: 0 2px 10px rgba(0,0,0,0.3);">${getWeatherDescription(current.weather_code)}</div>
+                            <div style="font-size: 0.9rem; opacity: 0.95; color: white; text-shadow: 0 1px 5px rgba(0,0,0,0.3);">Feels like ${Math.round(current.apparent_temperature)}°C</div>
+
+                            <div class="current-details">
+                                <div class="detail-item" style="color: white;">
+                                    <i class="fas fa-tint"></i>
+                                    <span>${current.relative_humidity_2m}% Humidity</span>
+                                </div>
+                                <div class="detail-item" style="color: white;">
+                                    <i class="fas fa-wind"></i>
+                                    <span>${Math.round(current.wind_speed_10m)} km/h Wind</span>
+                                </div>
                             </div>
                         </div>
+                        <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.1); z-index: 1;"></div>
                     </div>
                     
                     <div class="weather-forecasts">
@@ -3060,25 +4439,47 @@
                             ${amHours.length > 0 ? `
                                 <div class="hourly-period-label">AM Hours</div>
                                 <div class="hourly-forecast">
-                                    ${amHours.map(hour => `
-                                        <div class="hour-item">
-                                            <div class="hour-time">${hour.time.getHours()}:00</div>
-                                            <i class="${getWeatherIcon(hour.code)} hour-icon"></i>
-                                            <div class="hour-temp">${hour.temp}°</div>
+                                    ${amHours.map(hour => {
+                                        const currentHourTime = new Date(now);
+                                        currentHourTime.setMinutes(0, 0, 0);
+                                        const isPast = hour.time < currentHourTime;
+                                        const isHourDay = hour.hour >= 6 && hour.hour < 18;
+                                        const bg = getWeatherBackground(hour.code, isHourDay);
+                                        // Use dark text for light backgrounds (clear, overcast, snow, fog during day)
+                                        const lightBg = isHourDay && ([0, 1, 2, 3, 45, 48, 71, 73, 75].includes(hour.code));
+                                        const textColor = lightBg ? '#2c3e50' : 'white';
+                                        const shadowColor = lightBg ? 'rgba(255,255,255,0.5)' : 'rgba(0,0,0,0.3)';
+                                        return `
+                                        <div class="hour-item${isPast ? ' hour-past' : ''}" style="background: ${bg};">
+                                            ${getHourlyWeatherAnimation(hour.code, hour.time)}
+                                            <div class="hour-time" style="position: relative; z-index: 2; color: ${textColor}; text-shadow: 0 1px 3px ${shadowColor};">${hour.time.getHours()}:00</div>
+                                            <i class="${getWeatherIcon(hour.code)} hour-icon" style="position: relative; z-index: 2; color: ${textColor}; text-shadow: 0 1px 3px ${shadowColor};"></i>
+                                            <div class="hour-temp" style="position: relative; z-index: 2; color: ${textColor}; text-shadow: 0 1px 3px ${shadowColor};">${hour.temp}°</div>
                                         </div>
-                                    `).join('')}
+                                    `}).join('')}
                                 </div>
                             ` : ''}
                             ${pmHours.length > 0 ? `
                                 <div class="hourly-period-label">PM Hours</div>
                                 <div class="hourly-forecast">
-                                    ${pmHours.map(hour => `
-                                        <div class="hour-item">
-                                            <div class="hour-time">${hour.time.getHours()}:00</div>
-                                            <i class="${getWeatherIcon(hour.code)} hour-icon"></i>
-                                            <div class="hour-temp">${hour.temp}°</div>
+                                    ${pmHours.map(hour => {
+                                        const currentHourTime = new Date(now);
+                                        currentHourTime.setMinutes(0, 0, 0);
+                                        const isPast = hour.time < currentHourTime;
+                                        const isHourDay = hour.hour >= 6 && hour.hour < 18;
+                                        const bg = getWeatherBackground(hour.code, isHourDay);
+                                        // Use dark text for light backgrounds (clear, overcast, snow, fog during day)
+                                        const lightBg = isHourDay && ([0, 1, 2, 3, 45, 48, 71, 73, 75].includes(hour.code));
+                                        const textColor = lightBg ? '#2c3e50' : 'white';
+                                        const shadowColor = lightBg ? 'rgba(255,255,255,0.5)' : 'rgba(0,0,0,0.3)';
+                                        return `
+                                        <div class="hour-item${isPast ? ' hour-past' : ''}" style="background: ${bg};">
+                                            ${getHourlyWeatherAnimation(hour.code, hour.time)}
+                                            <div class="hour-time" style="position: relative; z-index: 2; color: ${textColor}; text-shadow: 0 1px 3px ${shadowColor};">${hour.time.getHours()}:00</div>
+                                            <i class="${getWeatherIcon(hour.code)} hour-icon" style="position: relative; z-index: 2; color: ${textColor}; text-shadow: 0 1px 3px ${shadowColor};"></i>
+                                            <div class="hour-temp" style="position: relative; z-index: 2; color: ${textColor}; text-shadow: 0 1px 3px ${shadowColor};">${hour.temp}°</div>
                                         </div>
-                                    `).join('')}
+                                    `}).join('')}
                                 </div>
                             ` : ''}
                         </div>
@@ -3090,8 +4491,8 @@
                             </div>
                             <div class="daily-forecast">
                                 ${dailyData.map((day, index) => {
-                                    const dayName = index === 0 ? 'Today' : 
-                                                    index === 1 ? 'Tomorrow' : 
+                                    const dayName = index === 0 ? 'Today' :
+                                                    index === 1 ? 'Tomorrow' :
                                                     day.date.toLocaleDateString('en-US', { weekday: 'long' });
                                     return `
                                         <div class="day-item">
@@ -3101,6 +4502,10 @@
                                             <div class="day-temp">
                                                 <span class="temp-high">${day.tempMax}°</span>
                                                 <span class="temp-low">${day.tempMin}°</span>
+                                            </div>
+                                            <div class="day-wind">
+                                                <i class="fas fa-wind"></i>
+                                                <span>${day.windSpeed} km/h</span>
                                             </div>
                                         </div>
                                     `;
@@ -3122,21 +4527,24 @@
         }
 
         // Calendar Events Loading
+        let calendarUpcomingEvents = [];
+        let currentCalendarView = localStorage.getItem('calendarView') || 'table';
+
         async function loadCalendarEvents() {
             try {
-                const response = await fetch('calendar-events.json');
+                // Add cache-busting to always fetch latest events
+                const response = await fetch(`calendar-events.json?v=${Date.now()}`);
                 const events = await response.json();
 
                 // Filter and sort events
                 const today = new Date();
                 today.setHours(0, 0, 0, 0);
 
-                const upcomingEvents = events
+                calendarUpcomingEvents = events
                     .filter(event => new Date(event.date) >= today)
-                    .sort((a, b) => new Date(a.date) - new Date(b.date))
-                    .slice(0, 6); // Show next 6 events
+                    .sort((a, b) => new Date(a.date) - new Date(b.date));
 
-                renderCalendarEvents(upcomingEvents);
+                renderCalendarEvents(calendarUpcomingEvents);
             } catch (error) {
                 console.error('Error loading calendar events:', error);
                 document.getElementById('calendarEmpty').style.display = 'block';
@@ -3144,32 +4552,74 @@
             }
         }
 
+        function switchPublicView(view) {
+            currentCalendarView = view;
+            localStorage.setItem('calendarView', view);
+
+            document.getElementById('gridViewBtnPublic').classList.toggle('active', view === 'grid');
+            document.getElementById('tableViewBtnPublic').classList.toggle('active', view === 'table');
+
+            renderCalendarEvents(calendarUpcomingEvents);
+        }
+
         function renderCalendarEvents(events) {
             const grid = document.getElementById('calendarGrid');
+            const table = document.getElementById('calendarTable');
+            const tableBody = document.getElementById('calendarTableBody');
             const emptyState = document.getElementById('calendarEmpty');
 
             if (events.length === 0) {
                 grid.style.display = 'none';
+                table.style.display = 'none';
                 emptyState.style.display = 'block';
                 return;
             }
 
-            grid.style.display = 'grid';
             emptyState.style.display = 'none';
 
+            // Check if mobile
+            const isMobile = window.innerWidth <= 768;
+
+            // Force grid view on mobile
+            const viewToUse = isMobile ? 'grid' : currentCalendarView;
+
+            if (viewToUse === 'table') {
+                grid.style.display = '';
+                table.style.display = '';
+                grid.classList.add('hidden');
+                table.classList.add('active');
+                renderCalendarTableView(events, tableBody);
+            } else {
+                grid.style.display = '';
+                table.style.display = '';
+                grid.classList.remove('hidden');
+                table.classList.remove('active');
+                renderCalendarGridView(events, grid);
+            }
+        }
+
+        function renderCalendarGridView(events, grid) {
             grid.innerHTML = events.map(event => `
                 <div class="calendar-event ${event.type}">
-                    <span class="event-type-badge ${event.type}">${event.type}</span>
+                    <span class="event-type-badge ${event.type}">${formatEventType(event.type)}</span>
                     <h3>${event.title}</h3>
                     <div class="event-meta">
                         <div class="event-meta-item">
                             <i class="fas fa-calendar"></i>
                             <span>${formatEventDate(event.date)}</span>
                         </div>
+                        ${event.time ? `
                         <div class="event-meta-item">
                             <i class="fas fa-clock"></i>
                             <span>${formatEventTime(event.time)}</span>
                         </div>
+                        ` : ''}
+                        ${event.organizer ? `
+                        <div class="event-meta-item">
+                            <i class="fas fa-users"></i>
+                            <span>${event.organizer}</span>
+                        </div>
+                        ` : ''}
                     </div>
                     ${event.description ? `<div class="event-description">${event.description}</div>` : ''}
                     ${event.recurring !== 'none' ? `
@@ -3179,6 +4629,21 @@
                         </div>
                     ` : ''}
                 </div>
+            `).join('');
+        }
+
+        function renderCalendarTableView(events, tableBody) {
+            tableBody.innerHTML = events.map(event => `
+                <tr>
+                    <td class="event-title-cell">${event.title}</td>
+                    <td>${event.organizer || '-'}</td>
+                    <td>
+                        <span class="event-type-cell ${event.type}">${formatEventType(event.type)}</span>
+                    </td>
+                    <td>${formatEventDate(event.date)}</td>
+                    <td>${event.time ? formatEventTime(event.time) : 'TBD'}</td>
+                    <td style="max-width: 300px;">${event.description || '-'}</td>
+                </tr>
             `).join('');
         }
 
@@ -3193,6 +4658,7 @@
         }
 
         function formatEventTime(timeStr) {
+            if (!timeStr) return 'TBD';
             const [hours, minutes] = timeStr.split(':');
             const hour = parseInt(hours);
             const ampm = hour >= 12 ? 'PM' : 'AM';
@@ -3212,6 +4678,25 @@
                 'weekly-tuesday-thursday': 'Every Tuesday & Thursday'
             };
             return patterns[pattern] || pattern;
+        }
+
+        function formatEventType(type) {
+            const types = {
+                'social': 'Social Tennis',
+                'ladies': 'Ladies\' Group',
+                'coaching': 'Coaching',
+                'tournament': 'Tournament',
+                'league': 'League Match',
+                'championship': 'Championship',
+                'mixed': 'Mixed Doubles',
+                'junior': 'Junior Tennis',
+                'beginner': 'Beginner Session',
+                'social-event': 'Club Social',
+                'meeting': 'Members Meeting',
+                'maintenance': 'Court Maintenance',
+                'other': 'Other'
+            };
+            return types[type] || type;
         }
 
         // Load calendar events when page loads

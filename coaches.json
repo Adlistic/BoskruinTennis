@@ -1,0 +1,57 @@
+[
+  {
+    "id": 1,
+    "name": "Wayne Kets",
+    "title": "Head Coach & Founding Member",
+    "bio": "Wayne is a qualified professional tennis coach and founding member of Boskruin Tennis Club (est. 1993). He believes in finding potential in each player and teaching the skills needed for a great game.",
+    "image": "waynekets.jpg",
+    "whatsapp": "27837031434",
+    "pricingHeader": "Coaching Fees",
+    "pricing": [
+      { "label": "Mini Tennis (Age 4+, 30min)", "price": "R580/month" },
+      { "label": "Beginners (45min)", "price": "R735/month" },
+      { "label": "Intermediate & Advanced (90min)", "price": "R840/month" },
+      { "label": "Squad Level (2 hours)", "price": "R1,050/month" },
+      { "label": "Individual Coaching", "price": "R420/30min" },
+      { "label": "Racket Restringing", "price": "R330" }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Jayson Cerovich",
+    "title": "Tennis & Fitness Coach",
+    "bio": "With 15+ years of experience and training with German ex-pro Marc Kevin Goellner, Jayson helps players reach their goals through dedication and commitment while ensuring everyone has fun.",
+    "image": "jaysoncerovich.jpg",
+    "whatsapp": "27834159042",
+    "pricingHeader": "Coaching Fees",
+    "pricing": [
+      { "label": "Squad Level", "price": "R900/month" },
+      { "label": "All Levels", "price": "R390/30min" }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Jamie Davis Tennis Academy",
+    "title": "High-Performance Tennis Academy",
+    "bio": "Jamie Davis Tennis Academy (JDTA) is a professional high-performance tennis academy based at the Boskruin Tennis Club. Founded in 2023, JDTA offers professional coaching services to all ages and levels, from beginners to high-level players.",
+    "image": "jdta.jpg",
+    "whatsapp": "27718689388",
+    "pricingHeader": "Academy Programs",
+    "pricing": [
+      { "label": "All Ages & Skill Levels", "price": "Contact for Details" },
+      { "label": "High-Performance Training", "price": "Available" }
+    ]
+  },
+  {
+    "id": 4,
+    "name": "Preatchy Dlamini",
+    "title": "Tennis Coach",
+    "bio": "Preatchy offers personalized coaching to help players develop their skills and reach their full potential on the court.",
+    "image": "",
+    "whatsapp": "27738311751",
+    "pricingHeader": "Coaching Fees",
+    "pricing": [
+      { "label": "Adult Beginner Coaching", "price": "R290/30min" }
+    ]
+  }
+]

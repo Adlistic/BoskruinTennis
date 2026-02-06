@@ -25,6 +25,7 @@
     "whatsapp": "27834159042",
     "pricingHeader": "Coaching Fees",
     "pricing": [
+      { "label": "Adult Beginners (45min)", "price": "R680/month" },
       { "label": "Squad Level", "price": "R900/month" },
       { "label": "All Levels", "price": "R390/30min" }
     ]
@@ -51,6 +52,7 @@
     "whatsapp": "27738311751",
     "pricingHeader": "Coaching Fees",
     "pricing": [
+      { "label": "Adult Beginners (45min)", "price": "R620/month" },
       { "label": "Adult Beginner Coaching", "price": "R290/30min" }
     ]
   }

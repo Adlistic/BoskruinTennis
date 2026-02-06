@@ -107,6 +107,23 @@
             font-weight: 500;
             transition: color 0.3s;
             font-size: 0.95rem;
+            position: relative;
+        }
+
+        .nav-menu a.active-section {
+            color: var(--accent-color) !important;
+            font-weight: 600;
+        }
+
+        .nav-menu a.active-section::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--accent-color);
+            border-radius: 1px;
         }
 
         .nav-menu a:hover {
@@ -1664,6 +1681,470 @@
             box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
         }
 
+        /* Scroll Progress Bar */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-color), var(--secondary-color));
+            z-index: 1001;
+            transition: width 0.1s linear;
+            width: 0%;
+        }
+
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 100px;
+            right: 2rem;
+            width: 45px;
+            height: 45px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 15px rgba(13, 79, 79, 0.3);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            z-index: 999;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .back-to-top:hover {
+            background: var(--secondary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(13, 79, 79, 0.4);
+        }
+
+        /* Calculator Reset Button */
+        .calculator-reset {
+            background: none;
+            border: 2px solid var(--border-color);
+            color: var(--text-light);
+            padding: 0.6rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .calculator-reset:hover {
+            border-color: #dc3545;
+            color: #dc3545;
+            background: rgba(220, 53, 69, 0.05);
+        }
+
+        /* Couple Help Tip */
+        .couple-help-tip {
+            background: linear-gradient(135deg, #e8f8f0 0%, #d4f1e8 100%);
+            border: 1px solid rgba(26, 128, 128, 0.2);
+            border-radius: 10px;
+            padding: 1rem 1.25rem;
+            margin: 0.5rem 0 1rem;
+            font-size: 0.85rem;
+            color: var(--primary-color);
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+
+        .couple-help-tip i {
+            font-size: 1.1rem;
+            margin-top: 0.1rem;
+            color: var(--secondary-color);
+            flex-shrink: 0;
+        }
+
+        .couple-help-tip strong {
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        /* Membership Comparison Table */
+        .membership-comparison {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-top: 2rem;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .membership-comparison h3 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .comparison-table th {
+            padding: 0.75rem 1rem;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .comparison-table th:first-child {
+            text-align: left;
+            width: 40%;
+        }
+
+        .comparison-table th.league-col {
+            background: var(--primary-color);
+            color: white;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .comparison-table th.social-col {
+            background: var(--secondary-color);
+            color: white;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .comparison-table td {
+            padding: 0.6rem 1rem;
+            text-align: center;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 0.9rem;
+        }
+
+        .comparison-table td:first-child {
+            text-align: left;
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .comparison-table .check {
+            color: var(--success-color);
+            font-size: 1.1rem;
+        }
+
+        .comparison-table .cross {
+            color: #ccc;
+            font-size: 1.1rem;
+        }
+
+        /* Sticky Total Bar */
+        .sticky-total-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--primary-color);
+            color: white;
+            padding: 0.75rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            z-index: 998;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .sticky-total-bar.visible {
+            transform: translateY(0);
+        }
+
+        .sticky-total-bar .sticky-total-amount {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .sticky-total-bar .sticky-total-label {
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+
+        .sticky-total-bar .sticky-apply-btn {
+            background: var(--accent-color);
+            color: var(--primary-color);
+            border: none;
+            padding: 0.6rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .sticky-total-bar .sticky-apply-btn:hover {
+            background: var(--accent-hover);
+            transform: translateY(-1px);
+        }
+
+        /* Month Filter Buttons */
+        .month-filter-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .month-filter-btn {
+            padding: 0.4rem 1rem;
+            border: 2px solid var(--border-color);
+            background: white;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-light);
+            transition: all 0.3s ease;
+        }
+
+        .month-filter-btn:hover {
+            border-color: var(--secondary-color);
+            color: var(--secondary-color);
+        }
+
+        .month-filter-btn.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        /* Add to Calendar Button */
+        .add-to-cal-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.3rem 0.75rem;
+            background: rgba(13, 79, 79, 0.08);
+            color: var(--primary-color);
+            border: 1px solid rgba(13, 79, 79, 0.2);
+            border-radius: 6px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-top: 0.75rem;
+        }
+
+        .add-to-cal-btn:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        /* Social Countdown */
+        .social-countdown {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-radius: 15px;
+            padding: 1.5rem 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .social-countdown h3 {
+            font-size: 1rem;
+            font-weight: 500;
+            opacity: 0.9;
+            margin-bottom: 0.5rem;
+        }
+
+        .countdown-timer {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 0.75rem 0;
+        }
+
+        .countdown-unit {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .countdown-value {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .countdown-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.8;
+            margin-top: 0.25rem;
+        }
+
+        .countdown-session-name {
+            font-size: 0.95rem;
+            opacity: 0.9;
+            margin-top: 0.25rem;
+        }
+
+        /* Form Success State */
+        .form-success-state {
+            text-align: center;
+            padding: 3rem 2rem;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        .form-success-state .success-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--success-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2rem;
+            color: white;
+            animation: scaleIn 0.5s ease 0.2s both;
+        }
+
+        .form-success-state h3 {
+            color: var(--primary-color);
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-success-state p {
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        .form-success-state .send-another-btn {
+            background: none;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 0.6rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .form-success-state .send-another-btn:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        @keyframes scaleIn {
+            from { transform: scale(0); }
+            to { transform: scale(1); }
+        }
+
+        /* Tennis Weather Indicator */
+        .tennis-weather-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            margin-top: 1rem;
+            padding: 0.6rem 1.5rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            max-width: 350px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .tennis-weather-indicator.good {
+            background: linear-gradient(135deg, rgba(40, 167, 69, 0.1) 0%, rgba(40, 167, 69, 0.05) 100%);
+            color: #28a745;
+            border: 1px solid rgba(40, 167, 69, 0.2);
+        }
+
+        .tennis-weather-indicator.moderate {
+            background: linear-gradient(135deg, rgba(255, 193, 7, 0.1) 0%, rgba(255, 193, 7, 0.05) 100%);
+            color: #d4a017;
+            border: 1px solid rgba(255, 193, 7, 0.2);
+        }
+
+        .tennis-weather-indicator.poor {
+            background: linear-gradient(135deg, rgba(220, 53, 69, 0.1) 0%, rgba(220, 53, 69, 0.05) 100%);
+            color: #dc3545;
+            border: 1px solid rgba(220, 53, 69, 0.2);
+        }
+
+        /* Mobile Quick Nav Dots */
+        .mobile-quick-nav {
+            display: none;
+            position: fixed;
+            right: 0.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 997;
+            flex-direction: column;
+            gap: 0.6rem;
+            padding: 0.5rem;
+        }
+
+        .quick-nav-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(13, 79, 79, 0.2);
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 0;
+            position: relative;
+        }
+
+        .quick-nav-dot.active {
+            background: var(--accent-color);
+            transform: scale(1.3);
+            box-shadow: 0 0 8px rgba(200, 210, 0, 0.4);
+        }
+
+        .quick-nav-dot .dot-tooltip {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--primary-color);
+            color: white;
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease;
+        }
+
+        .quick-nav-dot:hover .dot-tooltip,
+        .quick-nav-dot:focus .dot-tooltip {
+            opacity: 1;
+        }
+
         /* Responsive Design */
         @media (max-width: 960px) {
             .contact-info-block {
@@ -1988,6 +2469,44 @@
                 font-size: 1.5rem;
                 bottom: 20px;
                 right: 20px;
+            }
+
+            .mobile-quick-nav {
+                display: flex;
+            }
+
+            .back-to-top {
+                bottom: 80px;
+                right: 1rem;
+                width: 40px;
+                height: 40px;
+            }
+
+            .sticky-total-bar {
+                padding: 0.6rem 1rem;
+                gap: 1rem;
+            }
+
+            .sticky-total-bar .sticky-total-amount {
+                font-size: 1.1rem;
+            }
+
+            .membership-comparison {
+                padding: 1rem;
+            }
+
+            .comparison-table td,
+            .comparison-table th {
+                padding: 0.5rem 0.5rem;
+                font-size: 0.8rem;
+            }
+
+            .countdown-value {
+                font-size: 1.5rem;
+            }
+
+            .countdown-timer {
+                gap: 1rem;
             }
         }
 
@@ -2457,6 +2976,7 @@
     </script>
 </head>
 <body>
+    <div class="scroll-progress" id="scrollProgress"></div>
     <nav class="navbar">
         <div class="nav-container">
             <a href="#" class="logo" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">
@@ -2521,6 +3041,7 @@
                     <i class="fas fa-spinner fa-spin" style="color: var(--secondary-color);"></i>
                 </div>
             </div>
+            <div id="tennisWeatherIndicator"></div>
         </div>
     </section>
     
@@ -2829,6 +3350,11 @@
                     <h3>Membership Pricing Calculator</h3>
                     <p>Customize your membership package to fit your needs</p>
                 </div>
+                <div style="text-align: right; margin-bottom: 1rem;">
+                    <button class="calculator-reset" onclick="resetCalculator()">
+                        <i class="fas fa-undo"></i> Reset All
+                    </button>
+                </div>
                 <div class="calculator-form">
                     <div class="package-item">
                         <div class="package-info">
@@ -2867,6 +3393,14 @@
                             <button class="counter-btn" onclick="updatePackageCount('adultSocial', 1)">
                                 <i class="fas fa-plus"></i>
                             </button>
+                        </div>
+                    </div>
+
+                    <div class="couple-help-tip">
+                        <i class="fas fa-lightbulb"></i>
+                        <div>
+                            <strong>Couples save more together</strong>
+                            Married or living-together couples can save R950-R1,450 per year compared to two individual memberships. Choose a Couple package below instead of selecting two individual Adult packages.
                         </div>
                     </div>
 
@@ -3046,6 +3580,61 @@
                         <button onclick="openMembershipModal()" class="btn btn-primary" style="text-align: center; width: 100%; border: none; cursor: pointer;">Apply for Membership</button>
                         </div>
                 </div>
+
+                <div class="membership-comparison">
+                    <h3><i class="fas fa-balance-scale"></i> League vs Social - What's the Difference?</h3>
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Benefit</th>
+                                <th class="league-col"><i class="fas fa-trophy"></i> League</th>
+                                <th class="social-col"><i class="fas fa-user"></i> Social</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Free court usage</td>
+                                <td><i class="fas fa-check check"></i></td>
+                                <td><i class="fas fa-check check"></i></td>
+                            </tr>
+                            <tr>
+                                <td>Court key & light box access</td>
+                                <td><i class="fas fa-check check"></i></td>
+                                <td><i class="fas fa-check check"></i></td>
+                            </tr>
+                            <tr>
+                                <td>Online court booking (SportyHQ)</td>
+                                <td><i class="fas fa-check check"></i></td>
+                                <td><i class="fas fa-check check"></i></td>
+                            </tr>
+                            <tr>
+                                <td>Social tennis sessions</td>
+                                <td><i class="fas fa-check check"></i></td>
+                                <td><i class="fas fa-check check"></i></td>
+                            </tr>
+                            <tr>
+                                <td>Club Championships entry</td>
+                                <td><i class="fas fa-check check"></i></td>
+                                <td><i class="fas fa-check check"></i></td>
+                            </tr>
+                            <tr>
+                                <td>Regional league matches (GCTA)</td>
+                                <td><i class="fas fa-check check"></i></td>
+                                <td><i class="fas fa-times cross"></i></td>
+                            </tr>
+                            <tr>
+                                <td>TSA/GTA league registration</td>
+                                <td><i class="fas fa-check check"></i></td>
+                                <td><i class="fas fa-times cross"></i></td>
+                            </tr>
+                            <tr>
+                                <td>Represent club in team matches</td>
+                                <td><i class="fas fa-check check"></i></td>
+                                <td><i class="fas fa-times cross"></i></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </section>
@@ -3158,6 +3747,11 @@
         <div class="section-header">
             <h2>Social Tennis</h2>
             <p>Join our famous social sessions - fun, friendly matches with players of similar ability. No booking needed!</p>
+        </div>
+        <div class="social-countdown" id="socialCountdown">
+            <h3>Next Social Session</h3>
+            <div class="countdown-timer" id="countdownTimer"></div>
+            <div class="countdown-session-name" id="countdownSessionName"></div>
         </div>
         <div class="social-grid">
             <div class="social-card">
@@ -3300,6 +3894,10 @@
                 </div>
             </div>
 
+            <div class="month-filter-container" id="monthFilterContainer">
+                <!-- Populated dynamically from available event months -->
+            </div>
+
             <div class="calendar-grid" id="calendarGrid">
                 <!-- Events will be loaded dynamically -->
             </div>
@@ -3314,6 +3912,7 @@
                             <th>Date</th>
                             <th>Time</th>
                             <th>Description</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody id="calendarTableBody">
@@ -3600,6 +4199,44 @@
         <i class="fab fa-whatsapp"></i>
     </a>
 
+    <button class="back-to-top" id="backToTop" title="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <div class="sticky-total-bar" id="stickyTotalBar">
+        <div>
+            <div class="sticky-total-label">Total Membership</div>
+            <div class="sticky-total-amount" id="stickyTotalAmount">R0</div>
+        </div>
+        <button class="sticky-apply-btn" onclick="openMembershipModal()">
+            Apply Now <i class="fas fa-arrow-right"></i>
+        </button>
+    </div>
+
+    <nav class="mobile-quick-nav" id="mobileQuickNav">
+        <button class="quick-nav-dot" data-section="benefits" onclick="document.getElementById('benefits').scrollIntoView({behavior:'smooth'})">
+            <span class="dot-tooltip">Why Join</span>
+        </button>
+        <button class="quick-nav-dot" data-section="membership" onclick="document.getElementById('membership').scrollIntoView({behavior:'smooth'})">
+            <span class="dot-tooltip">Membership</span>
+        </button>
+        <button class="quick-nav-dot" data-section="coaching" onclick="document.getElementById('coaching').scrollIntoView({behavior:'smooth'})">
+            <span class="dot-tooltip">Coaching</span>
+        </button>
+        <button class="quick-nav-dot" data-section="social" onclick="document.getElementById('social').scrollIntoView({behavior:'smooth'})">
+            <span class="dot-tooltip">Social</span>
+        </button>
+        <button class="quick-nav-dot" data-section="calendar" onclick="document.getElementById('calendar').scrollIntoView({behavior:'smooth'})">
+            <span class="dot-tooltip">Events</span>
+        </button>
+        <button class="quick-nav-dot" data-section="weather" onclick="document.getElementById('weather').scrollIntoView({behavior:'smooth'})">
+            <span class="dot-tooltip">Weather</span>
+        </button>
+        <button class="quick-nav-dot" data-section="contact" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">
+            <span class="dot-tooltip">Contact</span>
+        </button>
+    </nav>
+
     <script>
         // Mobile Menu Toggle
         function toggleMobileMenu() {
@@ -3617,7 +4254,10 @@
             });
         });
 
-        // Navbar Scroll Effect
+        // Navbar Scroll Effect + Progress Bar + Back to Top
+        const backToTopBtn = document.getElementById('backToTop');
+        const progressBar = document.getElementById('scrollProgress');
+
         window.addEventListener('scroll', function() {
             const navbar = document.querySelector('.navbar');
             if (window.scrollY > 50) {
@@ -3625,7 +4265,74 @@
             } else {
                 navbar.classList.remove('scrolled');
             }
+
+            // Scroll progress bar
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            if (docHeight > 0) {
+                progressBar.style.width = (scrollTop / docHeight) * 100 + '%';
+            }
+
+            // Back to top button visibility
+            if (window.scrollY > 500) {
+                backToTopBtn.classList.add('visible');
+            } else {
+                backToTopBtn.classList.remove('visible');
+            }
         });
+
+        backToTopBtn.addEventListener('click', function() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Scroll Spy - Active Nav Highlighting
+        const navLinks = document.querySelectorAll('.nav-menu a[href^="#"]');
+        const spySections = [];
+        navLinks.forEach(function(link) {
+            var href = link.getAttribute('href');
+            if (href && href !== '#' && !link.classList.contains('nav-cta')) {
+                var section = document.querySelector(href);
+                if (section) spySections.push({ element: section, link: link });
+            }
+        });
+
+        function updateActiveNav() {
+            var scrollPos = window.scrollY + 120;
+            var currentSection = null;
+            spySections.forEach(function(s) {
+                if (s.element.offsetTop <= scrollPos) {
+                    currentSection = s;
+                }
+            });
+            navLinks.forEach(function(link) { link.classList.remove('active-section'); });
+            if (currentSection) {
+                currentSection.link.classList.add('active-section');
+            }
+        }
+
+        window.addEventListener('scroll', updateActiveNav);
+        updateActiveNav();
+
+        // Mobile Quick Nav - update active dot on scroll
+        const quickNavDots = document.querySelectorAll('.quick-nav-dot');
+        const quickNavSections = ['benefits', 'membership', 'coaching', 'social', 'calendar', 'weather', 'contact'];
+
+        function updateQuickNav() {
+            var scrollPos = window.scrollY + window.innerHeight / 2;
+            var currentId = '';
+            quickNavSections.forEach(function(id) {
+                var el = document.getElementById(id);
+                if (el && el.offsetTop <= scrollPos) {
+                    currentId = id;
+                }
+            });
+            quickNavDots.forEach(function(dot) {
+                dot.classList.toggle('active', dot.dataset.section === currentId);
+            });
+        }
+
+        window.addEventListener('scroll', updateQuickNav);
+        updateQuickNav();
 
         // ----------------------------------------------------
         // ✅ EMAILJS CONFIGURATION
@@ -3655,10 +4362,15 @@
             // Send email using EmailJS
             emailjs.sendForm('service_btc_info', 'template_generalenquirie', form)
                 .then(function() {
-                    // Success
-                    statusDiv.innerHTML = '<p style="color: var(--success-color); font-weight: 600;"><i class="fas fa-check-circle"></i> Message sent successfully! We\'ll be in touch soon.</p>';
-                    statusDiv.style.display = 'block';
-                    form.reset();
+                    // Replace form with success state
+                    var formContainer = document.querySelector('.contact-form');
+                    formContainer.innerHTML = '<div class="form-success-state">' +
+                        '<div class="success-icon"><i class="fas fa-check"></i></div>' +
+                        '<h3>Message Sent!</h3>' +
+                        '<p>Thank you for reaching out. We\'ll get back to you within 24 hours.</p>' +
+                        '<p style="font-size: 0.85rem;">You can also reach us directly via WhatsApp at <a href="https://wa.me/27837031434" style="color: var(--secondary-color); font-weight: 600;">083 703 1434</a></p>' +
+                        '<button class="send-another-btn" onclick="location.reload()"><i class="fas fa-envelope"></i> Send Another Message</button>' +
+                    '</div>';
                 }, function(error) {
                     // Error
                     statusDiv.innerHTML = '<p style="color: #dc3545; font-weight: 600;"><i class="fas fa-exclamation-circle"></i> Failed to send message. Please try again or contact us directly.</p>';
@@ -3864,12 +4576,28 @@
     // Update the HTML display elements
     document.getElementById('price-breakdown').innerHTML = breakdownHTML;
     document.getElementById('total-price').textContent = `R${grandTotal.toLocaleString('en-US')}`;
+
+    // Update sticky total bar
+    var stickyAmount = document.getElementById('stickyTotalAmount');
+    if (stickyAmount) {
+        stickyAmount.textContent = 'R' + grandTotal.toLocaleString('en-US');
+    }
 }
 
 
         // ----------------------------------------------------
         // END CORRECTED CALCULATOR LOGIC
         // ----------------------------------------------------
+
+        // Reset Calculator
+        function resetCalculator() {
+            for (var type in packageCounts) {
+                packageCounts[type] = 0;
+                var countElement = document.getElementById(type + '-count');
+                if (countElement) countElement.textContent = '0';
+            }
+            calculateTotal();
+        }
 
         // Membership Application Modal Functions
         function openMembershipModal() {
@@ -3962,6 +4690,101 @@
 
         // Initialize calculator on page load
         calculateTotal();
+
+        // Sticky Total Bar visibility
+        (function() {
+            var stickyBar = document.getElementById('stickyTotalBar');
+            var priceSummary = document.querySelector('.price-summary');
+            var membershipSection = document.getElementById('membership');
+
+            if (priceSummary && stickyBar && membershipSection) {
+                var stickyObserver = new IntersectionObserver(function(entries) {
+                    entries.forEach(function(entry) {
+                        var hasSelections = Object.values(packageCounts).some(function(c) { return c > 0; });
+                        if (!entry.isIntersecting && hasSelections) {
+                            var rect = membershipSection.getBoundingClientRect();
+                            if (rect.top < 0 && rect.bottom > 0) {
+                                stickyBar.classList.add('visible');
+                            } else {
+                                stickyBar.classList.remove('visible');
+                            }
+                        } else {
+                            stickyBar.classList.remove('visible');
+                        }
+                    });
+                }, { threshold: 0.1 });
+
+                stickyObserver.observe(priceSummary);
+
+                window.addEventListener('scroll', function() {
+                    if (stickyBar.classList.contains('visible')) {
+                        var rect = membershipSection.getBoundingClientRect();
+                        if (rect.bottom < 0 || rect.top > window.innerHeight) {
+                            stickyBar.classList.remove('visible');
+                        }
+                    }
+                });
+            }
+        })();
+
+        // Social Session Countdown
+        function updateSocialCountdown() {
+            var now = new Date();
+            var currentDay = now.getDay();
+
+            var sessions = [
+                { day: 2, hour: 18, minute: 0, name: 'Tuesday Evening Social', label: 'Tue 6:00 PM' },
+                { day: 6, hour: 14, minute: 0, name: 'Saturday Afternoon Social', label: 'Sat 2:00 PM' }
+            ];
+
+            var nextSession = null;
+            var minDiff = Infinity;
+
+            sessions.forEach(function(session) {
+                var daysUntil = session.day - currentDay;
+                if (daysUntil < 0) daysUntil += 7;
+
+                var sessionDate = new Date(now);
+                sessionDate.setDate(now.getDate() + daysUntil);
+                sessionDate.setHours(session.hour, session.minute, 0, 0);
+
+                if (sessionDate <= now) {
+                    sessionDate.setDate(sessionDate.getDate() + 7);
+                }
+
+                var diff = sessionDate - now;
+                if (diff < minDiff) {
+                    minDiff = diff;
+                    nextSession = { name: session.name, label: session.label, date: sessionDate, diff: diff };
+                }
+            });
+
+            if (!nextSession) return;
+
+            var totalSeconds = Math.floor(nextSession.diff / 1000);
+            var days = Math.floor(totalSeconds / 86400);
+            var hours = Math.floor((totalSeconds % 86400) / 3600);
+            var minutes = Math.floor((totalSeconds % 3600) / 60);
+            var seconds = totalSeconds % 60;
+
+            var timerEl = document.getElementById('countdownTimer');
+            var nameEl = document.getElementById('countdownSessionName');
+
+            if (timerEl) {
+                timerEl.innerHTML =
+                    (days > 0 ? '<div class="countdown-unit"><span class="countdown-value">' + days + '</span><span class="countdown-label">Days</span></div>' : '') +
+                    '<div class="countdown-unit"><span class="countdown-value">' + hours + '</span><span class="countdown-label">Hours</span></div>' +
+                    '<div class="countdown-unit"><span class="countdown-value">' + minutes + '</span><span class="countdown-label">Min</span></div>' +
+                    '<div class="countdown-unit"><span class="countdown-value">' + seconds + '</span><span class="countdown-label">Sec</span></div>';
+            }
+
+            if (nameEl) {
+                nameEl.textContent = nextSession.name + ' \u2014 ' + nextSession.label;
+            }
+        }
+
+        updateSocialCountdown();
+        setInterval(updateSocialCountdown, 1000);
 
         // Intersection Observer for fade-in animations
         const observerOptions = {
@@ -4365,8 +5188,38 @@
             `;
 
             document.getElementById('compactWeatherWidget').innerHTML = html;
+
+            // Tennis playability indicator
+            var indicator = document.getElementById('tennisWeatherIndicator');
+            if (indicator) {
+                var code = current.weather_code;
+                var wind = current.wind_speed_10m;
+                var temp = current.temperature_2m;
+                var status, statusClass, icon;
+
+                if ([51, 53, 55, 61, 63, 65, 80, 81, 82, 95, 96, 99].indexOf(code) !== -1) {
+                    status = 'Not ideal for tennis \u2014 rain expected';
+                    statusClass = 'poor';
+                    icon = 'fa-umbrella';
+                } else if (wind > 30) {
+                    status = 'Windy conditions \u2014 play with caution';
+                    statusClass = 'moderate';
+                    icon = 'fa-wind';
+                } else if (temp < 10 || temp > 35) {
+                    status = temp < 10 ? 'Cold \u2014 dress warmly for tennis' : 'Very hot \u2014 stay hydrated';
+                    statusClass = 'moderate';
+                    icon = temp < 10 ? 'fa-temperature-low' : 'fa-temperature-high';
+                } else {
+                    status = 'Great conditions for tennis!';
+                    statusClass = 'good';
+                    icon = 'fa-table-tennis';
+                }
+
+                indicator.innerHTML = '<div class="tennis-weather-indicator ' + statusClass + '">' +
+                    '<i class="fas ' + icon + '"></i> ' + status + '</div>';
+            }
         }
-        
+
         function displayFullWeather(data) {
             const current = data.current;
             const hourly = data.hourly;
@@ -4529,27 +5382,64 @@
         // Calendar Events Loading
         let calendarUpcomingEvents = [];
         let currentCalendarView = localStorage.getItem('calendarView') || 'table';
+        let activeMonthFilter = 'all';
 
         async function loadCalendarEvents() {
             try {
-                // Add cache-busting to always fetch latest events
-                const response = await fetch(`calendar-events.json?v=${Date.now()}`);
+                const response = await fetch('calendar-events.json?v=' + Date.now());
                 const events = await response.json();
 
-                // Filter and sort events
                 const today = new Date();
                 today.setHours(0, 0, 0, 0);
 
                 calendarUpcomingEvents = events
-                    .filter(event => new Date(event.date) >= today)
-                    .sort((a, b) => new Date(a.date) - new Date(b.date));
+                    .filter(function(event) { return new Date(event.date) >= today; })
+                    .sort(function(a, b) { return new Date(a.date) - new Date(b.date); });
 
-                renderCalendarEvents(calendarUpcomingEvents);
+                buildMonthFilters(calendarUpcomingEvents);
+                renderCalendarEvents(getFilteredEvents());
             } catch (error) {
                 console.error('Error loading calendar events:', error);
                 document.getElementById('calendarEmpty').style.display = 'block';
                 document.getElementById('calendarGrid').style.display = 'none';
             }
+        }
+
+        function buildMonthFilters(events) {
+            var container = document.getElementById('monthFilterContainer');
+            if (!container || events.length === 0) return;
+
+            var months = {};
+            events.forEach(function(e) {
+                var d = new Date(e.date);
+                var key = d.getFullYear() + '-' + String(d.getMonth()).padStart(2, '0');
+                months[key] = true;
+            });
+
+            var sorted = Object.keys(months).sort();
+            var html = '<button class="month-filter-btn active" onclick="filterByMonth(\'all\', this)">All</button>';
+            sorted.forEach(function(key) {
+                var parts = key.split('-');
+                var label = new Date(parseInt(parts[0]), parseInt(parts[1])).toLocaleDateString('en-ZA', { month: 'short', year: 'numeric' });
+                html += '<button class="month-filter-btn" onclick="filterByMonth(\'' + key + '\', this)">' + label + '</button>';
+            });
+            container.innerHTML = html;
+        }
+
+        function filterByMonth(key, btn) {
+            activeMonthFilter = key;
+            document.querySelectorAll('.month-filter-btn').forEach(function(b) { b.classList.remove('active'); });
+            if (btn) btn.classList.add('active');
+            renderCalendarEvents(getFilteredEvents());
+        }
+
+        function getFilteredEvents() {
+            if (activeMonthFilter === 'all') return calendarUpcomingEvents;
+            var parts = activeMonthFilter.split('-');
+            return calendarUpcomingEvents.filter(function(e) {
+                var d = new Date(e.date);
+                return d.getFullYear() === parseInt(parts[0]) && d.getMonth() === parseInt(parts[1]);
+            });
         }
 
         function switchPublicView(view) {
@@ -4559,7 +5449,7 @@
             document.getElementById('gridViewBtnPublic').classList.toggle('active', view === 'grid');
             document.getElementById('tableViewBtnPublic').classList.toggle('active', view === 'table');
 
-            renderCalendarEvents(calendarUpcomingEvents);
+            renderCalendarEvents(getFilteredEvents());
         }
 
         function renderCalendarEvents(events) {
@@ -4577,10 +5467,7 @@
 
             emptyState.style.display = 'none';
 
-            // Check if mobile
             const isMobile = window.innerWidth <= 768;
-
-            // Force grid view on mobile
             const viewToUse = isMobile ? 'grid' : currentCalendarView;
 
             if (viewToUse === 'table') {
@@ -4598,53 +5485,79 @@
             }
         }
 
+        // Generate ICS calendar file for download
+        function generateICS(eventData) {
+            var date = new Date(eventData.date);
+            var year = date.getFullYear();
+            var month = String(date.getMonth() + 1).padStart(2, '0');
+            var day = String(date.getDate()).padStart(2, '0');
+
+            var startTime = '090000';
+            var endTime = '100000';
+            if (eventData.time) {
+                var parts = eventData.time.split(':');
+                startTime = parts[0].padStart(2, '0') + parts[1].padStart(2, '0') + '00';
+                var endHour = (parseInt(parts[0]) + 2) % 24;
+                endTime = String(endHour).padStart(2, '0') + parts[1].padStart(2, '0') + '00';
+            }
+
+            var dtStart = year + month + day + 'T' + startTime;
+            var dtEnd = year + month + day + 'T' + endTime;
+            var desc = (eventData.description || '').replace(/\n/g, '\\n');
+
+            var ics = [
+                'BEGIN:VCALENDAR',
+                'VERSION:2.0',
+                'PRODID:-//Boskruin Tennis Club//Events//EN',
+                'BEGIN:VEVENT',
+                'DTSTART;TZID=Africa/Johannesburg:' + dtStart,
+                'DTEND;TZID=Africa/Johannesburg:' + dtEnd,
+                'SUMMARY:' + eventData.title,
+                'DESCRIPTION:' + desc,
+                'LOCATION:Boskruin Tennis Club\\, Kelly Road\\, Boskruin\\, Johannesburg',
+                'END:VEVENT',
+                'END:VCALENDAR'
+            ].join('\r\n');
+
+            var blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
+            var link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = eventData.title.replace(/[^a-zA-Z0-9]/g, '_') + '.ics';
+            link.click();
+            URL.revokeObjectURL(link.href);
+        }
+
         function renderCalendarGridView(events, grid) {
-            grid.innerHTML = events.map(event => `
-                <div class="calendar-event ${event.type}">
-                    <span class="event-type-badge ${event.type}">${formatEventType(event.type)}</span>
-                    <h3>${event.title}</h3>
-                    <div class="event-meta">
-                        <div class="event-meta-item">
-                            <i class="fas fa-calendar"></i>
-                            <span>${formatEventDate(event.date)}</span>
-                        </div>
-                        ${event.time ? `
-                        <div class="event-meta-item">
-                            <i class="fas fa-clock"></i>
-                            <span>${formatEventTime(event.time)}</span>
-                        </div>
-                        ` : ''}
-                        ${event.organizer ? `
-                        <div class="event-meta-item">
-                            <i class="fas fa-users"></i>
-                            <span>${event.organizer}</span>
-                        </div>
-                        ` : ''}
-                    </div>
-                    ${event.description ? `<div class="event-description">${event.description}</div>` : ''}
-                    ${event.recurring !== 'none' ? `
-                        <div class="recurring-badge">
-                            <i class="fas fa-redo"></i>
-                            <span>${formatRecurringPattern(event.recurring)}</span>
-                        </div>
-                    ` : ''}
-                </div>
-            `).join('');
+            grid.innerHTML = events.map(function(event) {
+                var eventJson = JSON.stringify(event).replace(/'/g, '&#39;').replace(/"/g, '&quot;');
+                return '<div class="calendar-event ' + event.type + '">' +
+                    '<span class="event-type-badge ' + event.type + '">' + formatEventType(event.type) + '</span>' +
+                    '<h3>' + event.title + '</h3>' +
+                    '<div class="event-meta">' +
+                        '<div class="event-meta-item"><i class="fas fa-calendar"></i><span>' + formatEventDate(event.date) + '</span></div>' +
+                        (event.time ? '<div class="event-meta-item"><i class="fas fa-clock"></i><span>' + formatEventTime(event.time) + '</span></div>' : '') +
+                        (event.organizer ? '<div class="event-meta-item"><i class="fas fa-users"></i><span>' + event.organizer + '</span></div>' : '') +
+                    '</div>' +
+                    (event.description ? '<div class="event-description">' + event.description + '</div>' : '') +
+                    (event.recurring !== 'none' ? '<div class="recurring-badge"><i class="fas fa-redo"></i><span>' + formatRecurringPattern(event.recurring) + '</span></div>' : '') +
+                    '<button class="add-to-cal-btn" onclick=\'generateICS(' + eventJson + ')\'><i class="fas fa-calendar-plus"></i> Add to Calendar</button>' +
+                '</div>';
+            }).join('');
         }
 
         function renderCalendarTableView(events, tableBody) {
-            tableBody.innerHTML = events.map(event => `
-                <tr>
-                    <td class="event-title-cell">${event.title}</td>
-                    <td>${event.organizer || '-'}</td>
-                    <td>
-                        <span class="event-type-cell ${event.type}">${formatEventType(event.type)}</span>
-                    </td>
-                    <td>${formatEventDate(event.date)}</td>
-                    <td>${event.time ? formatEventTime(event.time) : 'TBD'}</td>
-                    <td style="max-width: 300px;">${event.description || '-'}</td>
-                </tr>
-            `).join('');
+            tableBody.innerHTML = events.map(function(event) {
+                var eventJson = JSON.stringify(event).replace(/'/g, '&#39;').replace(/"/g, '&quot;');
+                return '<tr>' +
+                    '<td class="event-title-cell">' + event.title + '</td>' +
+                    '<td>' + (event.organizer || '-') + '</td>' +
+                    '<td><span class="event-type-cell ' + event.type + '">' + formatEventType(event.type) + '</span></td>' +
+                    '<td>' + formatEventDate(event.date) + '</td>' +
+                    '<td>' + (event.time ? formatEventTime(event.time) : 'TBD') + '</td>' +
+                    '<td style="max-width: 300px;">' + (event.description || '-') + '</td>' +
+                    '<td><button class="add-to-cal-btn" onclick=\'generateICS(' + eventJson + ')\'><i class="fas fa-calendar-plus"></i></button></td>' +
+                '</tr>';
+            }).join('');
         }
 
         function formatEventDate(dateStr) {

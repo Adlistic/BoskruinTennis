@@ -1319,6 +1319,9 @@
                 <h2 style="font-family: 'Poppins', sans-serif; font-size: 1.2rem; color: var(--dark);">
                     <i class="fas fa-user-friends" style="color: var(--primary); margin-right: 8px;"></i>Manage Coaches
                 </h2>
+                <button class="btn-add" onclick="addNewCoach()" style="background: var(--primary); color: white; border: none; padding: 0.6rem 1.2rem; border-radius: 8px; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: inline-flex; align-items: center; gap: 0.5rem;">
+                    <i class="fas fa-plus"></i> Add New Coach
+                </button>
             </div>
             <div class="coaches-admin-grid" id="coachesAdminGrid">
                 <!-- Coach cards loaded dynamically -->
@@ -2059,7 +2062,7 @@
         function renderCoaches() {
             const grid = document.getElementById('coachesAdminGrid');
             if (coaches.length === 0) {
-                grid.innerHTML = '<div class="empty-state"><i class="fas fa-user-friends"></i><h3>No Coaches</h3><p>No coach data found.</p></div>';
+                grid.innerHTML = '<div class="empty-state"><i class="fas fa-user-friends"></i><h3>No Coaches</h3><p>No coach data found. Click "Add New Coach" to get started.</p></div>';
                 return;
             }
 
@@ -2081,9 +2084,73 @@
                         '<button class="btn-edit" onclick="editCoach(' + coach.id + ')">' +
                             '<i class="fas fa-edit"></i> Edit' +
                         '</button>' +
+                        '<button class="btn-edit" style="background: #fde8e8; color: var(--danger);" onclick="promptDeleteCoach(' + coach.id + ')">' +
+                            '<i class="fas fa-trash"></i> Delete' +
+                        '</button>' +
                     '</div>' +
                 '</div>';
             }).join('');
+        }
+
+        function addNewCoach() {
+            editingCoachId = null;
+            pendingImageFile = null;
+
+            document.getElementById('coachModalTitle').textContent = 'Add New Coach';
+            document.getElementById('coachId').value = '';
+            document.getElementById('coachName').value = '';
+            document.getElementById('coachTitle').value = '';
+            document.getElementById('coachBio').value = '';
+            document.getElementById('coachWhatsapp').value = '';
+            document.getElementById('coachPricingHeader').value = 'Coaching Fees';
+
+            const preview = document.getElementById('imagePreview');
+            preview.innerHTML = '<i class="fas fa-cloud-upload-alt"></i><p>Click or drag to upload image (JPG, PNG, WebP - max 5MB)</p>';
+            document.getElementById('coachImageFile').value = '';
+            renderPricingRows([{ label: '', price: '' }]);
+
+            document.getElementById('coachModal').classList.add('show');
+        }
+
+        let pendingDeleteCoachId = null;
+
+        function promptDeleteCoach(id) {
+            pendingDeleteCoachId = id;
+            const coach = coaches.find(c => c.id === id);
+            if (!coach) return;
+            document.getElementById('deleteCoachName').textContent = coach.name;
+            document.getElementById('deleteConfirmModal').style.display = 'flex';
+        }
+
+        function closeDeleteModal() {
+            document.getElementById('deleteConfirmModal').style.display = 'none';
+            pendingDeleteCoachId = null;
+        }
+
+        async function confirmDeleteCoach() {
+            if (pendingDeleteCoachId === null) return;
+
+            coaches = coaches.filter(c => c.id !== pendingDeleteCoachId);
+            closeDeleteModal();
+            renderCoaches();
+
+            try {
+                const response = await fetch('save-coaches.ashx', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Admin-Password': 'BoskruinAdmin2025'
+                    },
+                    body: JSON.stringify(coaches)
+                });
+                const result = await response.json();
+                if (!result.success) {
+                    alert('Warning: Changes may not have saved to the server.');
+                }
+            } catch (error) {
+                console.error('Error saving after delete:', error);
+                alert('Warning: Could not save to server. Changes are local only.');
+            }
         }
 
         function editCoach(id) {
@@ -2180,9 +2247,17 @@
         document.getElementById('coachForm').addEventListener('submit', async function(e) {
             e.preventDefault();
 
-            const coachId = editingCoachId;
-            const coachIndex = coaches.findIndex(c => c.id === coachId);
-            if (coachIndex === -1) return;
+            const isNewCoach = editingCoachId === null;
+            let coachId, coachIndex;
+
+            if (isNewCoach) {
+                // Generate new ID
+                coachId = coaches.length > 0 ? Math.max(...coaches.map(c => c.id)) + 1 : 1;
+            } else {
+                coachId = editingCoachId;
+                coachIndex = coaches.findIndex(c => c.id === coachId);
+                if (coachIndex === -1) return;
+            }
 
             // Collect pricing data
             const pricingRows = document.querySelectorAll('#pricingRows .pricing-row');
@@ -2196,7 +2271,7 @@
             });
 
             // Upload image first if one was selected
-            let imageFilename = coaches[coachIndex].image;
+            let imageFilename = isNewCoach ? '' : coaches[coachIndex].image;
             if (pendingImageFile) {
                 try {
                     showSuccess('Uploading image...');
@@ -2228,17 +2303,31 @@
                 }
             }
 
-            // Update coach data
-            coaches[coachIndex] = {
-                ...coaches[coachIndex],
-                name: document.getElementById('coachName').value,
-                title: document.getElementById('coachTitle').value,
-                bio: document.getElementById('coachBio').value,
-                whatsapp: document.getElementById('coachWhatsapp').value,
-                pricingHeader: document.getElementById('coachPricingHeader').value || 'Coaching Fees',
-                image: imageFilename,
-                pricing: pricing
-            };
+            if (isNewCoach) {
+                // Add new coach
+                coaches.push({
+                    id: coachId,
+                    name: document.getElementById('coachName').value,
+                    title: document.getElementById('coachTitle').value,
+                    bio: document.getElementById('coachBio').value,
+                    image: imageFilename,
+                    whatsapp: document.getElementById('coachWhatsapp').value,
+                    pricingHeader: document.getElementById('coachPricingHeader').value || 'Coaching Fees',
+                    pricing: pricing
+                });
+            } else {
+                // Update existing coach data
+                coaches[coachIndex] = {
+                    ...coaches[coachIndex],
+                    name: document.getElementById('coachName').value,
+                    title: document.getElementById('coachTitle').value,
+                    bio: document.getElementById('coachBio').value,
+                    whatsapp: document.getElementById('coachWhatsapp').value,
+                    pricingHeader: document.getElementById('coachPricingHeader').value || 'Coaching Fees',
+                    image: imageFilename,
+                    pricing: pricing
+                };
+            }
 
             // Save to server
             await saveCoaches();
@@ -2282,5 +2371,17 @@
             }
         }
     </script>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteConfirmModal" style="position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1100; display: none; align-items: center; justify-content: center;">
+        <div style="background: white; border-radius: 15px; padding: 2rem; max-width: 400px; text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,0.3);">
+            <h3 style="color: var(--danger); margin-bottom: 0.5rem;"><i class="fas fa-exclamation-triangle"></i> Delete Coach</h3>
+            <p style="color: #666; margin-bottom: 1.5rem;">Are you sure you want to delete <strong id="deleteCoachName"></strong>? This action cannot be undone.</p>
+            <div style="display: flex; gap: 1rem; justify-content: center;">
+                <button onclick="closeDeleteModal()" style="padding: 0.5rem 1.5rem; border-radius: 8px; cursor: pointer; font-weight: 500; border: none; background: #f0f0f0; color: #666;">Cancel</button>
+                <button onclick="confirmDeleteCoach()" style="padding: 0.5rem 1.5rem; border-radius: 8px; cursor: pointer; font-weight: 500; border: none; background: var(--danger); color: white;">Delete</button>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

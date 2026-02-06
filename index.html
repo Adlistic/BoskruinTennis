@@ -4452,7 +4452,7 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>© <script>document.write(new Date().getFullYear())</script> Boskruin Tennis Club. All rights reserved. | <a href="#" style="color: var(--accent-color);">Privacy Policy</a></p>
+            <p>© <script>document.write(new Date().getFullYear())</script> Boskruin Tennis Club. All rights reserved. | <a href="#" style="color: var(--accent-color);" onclick="document.getElementById('privacyModal').classList.add('show'); document.body.style.overflow='hidden'; return false;">Privacy Policy</a></p>
             <p style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.8;">
                 Website crafted with care by <strong>Chris Cousens</strong>.
                 Looking for a website or digital solution?
@@ -4461,6 +4461,32 @@
             </p>
         </div>
     </footer>
+
+    <!-- Privacy Policy Modal -->
+    <div id="privacyModal" class="membership-modal">
+        <div class="membership-modal-content" style="max-width: 650px;">
+            <span class="membership-modal-close" onclick="document.getElementById('privacyModal').classList.remove('show'); document.body.style.overflow='auto';">&times;</span>
+            <h2><i class="fas fa-shield-alt"></i> Privacy Policy</h2>
+            <div style="text-align: left; color: var(--text-dark); line-height: 1.8; font-size: 0.95rem;">
+                <p style="margin-bottom: 1rem;">Boskruin Tennis Club respects your privacy. This policy explains how our website works.</p>
+
+                <h4 style="color: var(--primary-color); margin: 1.25rem 0 0.5rem;"><i class="fas fa-database" style="margin-right: 0.5rem;"></i>We Don't Store Your Data</h4>
+                <p style="margin-bottom: 1rem;">This website does not have a database and does not store any personal information. When you submit a contact or membership enquiry form, your message is sent directly to us via email. Nothing is saved on this website.</p>
+
+                <h4 style="color: var(--primary-color); margin: 1.25rem 0 0.5rem;"><i class="fas fa-chart-bar" style="margin-right: 0.5rem;"></i>Anonymous Analytics</h4>
+                <p style="margin-bottom: 1rem;">We use Google Analytics to understand how visitors use the site (which pages are popular, how long people stay, etc.). This data is anonymous and cannot be used to identify you personally.</p>
+
+                <h4 style="color: var(--primary-color); margin: 1.25rem 0 0.5rem;"><i class="fas fa-cookie-bite" style="margin-right: 0.5rem;"></i>Cookies</h4>
+                <p style="margin-bottom: 1rem;">The only cookies on this site are set by Google Analytics for anonymous usage statistics. We do not use any tracking, advertising, or marketing cookies.</p>
+
+                <h4 style="color: var(--primary-color); margin: 1.25rem 0 0.5rem;"><i class="fas fa-external-link-alt" style="margin-right: 0.5rem;"></i>Third-Party Services</h4>
+                <p style="margin-bottom: 1rem;">Our site includes content from Instagram (EmbedSocial) and links to SportyHQ for court bookings. These services have their own privacy policies.</p>
+
+                <h4 style="color: var(--primary-color); margin: 1.25rem 0 0.5rem;"><i class="fas fa-envelope" style="margin-right: 0.5rem;"></i>Contact</h4>
+                <p>If you have any questions, email us at <a href="mailto:tennis@waynekets.co.za" style="color: var(--secondary-color); font-weight: 600;">tennis@waynekets.co.za</a>.</p>
+            </div>
+        </div>
+    </div>
 
     <a href="https://wa.me/27837031434" target="_blank" class="whatsapp-float" title="Chat on WhatsApp">
         <i class="fab fa-whatsapp"></i>

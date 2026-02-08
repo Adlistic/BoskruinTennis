@@ -4718,7 +4718,6 @@
         // ☀️🌙 CANVAS WEATHER ENGINE (Apple Weather / WeatherMaster)
         // ============================================================
         var heroWeatherCode = null;
-        var heroForceNight = null;
         var skyCycleTimer = null;
 
         // Realistic sky gradients (top zenith → mid → horizon)
@@ -5097,8 +5096,6 @@
             var currentHour = now.getHours() + now.getMinutes() / 60;
             var isDaytime = currentHour >= sunriseHour && currentHour < sunsetHour;
 
-            if (heroForceNight === true) { isDaytime = false; currentHour = 1; }
-            else if (heroForceNight === false) { isDaytime = true; currentHour = 12; }
 
             var progress;
             if (isDaytime) {
@@ -5159,34 +5156,6 @@
         }
         initSkyCycle();
 
-        // Weather test panel (localhost only)
-        function testWeatherCondition(value) {
-            var timeVal = document.getElementById('weatherTestTime').value;
-            if (value === 'live') { heroWeatherCode = null; }
-            else { heroWeatherCode = parseInt(value, 10); }
-            heroForceNight = timeVal==='night'?true:(timeVal==='day'?false:null);
-            initSkyCycle();
-
-            // Re-render all weather cards with test override
-            if (lastWeatherData) {
-                var testData = JSON.parse(JSON.stringify(lastWeatherData));
-                if (value !== 'live') {
-                    var testCode = parseInt(value, 10);
-                    testData.current.weather_code = testCode;
-                    // Override hourly codes too
-                    for (var i = 0; i < testData.hourly.weather_code.length; i++) {
-                        testData.hourly.weather_code[i] = testCode;
-                    }
-                    // Override daily codes
-                    for (var j = 0; j < testData.daily.weather_code.length; j++) {
-                        testData.daily.weather_code[j] = testCode;
-                    }
-                }
-                displayCompactWeather(testData);
-                displayFullWeather(testData);
-            }
-        }
-        // Test panel show logic moved to after the panel HTML (bottom of body)
 
         // ----------------------------------------------------
         // ✅ EMAILJS CONFIGURATION
@@ -5677,7 +5646,6 @@
 
     <script>
         // Weather API integration for both compact and full widgets
-        var lastWeatherData = null; // stored for test panel re-rendering
         async function loadWeather() {
             const compactWidget = document.getElementById('compactWeatherWidget');
             const fullWidget = document.getElementById('fullWeatherWidget');
@@ -5692,8 +5660,6 @@
                 );
 
                 const data = await response.json();
-                lastWeatherData = data;
-
                 displayCompactWeather(data);
                 displayFullWeather(data);
 
@@ -5793,7 +5759,7 @@
             var summerFactor = Math.cos(month * Math.PI / 6);
             var sunriseHour = 6.25 - summerFactor * 0.75;
             var sunsetHour = 18.25 + summerFactor * 0.75;
-            var currentHour = heroForceNight === true ? 1 : heroForceNight === false ? 12 : (now.getHours() + now.getMinutes() / 60);
+            var currentHour = now.getHours() + now.getMinutes() / 60;
             var progress;
             if (isDay) {
                 progress = (currentHour - sunriseHour) / (sunsetHour - sunriseHour);
@@ -5912,7 +5878,7 @@
         // Hourly card weather effects (tiny version)
         function getHourlyWeatherAnimation(code, hourTime) {
             var hour = hourTime.getHours();
-            var isNight = heroForceNight === true ? true : heroForceNight === false ? false : (hour < 6 || hour > 18);
+            var isNight = hour < 6 || hour > 18;
             var cond = getWeatherCondition(code);
             var html = '';
 
@@ -5976,7 +5942,7 @@
 
             const now = new Date();
             const currentHour = now.getHours();
-            const isDay = heroForceNight === true ? false : heroForceNight === false ? true : (currentHour >= 6 && currentHour < 18);
+            const isDay = currentHour >= 6 && currentHour < 18;
 
             const html = `
                 <div class="compact-weather-display" style="background: ${getWeatherBackground(current.weather_code, isDay)}; position: relative; overflow: hidden;">
@@ -6065,7 +6031,7 @@
 
             const now = new Date();
             const currentHour = now.getHours();
-            const isDay = heroForceNight === true ? false : heroForceNight === false ? true : (currentHour >= 6 && currentHour < 18);
+            const isDay = currentHour >= 6 && currentHour < 18;
 
             // Get hours every 2 hours for the next 24 hours
             const hourlyData = [];
@@ -6134,7 +6100,7 @@
                                         const currentHourTime = new Date(now);
                                         currentHourTime.setMinutes(0, 0, 0);
                                         const isPast = hour.time < currentHourTime;
-                                        const isHourDay = heroForceNight === true ? false : heroForceNight === false ? true : (hour.hour >= 6 && hour.hour < 18);
+                                        const isHourDay = hour.hour >= 6 && hour.hour < 18;
                                         const bg = getWeatherBackground(hour.code, isHourDay);
                                         return `
                                         <div class="hour-item${isPast ? ' hour-past' : ''}" style="background: ${bg};">
@@ -6153,7 +6119,7 @@
                                         const currentHourTime = new Date(now);
                                         currentHourTime.setMinutes(0, 0, 0);
                                         const isPast = hour.time < currentHourTime;
-                                        const isHourDay = heroForceNight === true ? false : heroForceNight === false ? true : (hour.hour >= 6 && hour.hour < 18);
+                                        const isHourDay = hour.hour >= 6 && hour.hour < 18;
                                         const bg = getWeatherBackground(hour.code, isHourDay);
                                         return `
                                         <div class="hour-item${isPast ? ' hour-past' : ''}" style="background: ${bg};">
@@ -6450,31 +6416,5 @@
         }
     </script>
 
-    <!-- Weather test panel (localhost only) - sticky bottom bar -->
-    <div id="weatherTestPanel" style="display:none; position:fixed; bottom:0; left:0; right:0; z-index:9999; background:rgba(0,0,0,0.85); padding:10px 20px; font-size:0.8rem; color:#fff; backdrop-filter:blur(8px); align-items:center; justify-content:center; gap:12px; border-top:1px solid rgba(255,255,255,0.15);">
-        <span style="font-weight:600; opacity:0.7;">DEV</span>
-        <label for="weatherTestSelect" style="margin-right:4px;">Weather:</label>
-        <select id="weatherTestSelect" onchange="testWeatherCondition(this.value)" style="padding:5px 10px; border-radius:4px; border:none; font-size:0.8rem; cursor:pointer; background:#333; color:#fff;">
-            <option value="live">Live Weather</option>
-            <option value="0">Clear (0)</option>
-            <option value="2">Cloudy (2)</option>
-            <option value="3">Overcast (3)</option>
-            <option value="45">Fog (45)</option>
-            <option value="61">Rain (61)</option>
-            <option value="95">Thunder (95)</option>
-            <option value="71">Snow (71)</option>
-        </select>
-        <label for="weatherTestTime" style="margin-left:8px; margin-right:4px;">Time:</label>
-        <select id="weatherTestTime" onchange="testWeatherCondition(document.getElementById('weatherTestSelect').value)" style="padding:5px 10px; border-radius:4px; border:none; font-size:0.8rem; cursor:pointer; background:#333; color:#fff;">
-            <option value="auto">Auto</option>
-            <option value="day">Day</option>
-            <option value="night">Night</option>
-        </select>
-    </div>
-    <script>
-        if (location.hostname==='localhost'||location.hostname==='127.0.0.1') {
-            document.getElementById('weatherTestPanel').style.display = 'flex';
-        }
-    </script>
 </body>
 </html>

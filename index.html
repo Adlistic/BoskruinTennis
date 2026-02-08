@@ -5804,28 +5804,35 @@
                 html += '<div class="card-celestial card-moon'+(dimmed?' dimmed':'')+'" style="left:'+xPct+'%;top:'+yPct+'%;"></div>';
             }
 
-            // Clouds
+            // Clouds (4-blob volumetric, matching hero)
             if (cond==='cloudy'||cond==='overcast'||cond==='rain'||cond==='thunder'||cond==='snow') {
-                var cc = size==='full' ? (cond==='thunder'?5:3) : (cond==='thunder'?3:2);
-                var baseOp = isDay?0.5:0.15;
-                if (cond==='overcast') baseOp = isDay?0.65:0.22;
-                if (cond==='thunder') baseOp = isDay?0.75:0.3;
+                var cc = size==='full'
+                    ? (cond==='thunder'?6:(cond==='overcast'?5:4))
+                    : (cond==='thunder'?5:(cond==='overcast'?4:3));
+                var baseOp = isDay?0.55:0.18;
+                if (cond==='overcast') baseOp = isDay?0.7:0.25;
+                if (cond==='thunder') baseOp = isDay?0.8:0.35;
                 var col = isDay?'200,210,225':'90,105,125';
                 if (cond==='thunder') col = isDay?'60,65,75':'30,35,45';
-                var scale = size==='full'?0.5:0.3;
 
                 for (var i=0; i<cc; i++) {
-                    var cw = (80+Math.random()*90)*scale;
-                    var ch = cw*(0.3+Math.random()*0.1);
-                    var ct = (Math.random()*45).toFixed(0);
-                    var cSpd = (25+Math.random()*30).toFixed(0);
+                    var cw = size==='full' ? (90+Math.random()*120) : (70+Math.random()*100);
+                    var ch = cw*(0.28+Math.random()*0.12);
+                    var ct = (Math.random()*50).toFixed(0);
+                    var cSpd = (20+Math.random()*30).toFixed(0);
                     var cDel = (-Math.random()*25).toFixed(0);
                     var op = (baseOp*(0.6+Math.random()*0.4)).toFixed(2);
-                    var blur = ((6+Math.random()*5)*scale).toFixed(0);
+                    var blur = size==='full' ? (8+Math.random()*7).toFixed(0) : (6+Math.random()*6).toFixed(0);
+
                     html += '<div class="card-cloud-group" style="top:'+ct+'%;animation-duration:'+cSpd+'s;animation-delay:'+cDel+'s;">';
+                    // Main body
                     html += '<div class="card-cloud-blob" style="width:'+cw.toFixed(0)+'px;height:'+ch.toFixed(0)+'px;bottom:0;left:'+(cw*0.15).toFixed(0)+'px;background:rgba('+col+','+op+');filter:blur('+blur+'px);"></div>';
-                    html += '<div class="card-cloud-blob" style="width:'+(cw*0.45).toFixed(0)+'px;height:'+(ch*0.7).toFixed(0)+'px;bottom:'+(ch*0.15).toFixed(0)+'px;left:0;background:rgba('+col+','+(op*0.8).toFixed(2)+');filter:blur('+(blur*0.85).toFixed(0)+'px);"></div>';
-                    html += '<div class="card-cloud-blob" style="width:'+(cw*0.5).toFixed(0)+'px;height:'+(ch*0.65).toFixed(0)+'px;bottom:'+(ch*0.1).toFixed(0)+'px;right:0;background:rgba('+col+','+(op*0.85).toFixed(2)+');filter:blur('+(blur*0.9).toFixed(0)+'px);"></div>';
+                    // Left bump
+                    html += '<div class="card-cloud-blob" style="width:'+(cw*0.45).toFixed(0)+'px;height:'+(ch*0.75).toFixed(0)+'px;bottom:'+(ch*0.18).toFixed(0)+'px;left:0;background:rgba('+col+','+(op*0.8).toFixed(2)+');filter:blur('+(blur*0.85).toFixed(0)+'px);"></div>';
+                    // Right bump
+                    html += '<div class="card-cloud-blob" style="width:'+(cw*0.5).toFixed(0)+'px;height:'+(ch*0.7).toFixed(0)+'px;bottom:'+(ch*0.12).toFixed(0)+'px;right:0;background:rgba('+col+','+(op*0.85).toFixed(2)+');filter:blur('+(blur*0.9).toFixed(0)+'px);"></div>';
+                    // Top bump (gives volumetric depth)
+                    html += '<div class="card-cloud-blob" style="width:'+(cw*0.35).toFixed(0)+'px;height:'+(ch*0.6).toFixed(0)+'px;bottom:'+(ch*0.35).toFixed(0)+'px;left:'+(cw*0.3).toFixed(0)+'px;background:rgba('+col+','+(op*0.95).toFixed(2)+');filter:blur('+(blur*0.8).toFixed(0)+'px);"></div>';
                     html += '</div>';
                 }
             }
@@ -5904,11 +5911,19 @@
                 }
             }
 
-            // Mini cloud
+            // Mini cloud (3-blob volumetric)
             if (cond==='cloudy'||cond==='overcast') {
                 var col = isNight?'90,105,125':'200,210,225';
-                var op = isNight?0.15:0.4;
-                html += '<div class="card-cloud-group" style="top:20%;animation-duration:20s;"><div class="card-cloud-blob" style="width:35px;height:12px;bottom:0;background:rgba('+col+','+op+');filter:blur(4px);border-radius:50%;"></div></div>';
+                var bop = isNight?0.15:0.45;
+                if (cond==='overcast') bop = isNight?0.22:0.6;
+                var mcw = 40+Math.random()*20;
+                var mch = mcw*0.3;
+                var mbl = 4;
+                html += '<div class="card-cloud-group" style="top:'+(15+Math.random()*25).toFixed(0)+'%;animation-duration:'+(18+Math.random()*12).toFixed(0)+'s;">';
+                html += '<div class="card-cloud-blob" style="width:'+mcw.toFixed(0)+'px;height:'+mch.toFixed(0)+'px;bottom:0;left:'+(mcw*0.12).toFixed(0)+'px;background:rgba('+col+','+bop.toFixed(2)+');filter:blur('+mbl+'px);"></div>';
+                html += '<div class="card-cloud-blob" style="width:'+(mcw*0.4).toFixed(0)+'px;height:'+(mch*0.7).toFixed(0)+'px;bottom:'+(mch*0.15).toFixed(0)+'px;left:0;background:rgba('+col+','+(bop*0.8).toFixed(2)+');filter:blur(3px);"></div>';
+                html += '<div class="card-cloud-blob" style="width:'+(mcw*0.45).toFixed(0)+'px;height:'+(mch*0.65).toFixed(0)+'px;bottom:'+(mch*0.1).toFixed(0)+'px;right:0;background:rgba('+col+','+(bop*0.85).toFixed(2)+');filter:blur(3px);"></div>';
+                html += '</div>';
             }
 
             // Tiny stars

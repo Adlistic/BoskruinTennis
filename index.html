@@ -2974,22 +2974,24 @@
             }
         }
 
-        /* Weather Animations */
-        @keyframes rainFall {
-            0% {
-                transform: translateY(-30px) translateX(0);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(300px) translateX(-8px);
-                opacity: 0;
-            }
+        /* Weather Animations - 3 depth layers matching hero canvas */
+        @keyframes rainBack {
+            0%   { transform: translateY(-15px) translateX(0); opacity: 0; }
+            8%   { opacity: 1; }
+            92%  { opacity: 1; }
+            100% { transform: translateY(350px) translateX(-20px); opacity: 0; }
+        }
+        @keyframes rainMid {
+            0%   { transform: translateY(-20px) translateX(0); opacity: 0; }
+            6%   { opacity: 1; }
+            94%  { opacity: 1; }
+            100% { transform: translateY(350px) translateX(-28px); opacity: 0; }
+        }
+        @keyframes rainFront {
+            0%   { transform: translateY(-25px) translateX(0); opacity: 0; }
+            5%   { opacity: 1; }
+            95%  { opacity: 1; }
+            100% { transform: translateY(350px) translateX(-35px); opacity: 0; }
         }
 
         @keyframes snowFall {
@@ -3040,11 +3042,20 @@
 
         .rain-drop {
             position: absolute;
-            width: 2px;
-            height: 20px;
-            background: linear-gradient(180deg, rgba(180,210,245,0.7), rgba(180,210,245,0.2));
-            animation: rainFall linear infinite;
-            border-radius: 2px;
+            border-radius: 1px;
+            top: 0;
+        }
+        /* Back layer: thin, slow, faint */
+        .rain-drop.rain-back {
+            animation: rainBack linear infinite;
+        }
+        /* Mid layer: medium */
+        .rain-drop.rain-mid {
+            animation: rainMid linear infinite;
+        }
+        /* Front layer: thick, fast, bright */
+        .rain-drop.rain-front {
+            animation: rainFront linear infinite;
         }
 
         .snow-flake {
@@ -5844,16 +5855,25 @@
                 html += '<div class="card-fog-layer" style="bottom:10%;height:50%;background:radial-gradient(ellipse at 70% 80%,rgba('+fc+',0.25) 0%,transparent 50%);animation-duration:18s;animation-delay:3s;"></div>';
             }
 
-            // Rain particles
+            // Rain particles (3 depth layers like hero canvas)
             if (cond==='rain'||cond==='thunder') {
                 var heavy = cond==='thunder';
-                var dropCount = size==='full' ? (heavy?35:20) : (heavy?18:10);
-                for (var ri=0; ri<dropCount; ri++) {
-                    var left = Math.random()*100;
-                    var dur = (0.4+Math.random()*0.4).toFixed(2);
-                    var del = (Math.random()*2).toFixed(2);
-                    var h = (10+Math.random()*10).toFixed(0);
-                    html += '<div class="rain-drop" style="left:'+left+'%;height:'+h+'px;animation-duration:'+dur+'s;animation-delay:'+del+'s;"></div>';
+                // Layer config: [class, count, height-range, width, opacity-range, speed-range, color]
+                var layers = [
+                    { cls:'rain-back',  n: size==='full'?(heavy?14:10):(heavy?8:5),  hMin:6, hMax:12, w:0.5, aMin:0.08, aMax:0.2,  sMin:1.2, sMax:1.8 },
+                    { cls:'rain-mid',   n: size==='full'?(heavy?12:8):(heavy?6:4),   hMin:12,hMax:20, w:1,   aMin:0.18, aMax:0.35, sMin:0.7, sMax:1.1 },
+                    { cls:'rain-front', n: size==='full'?(heavy?10:6):(heavy?5:3),   hMin:18,hMax:28, w:1.5, aMin:0.3,  aMax:0.5,  sMin:0.35,sMax:0.65 }
+                ];
+                for (var li=0; li<layers.length; li++) {
+                    var L = layers[li];
+                    for (var ri=0; ri<L.n; ri++) {
+                        var rl = (Math.random()*110-5).toFixed(1);
+                        var rh = (L.hMin+Math.random()*(L.hMax-L.hMin)).toFixed(0);
+                        var ra = (L.aMin+Math.random()*(L.aMax-L.aMin)).toFixed(2);
+                        var rs = (L.sMin+Math.random()*(L.sMax-L.sMin)).toFixed(2);
+                        var rd = (Math.random()*2.5).toFixed(2);
+                        html += '<div class="rain-drop '+L.cls+'" style="left:'+rl+'%;width:'+L.w+'px;height:'+rh+'px;background:linear-gradient(180deg,rgba(180,210,245,'+ra+'),rgba(180,210,245,'+(ra*0.3).toFixed(2)+'));animation-duration:'+rs+'s;animation-delay:'+rd+'s;"></div>';
+                    }
                 }
             }
 
@@ -5896,11 +5916,18 @@
             var cond = getWeatherCondition(code);
             var html = '';
 
-            // Tiny rain
+            // Tiny rain (2 depth layers)
             if (cond==='rain'||cond==='thunder') {
-                var dc = cond==='thunder'?8:5;
-                for (var i=0; i<dc; i++) {
-                    html += '<div class="rain-drop" style="left:'+((Math.random()*100).toFixed(0))+'%;height:8px;animation-duration:'+(0.4+Math.random()*0.4).toFixed(2)+'s;animation-delay:'+(Math.random()*2).toFixed(2)+'s;"></div>';
+                var tHeavy = cond==='thunder';
+                // Back layer
+                var tBack = tHeavy?3:2;
+                for (var tbi=0; tbi<tBack; tbi++) {
+                    html += '<div class="rain-drop rain-back" style="left:'+(Math.random()*100).toFixed(0)+'%;width:0.5px;height:6px;background:linear-gradient(180deg,rgba(180,210,245,0.12),rgba(180,210,245,0.04));animation-duration:'+(1.0+Math.random()*0.6).toFixed(2)+'s;animation-delay:'+(Math.random()*2).toFixed(2)+'s;"></div>';
+                }
+                // Front layer
+                var tFront = tHeavy?5:3;
+                for (var tfi=0; tfi<tFront; tfi++) {
+                    html += '<div class="rain-drop rain-front" style="left:'+(Math.random()*100).toFixed(0)+'%;width:1px;height:'+(8+Math.random()*6).toFixed(0)+'px;background:linear-gradient(180deg,rgba(180,210,245,0.35),rgba(180,210,245,0.1));animation-duration:'+(0.4+Math.random()*0.3).toFixed(2)+'s;animation-delay:'+(Math.random()*2).toFixed(2)+'s;"></div>';
                 }
             }
 
